@@ -270,21 +270,47 @@
           <span>评选流程</span>
         </h1>
         <div class="time-shaft clearfix">
-          <div class="shaft-item">
-            <p>作品征集</p>
-            <p>2017年12月23日</p>
+          <div class="shaft-item first">
+            <p>2018年5月5日</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
+            <p class="shaft-title">作品征集</p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item second">
+            <p>11月30日</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
             <p>截稿</p>
-            <p>2017年12月23日</p>
           </div>
-          <div class="shaft-item">
-            <p>评选获奖作品</p>
-            <p>2017年12月23日</p>
+          <div class="shaft-item third">
+            <p>12月3日~10日</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
+            <p>网络投票统计</p>
           </div>
-          <div class="shaft-item">
-            <p>公布获奖作品</p>
-            <p>2017年12月23日</p>
+          <div class="shaft-item forth">
+            <p>12月10日~17日</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
+            <p>作品初评</p>
+          </div>
+          <div class="shaft-item fifth">
+            <p>12月底</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
+            <p>作品终评</p>
+          </div>
+          <div class="shaft-item sixth">
+            <p>2019年1月</p>
+            <p class="dot-box">
+              <span class="dot"></span>
+            </p>
+            <p>颁奖典礼</p>
           </div>
         </div>
       </div>
@@ -384,18 +410,14 @@
 </template>
 
 <script>
-// import EditorViewport from '@/components/editor/EditorViewport'
 export default {
   name: 'pac',
-  data () {
+  data() {
     return {
       rank1ActiveName: '1',
       rank2ActiveName: '1'
     }
   }
-  // components: {
-  //   EditorViewport
-  // }
 }
 </script>
 
@@ -756,14 +778,76 @@ body {
   }
   .process-row {
     background-color: #101011;
+    padding: 80px 0;
     color: #fff;
     .time-shaft {
-      width: 840px;
-      margin: 0 auto;
+      width: 940px;
+      margin: 100px auto 0;
+      display: flex;
+      position: relative;
+    }
+    .time-shaft::after {
+      content: '';
+      height: 3px;
+      left: 62px;
+      display: inline-block;
+      right: 72px;
+      background-image: linear-gradient(90deg, #b10cfe, #2e0cfe);
+      position: absolute;
+      top: 53px;
     }
     .shaft-item {
-      float: left;
-      width: 25%;
+      width: 140px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .shaft-item:first-child {
+      flex: 1;
+      text-align: left;
+      .dot-box {
+        padding-left: 50px;
+      }
+      .shaft-title {
+        padding-left: 20px;
+      }
+    }
+    .dot-box {
+      padding: 16px 0 28px;
+    }
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: red;
+    }
+    .first .dot {
+      background-color: transparent;
+      width: 7px;
+      height: 7px;
+      border: 4px solid #b10cfe;
+      position: relative;
+      top: 3px;
+    }
+    .second .dot {
+      background-color: #870dfe;
+    }
+    .third .dot {
+      background-color: #710bfe;
+    }
+    .forth .dot {
+      background-color: #5c0dfe;
+    }
+    .fifth .dot {
+      background-color: #460dfe;
+    }
+    .sixth .dot {
+      background-color: transparent;
+      width: 7px;
+      height: 7px;
+      border: 4px solid #2f0bfe;
+      position: relative;
+      top: 3px;
     }
   }
   .guest-row {
