@@ -267,46 +267,52 @@
       </div>
       <div class="row process-row">
         <h1 class="title">
-          <span>评选流程</span>
+          <img src="@/assets/pac/big_dot.png" alt="">评选流程<img src="@/assets/pac/big_dot.png" alt="">
         </h1>
         <div class="time-shaft clearfix">
           <div class="shaft-item first">
-            <p>2018年5月5日</p>
+            <p class='time'>2018年5月5日</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
             <p class="shaft-title">作品征集</p>
           </div>
           <div class="shaft-item second">
-            <p>11月30日</p>
+            <p class='time'>11月30日</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
             <p>截稿</p>
           </div>
           <div class="shaft-item third">
-            <p>12月3日~10日</p>
+            <p class='time'>12月3日~10日</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
-            <p>网络投票统计</p>
+            <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="此环节由网络投票和媒体代表投票产生人气十佳，评分标准：网络*60%+媒体代表*40%。">
+              <p slot="reference">网络投票统计</p>
+            </el-popover>
           </div>
           <div class="shaft-item forth">
-            <p>12月10日~17日</p>
+            <p class='time'>12月10日~17日</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
-            <p>作品初评</p>
+            <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="所有作品按分类分配给相应组别的评委团，每部作品安排3位不同的评委打分，最后取平均分，周期为一个星期。">
+              <p slot="reference">作品初评</p>
+            </el-popover>
           </div>
           <div class="shaft-item fifth">
-            <p>12月底</p>
+            <p class='time'>12月底</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
-            <p>作品终评</p>
+            <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="邀请评委专家到深圳，对分类作品进行评审。同一幅作品由该类目的所有评委打分取平均分，按分数从高到低产生排序。">
+              <p slot="reference">作品终评</p>
+            </el-popover>
           </div>
           <div class="shaft-item sixth">
-            <p>2019年1月</p>
+            <p class='time'>2019年1月</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
@@ -429,6 +435,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.shaft-popper {
+  background-color: #101011;
+  color: #fff;
+  margin-top: 25px;
+}
 .pac {
   color: #606266;
   font-size: 16px;
@@ -520,6 +532,10 @@ body {
       width: 100%;
       height: 10px;
       background-color: #fee40c;
+    }
+    img {
+      vertical-align: middle;
+      margin: 0 15px;
     }
   }
   .tooltip-no-radius {
@@ -778,8 +794,12 @@ body {
   }
   .process-row {
     background-color: #101011;
-    padding: 80px 0;
+    // padding: 80px 0;
+    padding: 80px 0 130px;
     color: #fff;
+    .time{
+      font-weight: lighter;
+    }
     .time-shaft {
       width: 940px;
       margin: 100px auto 0;
