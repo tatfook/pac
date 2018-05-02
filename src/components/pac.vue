@@ -51,8 +51,26 @@
           <li>
             <a href='#'>相关下载</a>
           </li>
-          <li class="join-btn"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
-          <li class="profile">profile</li>
+          <li class="join-btn" @click="toApply"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
+          <li class="profile" v-if="userinfo && userinfo.portrait">
+            <el-dropdown placement='bottom' trigger='click'>
+              <span class="el-dropdown-link">
+                <img class="profile-img" :src='userinfo.portrait' alt="">
+                <img src="@/assets/pac/bottom-dot.png" alt="">
+              </span>
+              <el-dropdown-menu slot='dropdown'>
+                <el-dropdown-item>
+                  <a href="#">我的资料</a>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <a href="#">我的作品</a>
+                </el-dropdown-item>
+                <el-dropdown-item @click.native='toLogout'>
+                  退出登录
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </li>
         </ul>
       </div>
     </header>
@@ -412,16 +430,46 @@
         <p>粤ICP备14002196号-2 © Tatfook</p>
       </div>
     </footer>
+    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false>
+      <login @onLogined='reGetUserinfo'></login>
+    </el-dialog>
+    <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
+      <join></join>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import login from './login'
+import join from './join'
 export default {
   name: 'pac',
+  components: {
+    login,
+    join
+  },
   data() {
     return {
       rank1ActiveName: '1',
-      rank2ActiveName: '1'
+      rank2ActiveName: '1',
+      loginDialogVisible: false,
+      joinDialogVisible: false,
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      isLogined: this.userinfo ? true : false
+    }
+  },
+  methods: {
+    toApply() {
+      this.joinDialogVisible = true
+      // this.loginDialogVisible = true
+    },
+    toLogout() {
+      this.userinfo = undefined
+      localStorage.removeItem('userinfo')
+    },
+    reGetUserinfo() {
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      this.loginDialogVisible = false
     }
   }
 }
@@ -440,6 +488,32 @@ body {
   background-color: #101011;
   color: #fff;
   margin-top: 25px;
+}
+.el-dropdown-menu {
+  margin-top: 0;
+  border: none;
+  border-radius: 0;
+  padding: 5px 0;
+  background-color: #303133;
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .popper__arrow::after {
+    border-bottom-color: #303133;
+  }
+  .el-dropdown-menu__item {
+    padding: 0 27px;
+    color: #fff;
+  }
+  .el-dropdown-menu__item:not(.is-disabled):hover {
+    background-color: #181619;
+    color: #fff;
+  }
+}
+.el-dropdown {
+  font-size: 16px;
+  cursor: pointer;
 }
 .pac {
   color: #606266;
@@ -541,29 +615,6 @@ body {
   .tooltip-no-radius {
     border-radius: 0;
   }
-  .el-dropdown-menu {
-    margin-top: 0;
-    border: none;
-    border-radius: 0;
-    padding: 5px 0;
-    background-color: #303133;
-    a {
-      color: #fff;
-    }
-    .popper__arrow::after {
-      border-bottom-color: #303133;
-    }
-    .el-dropdown-menu__item {
-      padding: 0 27px;
-    }
-    .el-dropdown-menu__item:not(.is-disabled):hover {
-      background-color: #181619;
-    }
-  }
-  .el-dropdown {
-    font-size: 16px;
-    cursor: pointer;
-  }
   .pac-header {
     height: 70px;
     line-height: 70px;
@@ -589,13 +640,19 @@ body {
       color: #fff;
       font-weight: bold;
       margin-left: 24px;
+      cursor: pointer;
       img {
         margin-right: 10px;
         vertical-align: middle;
       }
     }
     .profile {
-      display: none;
+      // display: none;
+      .profile-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
     }
   }
   .banner {
@@ -797,7 +854,7 @@ body {
     // padding: 80px 0;
     padding: 80px 0 130px;
     color: #fff;
-    .time{
+    .time {
       font-weight: lighter;
     }
     .time-shaft {
