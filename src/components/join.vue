@@ -1,6 +1,6 @@
 <template>
   <div class="join-form">
-    <img class="close-btn" src="@/assets/pac/close.png" alt="">
+    <img @click="closeDialog" class="close-btn" src="@/assets/pac/close.png" alt="">
     <h1 class="title">
       <img src="@/assets/pac/form_big_dot_left.png" alt="">账号注册<img src="@/assets/pac/form_big_dot_right.png" alt="">
     </h1>
@@ -66,6 +66,9 @@ export default {
   methods: {
     _encodeURIComponent(url) {
       return encodeURIComponent(url).replace(/\./g, '%2E')
+    },
+    closeDialog(){
+      this.$emit('close')
     },
     startReSendCodeTimer() {
       this.reSendCodeTime = 60
@@ -252,6 +255,7 @@ export default {
     right: 0;
     top: 0;
     padding: 15px;
+    cursor: pointer;
   }
   .form {
     padding: 0 20px;

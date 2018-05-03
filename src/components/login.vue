@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <img class="close-btn" src="@/assets/pac/close.png" alt="">
+    <img @click="closeDialog" class="close-btn" src="@/assets/pac/close.png" alt="">
     <h1 class="title">
       <img src="@/assets/pac/form_big_dot_left.png" alt="">登录账号<img src="@/assets/pac/form_big_dot_right.png" alt="">
     </h1>
@@ -18,7 +18,7 @@
         立即登录
       </div>
       <p class="extra-operations">
-        <span>立即注册</span>
+        <span class="to-join-button" @click="showJoinDialog">立即注册</span>
       </p>
     </div>
   </div>
@@ -35,6 +35,13 @@ export default {
     }
   },
   methods: {
+    closeDialog(){
+      this.$emit('close')
+    },
+    showJoinDialog(){
+      this.$emit('showJoinDialog')
+      this.closeDialog()
+    },
     toLogin() {
       this.loginErrMsg = ''
       if (!this.username) {
@@ -82,6 +89,7 @@ export default {
     right: 0;
     top: 0;
     padding: 15px;
+    cursor: pointer;
   }
   .form {
     padding: 0 20px;
@@ -119,7 +127,7 @@ export default {
     width: 100%;
     border: 4px solid;
     height: 65px;
-    line-height: 58px;
+    line-height: 50px;
     font-size: 20px;
     background-color: #fef50c;
     color: #434103;
@@ -147,6 +155,9 @@ export default {
   .error-msg {
     text-align: left;
     color: red;
+  }
+  .to-join-button{
+    cursor: pointer;
   }
 }
 </style>

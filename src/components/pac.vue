@@ -431,10 +431,14 @@
       </div>
     </footer>
     <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false>
-      <login @onLogined='reGetUserinfo'></login>
+      <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
     </el-dialog>
     <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
-      <join @onLogined='reGetUserinfo'></join>
+      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
+    </el-dialog>
+    <el-dialog :visible.sync='applyDialogVisible' width='500px'>
+      <h1>报名</h1>
+      <p>报名功能开发中， 敬请期待</p>
     </el-dialog>
   </div>
 </template>
@@ -454,14 +458,21 @@ export default {
       rank2ActiveName: '1',
       loginDialogVisible: false,
       joinDialogVisible: false,
+      applyDialogVisible: false,
       userinfo: JSON.parse(localStorage.getItem('userinfo')),
       isLogined: this.userinfo ? true : false
     }
   },
   methods: {
+    setDialogVisible(key, value) {
+      this[key] = value
+    },
     toApply() {
-      this.joinDialogVisible = true
-      // this.loginDialogVisible = true
+      if (this.userinfo) {
+        this.applyDialogVisible = true
+        return
+      }
+      this.loginDialogVisible = true
     },
     toLogout() {
       this.userinfo = undefined
