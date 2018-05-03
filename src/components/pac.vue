@@ -434,7 +434,7 @@
       <login @onLogined='reGetUserinfo'></login>
     </el-dialog>
     <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
-      <join></join>
+      <join @onLogined='reGetUserinfo'></join>
     </el-dialog>
   </div>
 </template>
@@ -470,6 +470,7 @@ export default {
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.loginDialogVisible = false
+      this.joinDialogVisible = false
     }
   }
 }

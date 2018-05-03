@@ -58,7 +58,9 @@ export default {
           let data = result.data
           if (data.data) {
             let userinfo = JSON.stringify(data.data.userinfo)
+            let token = JSON.stringify(data.data.token)
             localStorage.setItem('userinfo', userinfo)
+            localStorage.setItem('token', token)
             that.$emit('onLogined')
             return
           }

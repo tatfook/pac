@@ -11,10 +11,8 @@
       </div>
       <div class="input-group">
         <img class="input-addon" src="@/assets/pac/unlock.png" alt="">
-        <input v-model="password" class="input-content" type="text" name="password" placeholder="请输入密码">
-      </div>
-      <div class="input-group">
-        <input v-model="rePassword" class="input-content" type="text" name="rePassword" placeholder="确认密码">
+        <input class="input-content" type="password" name="password" style="display: none">
+        <input v-model="password" class="input-content" type="password" name="password" placeholder="请输入密码">
       </div>
       <div class="input-group">
         <img class="input-addon" src="@/assets/pac/mobile-Phone.png" alt="">
@@ -34,6 +32,14 @@
 </template>
 <script>
 import axios from 'axios'
+import gitlabApiGenerator from 'node-gitlab-api'
+import contactContent from '@/../static/profile_datas/contact.md'
+import profileContent from '@/../static/profile_datas/profile.md'
+import siteContent from '@/../static/profile_datas/site.md'
+let GitlabApi = new gitlabApiGenerator({
+  url: 'http://git.keepwork.com',
+  token: ' '
+})
 let axiosInstance = axios.create({
   baseURL: 'http://keepwork.com/api/wiki/models'
 })
@@ -50,7 +56,6 @@ export default {
     return {
       username: '',
       password: '',
-      rePassword: '',
       phone: '',
       code: '',
       joinErrMsg: '',
@@ -59,6 +64,9 @@ export default {
     }
   },
   methods: {
+    _encodeURIComponent(url) {
+      return encodeURIComponent(url).replace(/\./g, '%2E')
+    },
     startReSendCodeTimer() {
       this.reSendCodeTime = 60
       let that = this
@@ -89,7 +97,6 @@ export default {
         })
         .then(function(result) {
           let data = result.data
-          console.log(data.data)
           if (data.data) {
             that.smsId = data.data.smsId
             that.startReSendCodeTimer()
@@ -100,37 +107,99 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
-      console.log(this.phone)
+    },
+    async createProfilePages(userDataSource) {
+      console.log(userDataSource)
+      let projectId = userDataSource.projectId
+      let username = userDataSource.username
+      let privateTokem = userDataSource.dataSourceToken
+      let gitlabAxiosInstance = axios.create({
+        baseURL: 'https://git.keepwork.com/api/v4',
+        headers: {
+          'PRIVATE-TOKEN': privateTokem
+        }
+      })
+      let pagePrefix = username + '_datas/'
+      let profilePagesList = [
+        {
+          filepath: pagePrefix + 'profile.md',
+          content: profileContent
+        },
+        {
+          filepath: pagePrefix + 'site.md',
+          content: siteContent
+        },
+        {
+          filepath: pagePrefix + 'contact.md',
+          content: contactContent
+        }
+      ]
+      // console.log(profilePagesList)
+      for (let pageObj of profilePagesList) {
+        let filepath = this._encodeURIComponent(pageObj.filepath)
+        let postUrl = `/projects/${projectId}/repository/files/${filepath}`
+        await gitlabAxiosInstance
+          .post(postUrl, {
+            branch: 'master',
+            content: pageObj.content,
+            commit_message: 'init profile page'
+          })
+          .then(function(result) {})
+          .catch(function(error) {
+            console.log(error)
+          })
+      }
+    },
+    async createProfileIndexPage(userinfo, token) {
+      axiosInstance
+        .post('/pages/insert', {
+          url: `/${userinfo.username}`
+        }, {
+          headers:{
+            Authorization: 'Bearer ' + token
+          }
+        })
+        .then(result => {})
+        .catch(error => {
+          console.log(error)
+        })
     },
     toRegister() {
-      console.log('aa')
+      const loading = this.$loading({
+        lock: true,
+        text: '请稍等...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.joinErrMsg = ''
       if (!this.username) {
         this.joinErrMsg = '请输入账号'
+        loading.close()
         return
       }
       if (this.password.length < 6) {
         this.joinErrMsg = '密码最少为6位数'
+        loading.close()
         return
       }
       if (!this.smsId) {
         this.joinErrMsg = '请先获取验证码'
+        loading.close()
         return
       }
       if (!this.phone) {
         this.joinErrMsg = '请输入手机号'
+        loading.close()
         return
       }
       if (!this.code) {
         this.joinErrMsg = '请输入验证码'
+        loading.close()
         return
       }
       if (this.username.length > 30) {
         this.joinErrMsg = '账号需小于30位'
-        return
-      }
-      if (this.password !== this.rePassword) {
-        this.joinErrMsg = '两次输入的密码不一致'
+        loading.close()
         return
       }
       let joinParams = {
@@ -144,16 +213,30 @@ export default {
       let that = this
       axiosInstance
         .post('/user/register', joinParams)
-        .then(function(result) {
+        .then(async function(result) {
           let data = result.data
           if (data.data) {
-            console.log(data)
+            console.log(data.data)
+            let userinfo = data.data.userinfo
+            let token = data.data.token
+            let userDataSource = userinfo.dataSource[0]
+            await that.createProfilePages(userDataSource)
+            await that.createProfileIndexPage(userinfo, token)
+            console.log('success')
+            loading.close()
+            let userinfoString = JSON.stringify(userinfo)
+            let tokenString = JSON.stringify(token)
+            localStorage.setItem('userinfo', userinfoString)
+            localStorage.setItem('token', tokenString)
+            that.$emit('onLogined')
             return
           }
           that.joinErrMsg = data.error.message
         })
         .catch(function(error) {
+          loading.close()
           console.log(error)
+          that.joinErrMsg = error
         })
       console.log(joinParams)
     }
