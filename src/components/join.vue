@@ -23,8 +23,11 @@
         <input v-model="code" class="input-content" type="text" name="code" placeholder="请输入验证码">
         <div class="get-code-btn" :class="{'get-code-btn-disabled': reSendCodeTime>0}" @click='getVerifyCode'>{{sendCodeBtnText}}</div>
       </div>
+      <div class="agree-service-line" @click="toggleAgreeServices">
+        <span class="fake-checkbox" :class="{'active': isAgreeService}"></span>申请即视为同意<a href="#" target="_blank">《Keepwork用户协议》</a>
+      </div>
       <p class="error-msg" v-show="joinErrMsg">{{joinErrMsg}}</p>
-      <div class="register-button" @click='toRegister'>
+      <div class="register-button" :class="{'active': isAgreeService}" @click='toRegister'>
         立即注册
       </div>
     </div>
@@ -60,15 +63,19 @@ export default {
       code: '',
       joinErrMsg: '',
       reSendCodeTime: 0,
-      reSendCodeInteval: undefined
+      reSendCodeInteval: undefined,
+      isAgreeService: true
     }
   },
   methods: {
     _encodeURIComponent(url) {
       return encodeURIComponent(url).replace(/\./g, '%2E')
     },
-    closeDialog(){
+    closeDialog() {
       this.$emit('close')
+    },
+    toggleAgreeServices() {
+      this.isAgreeService = !this.isAgreeService
     },
     startReSendCodeTimer() {
       this.reSendCodeTime = 60
@@ -155,26 +162,34 @@ export default {
     },
     async createProfileIndexPage(userinfo, token) {
       axiosInstance
-        .post('/pages/insert', {
-          url: `/${userinfo.username}`
-        }, {
-          headers:{
-            Authorization: 'Bearer ' + token
+        .post(
+          '/pages/insert',
+          {
+            url: `/${userinfo.username}`
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
           }
-        })
+        )
         .then(result => {})
         .catch(error => {
           console.log(error)
         })
     },
     toRegister() {
+      this.joinErrMsg = ''
+      if (!this.isAgreeService) {
+        this.joinErrMsg = '同意协议后才能注册哦'
+        return
+      }
       const loading = this.$loading({
         lock: true,
         text: '请稍等...',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      this.joinErrMsg = ''
       if (!this.username) {
         this.joinErrMsg = '请输入账号'
         loading.close()
@@ -300,8 +315,13 @@ export default {
     font-weight: bold;
     position: relative;
     margin: 32px 0 22px;
-    cursor: pointer;
     box-sizing: border-box;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .register-button.active{
+    opacity: 1;
+    cursor: pointer;
   }
   .register-button::after {
     content: '';
@@ -331,6 +351,32 @@ export default {
   .get-code-btn-disabled {
     cursor: not-allowed;
     opacity: 0.8;
+  }
+  .agree-service-line{
+    text-align: left;
+    padding-left: 12px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  .fake-checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #303133;
+    box-sizing: border-box;
+    vertical-align: middle;
+    margin-right: 10px;
+    position: relative;
+  }
+  .fake-checkbox.active::after{
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #303133;
+    position: absolute;
+    left: 3px;
+    top: 3px;
   }
 }
 </style>
