@@ -91,11 +91,15 @@
       </div>
       <div class="row intro-row">
         <div class="container">
+          <div class="decoration">
+            <div class="white-bg"></div>
+            <div class="transparent-bg"></div>
+          </div>
           <div class="content">
             <h1 class="title">
               <span>大赛简介</span>
             </h1>
-            <p class="intro">PAC全国3D创作大赛2017夏季赛 由Shenzhen ACM SIGGRAPH Chapter与Tatfook Inc 联合举办。PAC全称是Paracraft Animation Contest, 每年举办两届，主要面向中小学和大学生，旨在让参赛者通过Paracraft软件学习3D动画创作和计算机编程，制作出有意义的个人电脑作品，并以开源的形式保存和分享到互联网中。同时参加PAC大赛也是北京开放大学创意学院，计算机语言课程的唯一毕业方式。 参赛作品所有权归举办方和参赛者共同所有。</p>
+            <p class="intro">国际智能创意大奖赛是的以培养青少年的科学技术“童子功”和计算机思维，提高自主创新创造能力，为人工智能未来产业提供网络技术支撑和人才储备为目的的国家级、国际性年度赛事。赛事指定创作软件《Paracraft》和作品展示平台[图片]Keepwork.com基于拥有自主知识产权的神经元并行计算机语言NPL写成。赛事主要面向学生群体和计算机从业人员，倡导参赛者利用Paracraft软件进行3D动画制作和编程，并将创作的作品集中在Keepwork平台上集中存储、分享、展示。大奖赛将表彰优秀的参赛者和参赛作品，采用“奖励基金+学习基金+培育基金”的激励模式，以此驱动人们在参赛中重塑学习方式。2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”</p>
             <div class="paracraft">
               <img src="@/assets/pac/paracraft_topmenu_logo.png" alt="">
               <div class="paracraft-intro">
@@ -109,7 +113,7 @@
                 <p>了解更多</p>
               </div>
             </div>
-            <p class="paracraft-info">Paracraft创意空间是官方指定唯一的比赛创作软件。</p>
+            <p class="paracraft-info"><img src="@/assets/pac/little_dot.png" alt="">Paracraft创意空间是官方指定唯一的比赛创作软件。<img class="transform-img" src="@/assets/pac/little_dot.png" alt=""></p>
           </div>
         </div>
       </div>
@@ -146,7 +150,7 @@
                           <span>20万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>基于NPL及其原生引擎和代表软件《Paracraft创意空间》，通过研究、实践充分应用NPL相关各功能，以文字、视频、软件的形式设计、编撰相关课程和课件，便于他人学习研究《Paracraft创意空间》和NPL语言及相关功能</div>
                   </el-collapse-item>
                   <el-collapse-item name="3">
                     <template slot='title'>
@@ -155,7 +159,7 @@
                           <span>20万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>基于NPL及其原生引擎和代表软件《Paracraft创意空间》，通过研究、实践，使用用NPL语言开发出类似NPL CAD， 电影方块，自主动画系统，3D GIS校园等插件工具。或是基于《Paracraft创意空间》社区，设计可供单人或多人游乐体验之小程序。</div>
                   </el-collapse-item>
                   <el-collapse-item name="4">
                     <template slot='title'>
@@ -164,16 +168,16 @@
                           <span>15万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>使用《Paracraft创意空间》的建筑功能，以单人或多人的形式搭建场景。充分发挥《Paracraft创意空间》优势特色，结合自定义材质、自定义模型等功能，创作宏伟壮丽的场景。</div>
                   </el-collapse-item>
                   <el-collapse-item name="5">
                     <template slot='title'>
-                      <h3>NPL 3D角色制作奖
+                      <h3>NPL 最佳3D角色奖
                         <span>(1个，
                           <span>15万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>于《创意空间》系列软件的模型设计功能，用FBX（不可包含动画）或彩色方块建模，用电影方块制作动画，每个角色至少包含走 跑 跳 待机4个动作，在电影中通过姓名、身世、皮肤、戏份、动作动画等手法塑造的成功角色，使观众留下极为深刻印象的主人公或配角。</div>
                   </el-collapse-item>
                   <el-collapse-item name="6">
                     <template slot='title'>
@@ -182,7 +186,16 @@
                           <span>5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>用NPL语言开发出多个类似NPL CAD，电影方块，自主动画系统，3D GIS校园，等创作工具作品集。作品数量不少于5个，整个开发过程必须开源</div>
+                  </el-collapse-item>
+                  <el-collapse-item name="7">
+                    <template slot='title'>
+                      <h3>NPL 人气十佳
+                        <span>(10个，
+                          <span>1万元</span> )</span>
+                      </h3>
+                    </template>
+                    <div>由网络人气投票产生，获奖作品可重叠获得此奖项。网络投票得分占比60%，合作媒体代表评审团投票得分占比40%。并按最终得分从高到低取前十名获得本次大赛人气奖</div>
                   </el-collapse-item>
                 </el-collapse>
               </div>
@@ -205,7 +218,7 @@
                           <span>10万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>基于NPL及其原生引擎和代表软件《Paracraft创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《Paracraft创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
                   </el-collapse-item>
                   <el-collapse-item name="2">
                     <template slot='title'>
@@ -214,7 +227,7 @@
                           <span>最高可获得5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>以主题材质包的形式，参照现有方块的类型制作全新风格的方块材质。所有参赛电影、小程序的自定义材质包同步参与本奖项的角逐，也能以材质包的形式独立参赛。</div>
                   </el-collapse-item>
                   <el-collapse-item name="3">
                     <template slot='title'>
@@ -223,7 +236,7 @@
                           <span>最高可获得5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>以主题材质包的形式，参照现有方块的类型制作全新风格的方块材质。所有参赛电影、小程序的自定义材质包同步参与本奖项的角逐，也能以材质包的形式独立参赛。</div>
                   </el-collapse-item>
                   <el-collapse-item name="4">
                     <template slot='title'>
@@ -232,7 +245,7 @@
                           <span>最高可获得5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>以电影短片的形式，展现精彩卓绝的运镜和剪辑手法，或是勾勒宏伟壮阔的像素世界，带给观众以极具冲击力的视觉体验。</div>
                   </el-collapse-item>
                   <el-collapse-item name="5">
                     <template slot='title'>
@@ -241,7 +254,7 @@
                           <span>最高可获得5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>本奖项主要针对于在电影短片中专为推动电影情节、哄托场景气氛所作的场景的原创配乐和原创音效。参赛选手也可以从表现自然风光、主场场景的角度入手，组织相关的背景音乐。（即，是否允许用户以制作背景音乐的形式参赛，还是本奖只评判电影中的音乐）</div>
                   </el-collapse-item>
                   <el-collapse-item name="6">
                     <template slot='title'>
@@ -250,7 +263,16 @@
                           <span>最高可获得5万元</span> )</span>
                       </h3>
                     </template>
-                    <div>基于NPL及其原生引擎和代表软件《创意空间》，通过研究、实践充分应用NPL相关各功能，以动画作品形式充分展现《创意空间》平台性能和价值。结合作品故事情节、场景设计、音乐音效等综合因素确定大奖。</div>
+                    <div>本奖项旨在鼓励那些具有极佳故事创作才能，受软件制作限制无法完整诠释自己作品的剧本作者。根据电影剧情、立意以及对人物的刻画进行相应的评判。</div>
+                  </el-collapse-item>
+                  <el-collapse-item name="7">
+                    <template slot='title'>
+                      <h3>NPL 人气十佳
+                        <span>(10个，
+                          <span>1万元</span> )</span>
+                      </h3>
+                    </template>
+                    <div>由网络人气投票产生，获奖作品可重叠获得此奖项。网络投票得分占比60%，合作媒体代表评审团投票得分占比40%。并按最终得分从高到低取前十名获得本次大赛人气奖</div>
                   </el-collapse-item>
                 </el-collapse>
               </div>
@@ -266,30 +288,30 @@
           </h1>
           <ul>
             <li>
-              <img src="@/assets/pac/little dot.png" alt=""> 作品需使用电影方块，主题正面，电影类、创意类等均可。
+              <img src="@/assets/pac/little_dot.png" alt=""> 作品需使用电影方块，主题正面，电影类、创意类等均可。
             </li>
             <li>
-              <img src="@/assets/pac/little dot.png" alt=""> 所有参赛作品必须是在2017年12月29日及之前没有在任何创作平台公开发表过的作品。
+              <img src="@/assets/pac/little_dot.png" alt=""> 所有参赛作品必须是在2017年12月29日及之前没有在任何创作平台公开发表过的作品。
             </li>
             <li>
-              <img src="@/assets/pac/little dot.png" alt=""> 参赛作者可同时报名多个作品，官方鼓励作品的原创与多样性，同时也鼓励改编和重构其他作品。
+              <img src="@/assets/pac/little_dot.png" alt=""> 参赛作者可同时报名多个作品，官方鼓励作品的原创与多样性，同时也鼓励改编和重构其他作品。
             </li>
             <li>
-              <img src="@/assets/pac/little dot.png" alt=""> 如果参考了创意空间的其它作品需要注明来源，如发现公开冒充他人作品则直接取消参赛资格。
+              <img src="@/assets/pac/little_dot.png" alt=""> 如果参考了创意空间的其它作品需要注明来源，如发现公开冒充他人作品则直接取消参赛资格。
             </li>
             <li>
-              <img src="@/assets/pac/little dot.png" alt=""> 参考非创意空间的其他作品，作者可自行决定是否引用来源。
+              <img src="@/assets/pac/little_dot.png" alt=""> 参考非创意空间的其他作品，作者可自行决定是否引用来源。
             </li>
           </ul>
         </div>
       </div>
       <div class="row process-row">
         <h1 class="title">
-          <img src="@/assets/pac/big_dot.png" alt="">评选流程<img src="@/assets/pac/big_dot.png" alt="">
+          <img src="@/assets/pac/big_dot.png" alt="">评选流程<img class="transform-img" src="@/assets/pac/big_dot.png" alt="">
         </h1>
         <div class="time-shaft clearfix">
           <div class="shaft-item first">
-            <p class='time'>2018年5月5日</p>
+            <p class='time'>2018年5月10日</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
@@ -308,7 +330,9 @@
               <span class="dot"></span>
             </p>
             <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="此环节由网络投票和媒体代表投票产生人气十佳，评分标准：网络*60%+媒体代表*40%。">
-              <p slot="reference">网络投票统计</p>
+              <p slot="reference">
+                <span class="strip-bg">网络投票</span>
+              </p>
             </el-popover>
           </div>
           <div class="shaft-item forth">
@@ -317,7 +341,9 @@
               <span class="dot"></span>
             </p>
             <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="所有作品按分类分配给相应组别的评委团，每部作品安排3位不同的评委打分，最后取平均分，周期为一个星期。">
-              <p slot="reference">作品初评</p>
+              <p slot="reference">
+                <span class="strip-bg">初赛</span>
+              </p>
             </el-popover>
           </div>
           <div class="shaft-item fifth">
@@ -326,7 +352,9 @@
               <span class="dot"></span>
             </p>
             <el-popover placement="bottom" width="214" trigger="hover" popper-class='shaft-popper' content="邀请评委专家到深圳，对分类作品进行评审。同一幅作品由该类目的所有评委打分取平均分，按分数从高到低产生排序。">
-              <p slot="reference">作品终评</p>
+              <p slot="reference">
+                <span class="strip-bg">决赛</span>
+              </p>
             </el-popover>
           </div>
           <div class="shaft-item sixth">
@@ -396,7 +424,7 @@
             </div>
           </div>
           <div class="accounts">
-            <img src="@/assets/pac/code.png" alt="">
+            <img src="@/assets/pac/code.jpg" alt="">
             <h4>关注公众号，了解比赛实时动态</h4>
           </div>
         </div>
@@ -496,10 +524,17 @@ body {
   padding: 0;
 }
 
-.shaft-popper {
+.shaft-popper.el-popper {
   background-color: #101011;
   color: #fff;
   margin-top: 25px;
+  box-sizing: border-box;
+  border-radius: 0;
+  padding: 12px 15px;
+  line-height: 24px;
+  .popper__arrow {
+    top: -7px;
+  }
 }
 .el-dropdown-menu {
   margin-top: 0;
@@ -579,8 +614,8 @@ body {
     background-color: transparent;
     background-image: repeating-linear-gradient(
       -45deg,
-      white,
-      white 4px,
+      transparent,
+      transparent 4px,
       #9d9d9d 5px,
       #9d9d9d 6px
     );
@@ -590,14 +625,6 @@ body {
     max-width: 1080px;
     margin: 0 auto;
   }
-  // .clearfix:after,
-  // .clearfix:before {
-  // content: ' ';
-  // display: table;
-  // }
-  // .clearfix:before{
-  // clear: both;
-  // }
   .clearfix::after {
     content: '';
     clear: both;
@@ -690,9 +717,9 @@ body {
     background-color: #f5f5f5;
     .content {
       background-color: #fff;
-      padding: 40px 105px;
+      padding: 0 105px 40px;
       position: relative;
-      top: -60px;
+      top: -90px;
     }
     .content::after {
       content: '';
@@ -702,19 +729,46 @@ body {
       width: 100%;
       height: 20px;
       background-color: transparent;
+      background-size: 20px 20px;
       background-image: repeating-linear-gradient(
         -45deg,
         white,
-        white 8px,
-        #383838 8px,
-        #383838 9px
+        white 5.6px,
+        #d8d8d8 5.6px,
+        #d8d8d8 6.1px,
+        #3b3b3b 6.1px,
+        #3b3b3b 6.6px,
+        #d8d8d8 7.1px
       );
     }
     .intro {
       line-height: 37px;
       padding: 50px 0;
       margin-top: 30px;
-      border-top: 8px solid #cfcfcf;
+      position: relative;
+      // border-top: 8px solid #cfcfcf;
+    }
+    .intro::before {
+      content: '';
+      display: inline-block;
+      width: 100%;
+      height: 8px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #cfcfcf;
+    }
+    .intro::after {
+      content: '';
+      display: inline-block;
+      height: 8px;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      border: 15px solid #fff;
+      border-width: 0 15px;
+      top: 0;
+      background-color: #cfcfcf;
     }
     .paracraft {
       display: flex;
@@ -743,14 +797,65 @@ body {
       font-size: 14px;
       font-weight: bold;
       margin-top: 40px;
+      img {
+        margin-right: 13px;
+        vertical-align: middle;
+      }
+      .transform-img {
+        transform: rotate(180deg);
+      }
+    }
+    .decoration {
+      display: flex;
+      position: relative;
+      top: -90px;
+      height: 40px;
+      .white-bg {
+        background-color: #fff;
+        flex: 1;
+      }
+      .transparent-bg {
+        width: 40px;
+        background-color: transparent;
+        position: relative;
+      }
+      .transparent-bg::before {
+        content: '';
+        display: inline-block;
+        width: 40px;
+        height: 27px;
+        background-color: #fff;
+        position: absolute;
+        left: 15px;
+        bottom: 25px;
+        box-shadow: 0px 10px 0px 0px #afafaf;
+      }
+      .transparent-bg::after {
+        content: '';
+        display: inline-block;
+        width: 40px;
+        height: 27px;
+        background-color: #fff;
+        position: absolute;
+        left: 55px;
+        bottom: -12px;
+        box-shadow: 0px 10px 0px 0px #afafaf;
+      }
     }
   }
   .wards-row {
-    background-color: #e8e8e8;
+    background-color: #e9e8e9;
+    background-image: linear-gradient(
+        rgba(211, 211, 211, 0.3) 1px,
+        transparent 0
+      ),
+      linear-gradient(90deg, rgba(211, 211, 211, 0.3) 1px, transparent 0);
+    background-size: 15px 15px, 15px 15px, 75px 75px, 75px 75px;
     padding: 60px 0 70px;
     .row-info {
       text-align: center;
       margin: 25px 0 55px;
+      color: #606266;
     }
     .classify {
       padding: 0 60px;
@@ -765,7 +870,7 @@ body {
       float: right;
     }
     .rank-item {
-      height: 560px;
+      height: 620px;
       overflow-y: auto;
       background-color: #fff;
       padding: 20px 28px;
@@ -800,6 +905,7 @@ body {
     .el-collapse {
       border: none;
       padding-left: 30px;
+      padding-top: 20px;
     }
     .el-collapse-item__header {
       border: none;
@@ -852,20 +958,27 @@ body {
       width: 100%;
       height: 20px;
       background-color: transparent;
+      background-size: 20px 20px;
       background-image: repeating-linear-gradient(
         -45deg,
         white,
-        white 8px,
-        #383838 8px,
-        #383838 9px
+        white 5.6px,
+        #d8d8d8 5.6px,
+        #d8d8d8 6.1px,
+        #3b3b3b 6.1px,
+        #3b3b3b 6.6px,
+        #d8d8d8 7.1px
       );
     }
   }
   .process-row {
     background-color: #101011;
-    // padding: 80px 0;
-    padding: 80px 0 130px;
+    position: relative;
+    padding: 80px 0 190px;
     color: #fff;
+    .transform-img {
+      transform: rotate(180deg);
+    }
     .time {
       font-weight: lighter;
     }
@@ -889,6 +1002,13 @@ body {
       width: 140px;
       text-align: center;
       font-size: 18px;
+      .strip-bg {
+        padding-bottom: 10px;
+        cursor: pointer;
+      }
+      .strip-bg::after {
+        height: 6px;
+      }
     }
     .shaft-item:first-child {
       flex: 1;
@@ -937,6 +1057,27 @@ body {
       border: 4px solid #2f0bfe;
       position: relative;
       top: 3px;
+    }
+  }
+  .process-row::after {
+    content: '';
+    display: inline-block;
+    height: 140px;
+    background-image: url('../assets/pac/iicc_bg.png');
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    opacity: 0.05;
+    animation: backgroundMove 5s infinite;
+  }
+  @keyframes backgroundMove {
+    from {
+      background-position-x: left;
+    }
+    to {
+      background-position-x: right;
     }
   }
   .guest-row {
