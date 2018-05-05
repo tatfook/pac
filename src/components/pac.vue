@@ -82,8 +82,10 @@
             <div class="banner-content">
               <img src="@/assets/pac/banner-title.png" alt="">
               <div class="buttons">
-                <img src="@/assets/pac/button-join.png" alt="">
-                <img src="@/assets/pac/button-download.png" alt="">
+                <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="">
+                <a href="http://www.paracraft.cn/download?lang=zh" target="_blank" class="img-btn">
+                  <img src="@/assets/pac/button-download.png" alt="">
+                </a>
               </div>
             </div>
           </div>
@@ -434,25 +436,22 @@
       <div class="container">
         <ul>
           <li>
-            <a href="#">开放平台</a>
+            <a href="http://keepwork.com/official/open">开放平台</a>
           </li>
           <li>
-            <a href="#">加入我们</a>
+            <a href="http://keepwork.com/official/company/joinus">加入我们</a>
           </li>
           <li>
-            <a href="#">网站统计</a>
+            <a href="http://keepwork.com/wiki/statics">网站统计</a>
           </li>
           <li>
-            <a href="#">更新信息</a>
+            <a href="http://keepwork.com/intro/keepwork/changelog">更新信息</a>
           </li>
           <li>
-            <a href="">问题反馈</a>
+            <a href="https://github.com/tatfook/wikicraft/issues">问题反馈</a>
           </li>
           <li>
-            <a href="#">投诉本页</a>
-          </li>
-          <li>
-            <a href="#">POWER BY NPL</a>
+            <a href="https://github.com/LiXizhi/NPLRuntime/wiki">POWER BY NPL</a>
           </li>
         </ul>
         <p>粤ICP备14002196号-2 © Tatfook</p>
@@ -711,6 +710,10 @@ body {
     }
     .buttons {
       margin-top: 60px;
+    }
+    .img-btn{
+      cursor: pointer;
+      margin-right: 30px;
     }
   }
   .intro-row {
