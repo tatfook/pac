@@ -1105,7 +1105,7 @@ body {
     }
     .guest-item {
       float: left;
-      width: 190px;
+      width: 200px;
       background-color: #fff;
       padding: 19px 14px 27px;
       box-sizing: border-box;
