@@ -5,7 +5,7 @@
         <div class="brand">
           <img src="@/assets/pac/logo.png" alt="">
         </div>
-        <ul class="clearfix">
+        <ul class="hidden-xs-only clearfix">
           <li>
             <a href='#'>首页</a>
           </li>
@@ -72,6 +72,49 @@
             </el-dropdown>
           </li>
         </ul>
+        <el-dropdown class="hidden-sm-and-up xs-dropdown" placement='bottom-end'>
+          <span class="el-dropdown-link">
+            <i class="el-icon-menu"></i>
+          </span>
+          <el-dropdown-menu class="xs-dropdown-menu" slot="dropdown">
+            <el-dropdown-item>
+              <a href="#">首页</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">参赛作品</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">公开课</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">校园活动</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">主题长廊</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">人物访谈</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">版权交易</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">颁奖典礼</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">作品展示</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">课程学习</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">相关下载</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a href="#">我要报名</a>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </header>
     <main>
@@ -93,7 +136,7 @@
       </div>
       <div class="row intro-row">
         <div class="container">
-          <div class="decoration">
+          <div class="decoration hidden-xs-only">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
           </div>
@@ -101,7 +144,7 @@
             <h1 class="title">
               <span>大赛简介</span>
             </h1>
-            <p class="intro">国际智能创意大奖赛是的以培养青少年的科学技术“童子功”和计算机思维，提高自主创新创造能力，为人工智能未来产业提供网络技术支撑和人才储备为目的的国家级、国际性年度赛事。赛事指定创作软件《Paracraft》和作品展示平台[图片]Keepwork.com基于拥有自主知识产权的神经元并行计算机语言NPL写成。赛事主要面向学生群体和计算机从业人员，倡导参赛者利用Paracraft软件进行3D动画制作和编程，并将创作的作品集中在Keepwork平台上集中存储、分享、展示。大奖赛将表彰优秀的参赛者和参赛作品，采用“奖励基金+学习基金+培育基金”的激励模式，以此驱动人们在参赛中重塑学习方式。2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”</p>
+            <p class="intro">国际智能创意大奖赛是的以培养青少年的科学技术“童子功”和计算机思维，提高自主创新创造能力，为人工智能未来产业提供网络技术支撑和人才储备为目的的国家级、国际性年度赛事。赛事指定创作软件《 Paracraft 》和作品展示平台[图片]Keepwork.com基于拥有自主知识产权的神经元并行计算机语言NPL写成。赛事主要面向学生群体和计算机从业人员，倡导参赛者利用Paracraft软件进行3D动画制作和编程，并将创作的作品集中在Keepwork平台上集中存储、分享、展示。大奖赛将表彰优秀的参赛者和参赛作品，采用“奖励基金+学习基金+培育基金”的激励模式，以此驱动人们在参赛中重塑学习方式。2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”</p>
             <div class="paracraft">
               <img src="@/assets/pac/paracraft_topmenu_logo.png" alt="">
               <div class="paracraft-intro">
@@ -311,7 +354,7 @@
         <h1 class="title">
           <img src="@/assets/pac/big_dot.png" alt="">评选流程<img class="transform-img" src="@/assets/pac/big_dot.png" alt="">
         </h1>
-        <div class="time-shaft clearfix">
+        <div class="time-shaft clearfix hidden-xs-only">
           <div class="shaft-item first">
             <p class='time'>2018年5月10日</p>
             <p class="dot-box">
@@ -365,6 +408,47 @@
               <span class="dot"></span>
             </p>
             <p>颁奖典礼</p>
+          </div>
+        </div>
+        <div class="time-shaft-xs hidden-xs-and-up">
+          <div class="shaft-item">
+            <p>
+              <span class="time">2018年5月10日</span>
+              <span class="title">作品征集</span>
+            </p>
+          </div>
+          <div class="shaft-item">
+            <p>
+              <span class="time">11月30日</span>
+              <span class="title">截稿</span>
+            </p>
+          </div>
+          <div class="shaft-item">
+            <p>
+              <span class="time">12月3日~10日</span>
+              <span class="title">网络投票</span>
+            </p>
+            <p class='detail'>此环节由网络投票和媒体代表投票产生人气十佳，评分标准：网络*60%+媒体代表*40%。</p>
+          </div>
+          <div class="shaft-item">
+            <p>
+              <span class="time">12月10日~17日</span>
+              <span class="title">初赛</span>
+            </p>
+            <p class='detail'>所有作品按分类分配给相应组别的评委团，每部作品安排3位不同的评委打分，最后取平均分，周期为一个星期。</p>
+          </div>
+          <div class="shaft-item">
+            <p>
+              <span class="time">12月底</span>
+              <span class="title">决赛</span>
+            </p>
+            <p class='detail'>邀请评委专家到深圳，对分类作品进行评审。同一幅作品由该类目的所有评委打分取平均分，按分数从高到低产生排序。</p>
+          </div>
+          <div class="shaft-item">
+            <p>
+              <span class="time">2019年1月</span>
+              <span class="title">颁奖典礼</span>
+            </p>
           </div>
         </div>
       </div>
@@ -473,6 +557,7 @@
 <script>
 import login from './login'
 import join from './join'
+import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'pac',
   components: {
@@ -513,7 +598,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
 html,
 body {
@@ -599,6 +683,9 @@ body {
   }
   p {
     margin: 0;
+  }
+  img {
+    max-width: 100%;
   }
   .strip-bg {
     position: relative;
@@ -711,7 +798,7 @@ body {
     .buttons {
       margin-top: 60px;
     }
-    .img-btn{
+    .img-btn {
       cursor: pointer;
       margin-right: 30px;
     }
@@ -1164,6 +1251,193 @@ body {
       text-align: center;
       padding: 20px 0;
       color: #909399;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 768px) {
+  .el-popper.xs-dropdown-menu {
+    margin-top: 0;
+    .popper__arrow::after {
+      border-bottom-color: #303133;
+    }
+  }
+  .pac {
+    .pac-header {
+      padding: 0 15px;
+      .xs-dropdown {
+        float: right;
+        font-size: 28px;
+      }
+    }
+    .banner {
+      height: 460px;
+      .banner-content {
+        padding-top: 20px;
+      }
+      .buttons {
+        text-align: center;
+        margin-top: 0;
+      }
+    }
+    .intro-row {
+      .content {
+        padding: 15px;
+        top: 0;
+      }
+      .intro {
+        line-height: 24px;
+        font-size: 14px;
+        margin-top: 15px;
+        padding: 20px 0;
+        white-space: pre-wrap;
+      }
+      .paracraft {
+        flex-direction: column;
+        padding: 10px 15px;
+      }
+      .paracraft-intro {
+        padding: 0;
+        border: none;
+      }
+      .more {
+        align-self: flex-end;
+        img {
+          width: 28px;
+          margin-right: 5px;
+        }
+        p {
+          float: right;
+        }
+      }
+      .paracraft-info {
+        font-size: 12px;
+        margin-top: 20px;
+        img {
+          margin-right: 5px;
+          width: 10px;
+          vertical-align: sub;
+        }
+      }
+    }
+    .wards-row {
+      padding: 35px 15px 15px;
+      .classify {
+        padding: 0;
+      }
+      .rank-item {
+        padding: 20px 15px;
+      }
+      .item-box {
+        max-width: 100%;
+        margin-top: 20px;
+      }
+      .item-info {
+        font-size: 14px;
+        padding: 15px 0;
+        line-height: 20px;
+        height: auto;
+      }
+      .row-info {
+        font-size: 12px;
+        margin: 15px 0 0;
+      }
+      .trophy-img {
+        width: 70px;
+        right: 15px;
+        top: 8px;
+      }
+    }
+    .requirement-row {
+      padding: 20px 15px;
+      ul {
+        padding: 15px 0;
+      }
+    }
+    .process-row {
+      padding: 20px 0;
+      .time-shaft-xs {
+        padding: 20px 15px 0 35px;
+        position: relative;
+      }
+      .time-shaft-xs::after {
+        content: '';
+        width: 4px;
+        left: 17px;
+        top: 30px;
+        bottom: 30px;
+        position: absolute;
+        background-color: #fff;
+      }
+      .shaft-item {
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
+        padding-bottom: 20px;
+        position: relative;
+      }
+      .shaft-item::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: absolute;
+        left: -20px;
+        top: 6px;
+      }
+      .detail {
+        margin-top: 5px;
+        line-height: 22px;
+      }
+    }
+    .process-row::after {
+      display: none;
+    }
+    .guest-row {
+      padding: 15px 0 20px;
+      .guests {
+        flex-wrap: wrap;
+        margin: 20px 0 0;
+      }
+      .guests::before {
+        display: none;
+      }
+      .guest-item {
+        margin: 10px 0;
+      }
+    }
+    .partner-row {
+      .partners {
+        padding: 20px 15px;
+      }
+      .partner-item {
+        padding: 0 15px;
+      }
+      .partner-item::after {
+        top: 10px;
+      }
+      h4 {
+        padding-bottom: 20px;
+      }
+    }
+    .pac-footer {
+      a {
+        font-size: 14px;
+      }
+      ul {
+        padding: 10px 0;
+        display: block;
+      }
+      li {
+        display: inline-block;
+        padding: 5px 15px;
+      }
+      p {
+        padding: 15px 0;
+      }
     }
   }
 }

@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading } from 'element-ui'
+import { Icon, Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading } from 'element-ui'
 
 Vue.config.productionTip = false
+Vue.use(Icon)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
