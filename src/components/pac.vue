@@ -1172,7 +1172,32 @@ body {
   }
   .guest-row {
     background-color: #f5f5f5;
-    padding: 66px 0 90px;
+    .container {
+      border: 1px solid #efefef;
+      border-width: 0 1px;
+      padding: 66px 0 90px;
+      position: relative;
+    }
+    .container::before {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: 0;
+      bottom: 0;
+      border: 1px solid #efefef;
+      border-width: 0 1px;
+      z-index: 1;
+    }
+    .container::after {
+      content: '';
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      background-color: #efefef;
+    }
     h3 {
       margin: 20px 0 30px;
     }
@@ -1181,7 +1206,7 @@ body {
       justify-content: space-around;
       margin-top: 84px;
       position: relative;
-      z-index: 0;
+      z-index: 2;
     }
     .guests::before {
       content: '';
@@ -1398,6 +1423,9 @@ body {
     }
     .guest-row {
       padding: 15px 0 20px;
+      .container {
+        border: none;
+      }
       .guests {
         flex-wrap: wrap;
         margin: 20px 0 0;
