@@ -410,7 +410,7 @@
             <p>颁奖典礼</p>
           </div>
         </div>
-        <div class="time-shaft-xs hidden-xs-and-up">
+        <div class="time-shaft-xs hidden-sm-and-up">
           <div class="shaft-item">
             <p>
               <span class="time">2018年5月10日</span>
