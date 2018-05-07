@@ -13,7 +13,7 @@
           </div>
           <div class="content">
             <h1 class="title">
-              <span>大赛简介</span>
+              <img src="@/assets/pac/game_info_title.png" alt="">
             </h1>
             <p class="intro">国际智能创意大奖赛是的以培养青少年的科学技术“童子功”和计算机思维，提高自主创新创造能力，为人工智能未来产业提供网络技术支撑和人才储备为目的的国家级、国际性年度赛事。赛事指定创作软件《 Paracraft 》和作品展示平台[图片]Keepwork.com基于拥有自主知识产权的神经元并行计算机语言NPL写成。赛事主要面向学生群体和计算机从业人员，倡导参赛者利用Paracraft软件进行3D动画制作和编程，并将创作的作品集中在Keepwork平台上集中存储、分享、展示。大奖赛将表彰优秀的参赛者和参赛作品，采用“奖励基金+学习基金+培育基金”的激励模式，以此驱动人们在参赛中重塑学习方式。2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”</p>
             <div class="paracraft">
@@ -36,7 +36,7 @@
       <div class="row wards-row">
         <div class="container">
           <h1 class="title">
-            <span>奖金奖项</span>
+            <img src="@/assets/pac/award_title.png" alt="">
           </h1>
           <p class="row-info">努力，并不容易，而你一直在努力，付出，并不容易，而你付出了很多很多。</p>
           <div class="classify clearfix">
@@ -194,36 +194,44 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
-      <div class="row requirement-row">
+      <div class="row guest-row">
         <div class="container">
           <h1 class="title">
-            <span>作品要求</span>
+            <img src="@/assets/pac/guest_title.png" alt="">
           </h1>
-          <ul>
-            <li>
-              <img src="@/assets/pac/little_dot.png" alt=""> 作品需使用电影方块，主题正面，电影类、创意类等均可。
-            </li>
-            <li>
-              <img src="@/assets/pac/little_dot.png" alt=""> 所有参赛作品必须是在2017年12月29日及之前没有在任何创作平台公开发表过的作品。
-            </li>
-            <li>
-              <img src="@/assets/pac/little_dot.png" alt=""> 参赛作者可同时报名多个作品，官方鼓励作品的原创与多样性，同时也鼓励改编和重构其他作品。
-            </li>
-            <li>
-              <img src="@/assets/pac/little_dot.png" alt=""> 如果参考了创意空间的其它作品需要注明来源，如发现公开冒充他人作品则直接取消参赛资格。
-            </li>
-            <li>
-              <img src="@/assets/pac/little_dot.png" alt=""> 参考非创意空间的其他作品，作者可自行决定是否引用来源。
-            </li>
-          </ul>
+          <div class="guests">
+            <div class="guest-item strip-bg">
+              <img src="@/assets/pac/guest-1.png" alt="">
+              <h3>奇仔</h3>
+              <p>中国教育家协会会员</p>
+              <p>Paracraft明星玩家</p>
+            </div>
+            <div class="guest-item strip-bg">
+              <img src="@/assets/pac/guest-1.png" alt="">
+              <h3>奇仔</h3>
+              <p>中国教育家协会会员</p>
+              <p>Paracraft明星玩家</p>
+            </div>
+            <div class="guest-item strip-bg">
+              <img src="@/assets/pac/guest-1.png" alt="">
+              <h3>奇仔</h3>
+              <p>中国教育家协会会员</p>
+              <p>Paracraft明星玩家</p>
+            </div>
+            <div class="guest-item strip-bg">
+              <img src="@/assets/pac/guest-1.png" alt="">
+              <h3>奇仔</h3>
+              <p>中国教育家协会会员</p>
+              <p>Paracraft明星玩家</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row process-row">
         <h1 class="title">
-          <img src="@/assets/pac/big_dot.png" alt="">评选流程<img class="transform-img" src="@/assets/pac/big_dot.png" alt="">
+          <img src="@/assets/pac/process_title.png" alt="">
         </h1>
         <div class="time-shaft clearfix hidden-xs-only">
           <div class="shaft-item first">
@@ -323,68 +331,66 @@
           </div>
         </div>
       </div>
-      <div class="row guest-row">
+      <div class="orgs-row">
         <div class="container">
           <h1 class="title">
-            <span>评选嘉宾</span>
+            <img src="@/assets/pac/oganiziation_title.png" alt="">
           </h1>
-          <div class="guests">
-            <div class="guest-item strip-bg">
-              <img src="@/assets/pac/guest-1.png" alt="">
-              <h3>奇仔</h3>
-              <p>中国教育家协会会员</p>
-              <p>Paracraft明星玩家</p>
+          <div class="orgs">
+            <div class="org-item">
+              <h2>支持单位</h2>
+              <ul>
+                <li>深圳市福田区人民政府</li>
+              </ul>
             </div>
-            <div class="guest-item strip-bg">
-              <img src="@/assets/pac/guest-1.png" alt="">
-              <h3>奇仔</h3>
-              <p>中国教育家协会会员</p>
-              <p>Paracraft明星玩家</p>
+            <div class="org-item">
+              <h2>主办单位</h2>
+              <ul>
+                <li>中国教育电视台</li>
+                <li>深圳市大富配天集团</li>
+              </ul>
             </div>
-            <div class="guest-item strip-bg">
-              <img src="@/assets/pac/guest-1.png" alt="">
-              <h3>奇仔</h3>
-              <p>中国教育家协会会员</p>
-              <p>Paracraft明星玩家</p>
+            <div class="org-item">
+              <h2>承办单位</h2>
+              <ul>
+                <li>国际智能创意大奖赛组委会</li>
+                <li>深圳市大富科技股份有限公司</li>
+                <li>深圳市大富网络科技有限公司</li>
+                <li>深圳市一网乾坤科技文化发展有限公司</li>
+              </ul>
             </div>
-            <div class="guest-item strip-bg">
-              <img src="@/assets/pac/guest-1.png" alt="">
-              <h3>奇仔</h3>
-              <p>中国教育家协会会员</p>
-              <p>Paracraft明星玩家</p>
+            <div class="org-item">
+              <h2>协办单位</h2>
+              <ul>
+                <li>深圳市帕拉卡科技有限公司</li>
+                <li>深圳市爱致科技有限公司</li>
+                <li>上海配天智慧云物联网技术有限公司</li>
+              </ul>
+            </div>
+            <div class="org-item cooperator">
+              <h2>合作单位</h2>
+              <ul>
+                <li>国际先进动态影像协会</li>
+                <li>香港动漫电玩节组委会</li>
+                <li>深圳市方块动漫文化发展有限公司</li>
+                <li>前海拉瓦动漫（深圳）有限公司</li>
+                <li>深圳市时代科腾文化传媒有限公司</li>
+                <li>深圳市噢深商贸有限公司</li>
+              </ul>
+            </div>
+            <div class="org-item copyright">
+              <h2>版权服务</h2>
+              <ul>
+                <li>深圳市凯德版权代理有限公司</li>
+                <li>中国版权保护中心粤港澳版权登记大厅</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="row partner-row">
-        <div class="container">
-          <div class="partners">
-            <div class="partner-item">
-              <el-tooltip popper-class='tooltip-no-radius' effect="dark" content="中国教育电视台" placement="top">
-                <img src="@/assets/pac/partner-1.png" alt="">
-              </el-tooltip>
-            </div>
-            <div class="partner-item">
-              <el-tooltip popper-class='tooltip-no-radius' effect="dark" content="香港天极数码" placement="top">
-                <img src="@/assets/pac/partner-2.png" alt="">
-              </el-tooltip>
-            </div>
-            <div class="partner-item">
-              <el-tooltip popper-class='tooltip-no-radius' effect="dark" content="大富配天" placement="top">
-                <img src="@/assets/pac/partner-3.png" alt="">
-              </el-tooltip>
-            </div>
-            <div class="partner-item">
-              <el-tooltip popper-class='tooltip-no-radius' effect="dark" content="KEEPWORK" placement="top">
-                <img src="@/assets/pac/partner-4.png" alt="">
-              </el-tooltip>
-            </div>
-          </div>
-          <div class="accounts">
-            <img src="@/assets/pac/code.jpg" alt="">
-            <h4>关注公众号，了解比赛实时动态</h4>
-          </div>
-        </div>
+      <div class="row account-row">
+        <img src="@/assets/pac/code.jpg" alt="">
+        <h4>关注公众号，了解比赛实时动态</h4>
       </div>
     </main>
     <Footer></Footer>
@@ -483,6 +489,10 @@ body {
     font-size: 30px;
     margin: 0;
   }
+  h2 {
+    font-size: 20px;
+    margin: 0;
+  }
   h3 {
     font-size: 18px;
     margin: 0;
@@ -570,69 +580,6 @@ body {
   .tooltip-no-radius {
     border-radius: 0;
   }
-  .pac-header {
-    height: 70px;
-    line-height: 70px;
-    .brand {
-      float: left;
-    }
-    img {
-      vertical-align: middle;
-    }
-    ul {
-      float: right;
-    }
-    li {
-      float: left;
-      padding: 0 24px;
-    }
-    a:hover {
-      color: #303133;
-      font-weight: bold;
-    }
-    .join-btn {
-      background-color: #181619;
-      color: #fff;
-      font-weight: bold;
-      margin-left: 24px;
-      cursor: pointer;
-      img {
-        margin-right: 10px;
-        vertical-align: middle;
-      }
-    }
-    .profile {
-      // display: none;
-      .profile-img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-      }
-    }
-  }
-  .banner {
-    height: 724px;
-    position: relative;
-    .bg {
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .banner-content {
-      padding-top: 100px;
-    }
-    .buttons {
-      margin-top: 60px;
-    }
-    .img-btn {
-      cursor: pointer;
-      margin-right: 30px;
-    }
-  }
   .intro-row {
     background-color: #f5f5f5;
     .content {
@@ -693,9 +640,9 @@ body {
     .paracraft {
       display: flex;
       align-items: center;
-      background-color: #fee40c;
-      box-shadow: 0px 8px 0px 0px #b8a613;
-      border: 4px dashed;
+      background-color: #dae4ef;
+      box-shadow: 0px 8px 0px 0px #9fb2c6;
+      border: 4px dashed #5896b2;
       padding: 10px 30px;
       p {
         line-height: 28px;
@@ -706,7 +653,7 @@ body {
     .paracraft-intro {
       flex: 1;
       padding: 0 24px;
-      border-right: 6px solid #fff;
+      border-right: 3px solid #e5ecf4;
     }
     .more {
       padding-left: 26px;
@@ -716,7 +663,7 @@ body {
     }
     .paracraft-info {
       text-align: center;
-      color: #e25555;
+      color: #009fe8;
       font-size: 14px;
       font-weight: bold;
       margin-top: 40px;
@@ -843,7 +790,7 @@ body {
       position: absolute;
       left: -25px;
       top: 16px;
-      background-color: #fee40c;
+      background-color: #3b5bed;
     }
     .el-collapse-item__arrow {
       display: none;
@@ -854,44 +801,6 @@ body {
     }
     .el-collapse-item__wrap {
       border: none;
-    }
-  }
-  .requirement-row {
-    padding: 70px 0;
-    ul {
-      padding: 70px 0 90px 210px;
-    }
-    li {
-      font-size: 16px;
-      margin-bottom: 28px;
-      color: #606866;
-      img {
-        margin-right: 20px;
-        vertical-align: middle;
-      }
-    }
-    .container {
-      position: relative;
-    }
-    .container::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 20px;
-      background-color: transparent;
-      background-size: 20px 20px;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        white,
-        white 5.6px,
-        #d8d8d8 5.6px,
-        #d8d8d8 6.1px,
-        #3b3b3b 6.1px,
-        #3b3b3b 6.6px,
-        #d8d8d8 7.1px
-      );
     }
   }
   .process-row {
@@ -989,19 +898,10 @@ body {
     background-image: url('../assets/pac/iicc_bg.png');
     background-repeat: no-repeat;
     position: absolute;
-    left: 0;
+    left: 10%;
     right: 0;
     bottom: 20px;
     opacity: 0.05;
-    animation: backgroundMove 5s infinite;
-  }
-  @keyframes backgroundMove {
-    from {
-      background-position-x: left;
-    }
-    to {
-      background-position-x: right;
-    }
   }
   .guest-row {
     background-color: #f5f5f5;
@@ -1092,23 +992,80 @@ body {
       top: 20px;
     }
   }
-  .pac-footer {
-    background-color: #18181a;
-    ul {
+  .orgs-row {
+    padding: 75px 0 25px;
+    h2 {
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    h2::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      right: 17px;
+      bottom: 0;
+      height: 4px;
+      background-color: #8194d2;
+      z-index: 1;
+      border: 5px solid #f4f4f4;
+      border-width: 0 5px;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      height: 4px;
+      bottom: 0;
+      background-color: #8194d2;
+    }
+    .orgs {
       display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #303031;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 66px;
+    }
+    .org-item {
+      width: 250px;
+      min-height: 244px;
+      background-color: #f5f5f5;
+      box-shadow: 0 10px 0 0 #b1b1b1;
+      flex-shrink: 0;
+      margin: 0 10px 37px;
+      text-align: center;
+      padding: 32px 33px 7px;
+      box-sizing: border-box;
+      font-size: 14px;
+      color: #606266;
+    }
+    ul {
+      min-height: 139px;
     }
     li {
-      padding: 30px 0 22px;
+      padding-bottom: 11px;
     }
-    a {
-      color: #909399;
+    .cooperator {
+      padding: 32px 14px 7px;
+      h2::before {
+        left: 44px;
+        right: 44px;
+      }
+      h2::after {
+        left: 35px;
+        right: 35px;
+      }
     }
-    p {
-      text-align: center;
-      padding: 20px 0;
-      color: #909399;
+  }
+  .account-row{
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 88px 0 70px;
+    background-image: url('../assets/pac/bottom_dotline.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    img{
+      padding-bottom: 20px;
     }
   }
 }
@@ -1122,23 +1079,6 @@ body {
     }
   }
   .pac {
-    .pac-header {
-      padding: 0 15px;
-      .xs-dropdown {
-        float: right;
-        font-size: 28px;
-      }
-    }
-    .banner {
-      height: 460px;
-      .banner-content {
-        padding-top: 20px;
-      }
-      .buttons {
-        text-align: center;
-        margin-top: 0;
-      }
-    }
     .intro-row {
       .content {
         padding: 15px;
@@ -1207,12 +1147,6 @@ body {
         top: 8px;
       }
     }
-    .requirement-row {
-      padding: 20px 15px;
-      ul {
-        padding: 15px 0;
-      }
-    }
     .process-row {
       padding: 20px 0;
       .time-shaft-xs {
@@ -1268,36 +1202,6 @@ body {
       }
       .guest-item {
         margin: 10px 0;
-      }
-    }
-    .partner-row {
-      .partners {
-        padding: 20px 15px;
-      }
-      .partner-item {
-        padding: 0 15px;
-      }
-      .partner-item::after {
-        top: 10px;
-      }
-      h4 {
-        padding-bottom: 20px;
-      }
-    }
-    .pac-footer {
-      a {
-        font-size: 14px;
-      }
-      ul {
-        padding: 10px 0;
-        display: block;
-      }
-      li {
-        display: inline-block;
-        padding: 5px 15px;
-      }
-      p {
-        padding: 15px 0;
       }
     }
   }

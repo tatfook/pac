@@ -18,7 +18,7 @@
               <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               <img src="@/assets/pac/bottom-dot.png" alt="">
             </span>
-            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-menu class="header-dropdown" slot="dropdown">
               <el-dropdown-item>
                 <a href="#">公开课</a>
               </el-dropdown-item>
@@ -57,7 +57,7 @@
               <img class="profile-img" :src='userinfo.portrait' alt="">
               <img src="@/assets/pac/bottom-dot.png" alt="">
             </span>
-            <el-dropdown-menu slot='dropdown'>
+            <el-dropdown-menu class="header-dropdown" slot='dropdown'>
               <el-dropdown-item>
                 <a href="#">我的资料</a>
               </el-dropdown-item>
@@ -75,7 +75,7 @@
         <span class="el-dropdown-link">
           <i class="el-icon-menu"></i>
         </span>
-        <el-dropdown-menu class="xs-dropdown-menu" slot="dropdown">
+        <el-dropdown-menu class="header-dropdown xs-dropdown-menu" slot="dropdown">
           <el-dropdown-item>
             <a href="#">首页</a>
           </el-dropdown-item>
@@ -130,6 +130,7 @@
 <script>
 import login from '../login'
 import join from '../join'
+import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'CommonHeader',
   components: {
@@ -169,3 +170,103 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.header-dropdown.el-popper {
+  margin-top: 0;
+  border: none;
+  border-radius: 0;
+  padding: 5px 0;
+  background-color: #303133;
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .popper__arrow::after {
+    border-bottom-color: #303133;
+  }
+  .el-dropdown-menu__item {
+    padding: 0 27px;
+    color: #fff;
+  }
+  .el-dropdown-menu__item:not(.is-disabled):hover {
+    background-color: #181619;
+    color: #fff;
+  }
+}
+.pac-header {
+  height: 70px;
+  line-height: 56px;
+  padding: 8px 0;
+  box-sizing: border-box;
+  .brand {
+    float: left;
+  }
+  .container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .clearfix::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+  img {
+    vertical-align: middle;
+  }
+  ul {
+    float: right;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    float: left;
+    padding: 0 24px;
+  }
+  a {
+    color: #606266;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #303133;
+    font-weight: bold;
+  }
+  .join-btn {
+    background-color: #253994;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 24px;
+    cursor: pointer;
+    img {
+      margin-right: 10px;
+      vertical-align: middle;
+      top: -5px;
+      position: relative;
+    }
+  }
+  .profile {
+    // display: none;
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  .el-dropdown {
+    font-size: 16px;
+    cursor: pointer;
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 768px) {
+  .pac-header {
+    padding: 8px 15px;
+    .xs-dropdown {
+      float: right;
+      font-size: 28px;
+    }
+  }
+}
+</style>

@@ -63,3 +63,46 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.banner {
+  height: 724px;
+  position: relative;
+  img{
+    max-width: 100%;
+  }
+  .bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .banner-content {
+    padding-top: 100px;
+    text-align: center;
+  }
+  .buttons {
+    margin-top: 60px;
+  }
+  .img-btn {
+    cursor: pointer;
+    margin-right: 30px;
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 768px) {
+  .banner {
+    height: 460px;
+    .banner-content {
+      padding-top: 20px;
+    }
+    .buttons {
+      text-align: center;
+      margin-top: 0;
+    }
+  }
+}
+</style>
