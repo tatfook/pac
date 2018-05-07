@@ -1439,6 +1439,11 @@ body {
     .process-row::after {
       display: none;
     }
+    .works-row {
+      .container {
+        border: none;
+      }
+    }
     .guest-row {
       padding: 15px 0 20px;
       .container {
