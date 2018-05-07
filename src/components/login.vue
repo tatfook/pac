@@ -43,12 +43,20 @@ export default {
       this.closeDialog()
     },
     toLogin() {
+      const loading = this.$loading({
+        lock: true,
+        text: '请稍等...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.loginErrMsg = ''
       if (!this.username) {
+        loading.close()
         this.loginErrMsg = '用户名不能为空'
         return
       }
       if (!this.password) {
+        loading.close()
         this.loginErrMsg = '密码不能为空'
         return
       }
@@ -69,11 +77,15 @@ export default {
             localStorage.setItem('userinfo', userinfo)
             localStorage.setItem('token', token)
             that.$emit('onLogined')
+            loading.close()
             return
           }
           that.loginErrMsg = data.error.message
+          loading.close()
         })
         .catch(function(error) {
+          that.loginErrMsg = '出错了，请检查网络后重试'
+          loading.close()
           console.log(error)
         })
     }

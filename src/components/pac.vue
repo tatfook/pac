@@ -1,138 +1,9 @@
 <template>
   <div class="pac">
-    <header class="pac-header">
-      <div class="container clearfix">
-        <div class="brand">
-          <img src="@/assets/pac/logo.png" alt="">
-        </div>
-        <ul class="hidden-xs-only clearfix">
-          <li>
-            <a href='#'>首页</a>
-          </li>
-          <li>
-            <a href='#'>参赛作品</a>
-          </li>
-          <li>
-            <el-dropdown placement='bottom'>
-              <span class="el-dropdown-link">
-                活动专区
-                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
-                <img src="@/assets/pac/bottom-dot.png" alt="">
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                  <a href="#">公开课</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">校园活动</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">主题长廊</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">人物访谈</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">版权交易</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">颁奖典礼</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">作品展示</a>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <!-- <a href='#'>活动专区</a> -->
-          </li>
-          <li>
-            <a href='#'>课程学习</a>
-          </li>
-          <li>
-            <a href='#'>相关下载</a>
-          </li>
-          <li class="join-btn" @click="toApply"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
-          <li class="profile" v-if="userinfo && userinfo.portrait">
-            <el-dropdown placement='bottom' trigger='click'>
-              <span class="el-dropdown-link">
-                <img class="profile-img" :src='userinfo.portrait' alt="">
-                <img src="@/assets/pac/bottom-dot.png" alt="">
-              </span>
-              <el-dropdown-menu slot='dropdown'>
-                <el-dropdown-item>
-                  <a href="#">我的资料</a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a href="#">我的作品</a>
-                </el-dropdown-item>
-                <el-dropdown-item @click.native='toLogout'>
-                  退出登录
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
-        </ul>
-        <el-dropdown class="hidden-sm-and-up xs-dropdown" placement='bottom-end'>
-          <span class="el-dropdown-link">
-            <i class="el-icon-menu"></i>
-          </span>
-          <el-dropdown-menu class="xs-dropdown-menu" slot="dropdown">
-            <el-dropdown-item>
-              <a href="#">首页</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">参赛作品</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">公开课</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">校园活动</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">主题长廊</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">人物访谈</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">版权交易</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">颁奖典礼</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">作品展示</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">课程学习</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">相关下载</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="#">我要报名</a>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </header>
+    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
       <div class="row">
-        <div class="banner">
-          <img class="bg" src="@/assets/pac/banner.png" alt="">
-          <div class="container">
-            <div class="banner-content">
-              <img src="@/assets/pac/banner-title.png" alt="">
-              <div class="buttons">
-                <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="">
-                <a href="http://www.paracraft.cn/download?lang=zh" target="_blank" class="img-btn">
-                  <img src="@/assets/pac/button-download.png" alt="">
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       </div>
       <div class="row intro-row">
         <div class="container">
@@ -516,69 +387,30 @@
         </div>
       </div>
     </main>
-    <footer class="pac-footer">
-      <div class="container">
-        <ul>
-          <li>
-            <a href="http://keepwork.com/official/open">开放平台</a>
-          </li>
-          <li>
-            <a href="http://keepwork.com/official/company/joinus">加入我们</a>
-          </li>
-          <li>
-            <a href="http://keepwork.com/wiki/statics">网站统计</a>
-          </li>
-          <li>
-            <a href="http://keepwork.com/intro/keepwork/changelog">更新信息</a>
-          </li>
-          <li>
-            <a href="https://github.com/tatfook/wikicraft/issues">问题反馈</a>
-          </li>
-          <li>
-            <a href="https://github.com/LiXizhi/NPLRuntime/wiki">POWER BY NPL</a>
-          </li>
-        </ul>
-        <p>粤ICP备14002196号-2 © Tatfook</p>
-      </div>
-    </footer>
-    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false>
-      <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
-    </el-dialog>
-    <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
-      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
-    </el-dialog>
-    <el-dialog :visible.sync='applyDialogVisible' width='500px'>
-      <h1>报名</h1>
-      <p>报名功能开发中， 敬请期待</p>
-    </el-dialog>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import login from './login'
-import join from './join'
+import Header from './common/header'
+import Banner from './common/banner'
+import Footer from './common/footer'
 import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'pac',
   components: {
-    login,
-    join
+    Header,
+    Banner,
+    Footer
   },
   data() {
     return {
-      rank1ActiveName: '1',
-      rank2ActiveName: '1',
-      loginDialogVisible: false,
-      joinDialogVisible: false,
-      applyDialogVisible: false,
       userinfo: JSON.parse(localStorage.getItem('userinfo')),
-      isLogined: this.userinfo ? true : false
+      rank1ActiveName: '1',
+      rank2ActiveName: '1'
     }
   },
   methods: {
-    setDialogVisible(key, value) {
-      this[key] = value
-    },
     toApply() {
       if (this.userinfo) {
         this.applyDialogVisible = true
@@ -586,14 +418,12 @@ export default {
       }
       this.loginDialogVisible = true
     },
+    reGetUserinfo() {
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+    },
     toLogout() {
       this.userinfo = undefined
       localStorage.removeItem('userinfo')
-    },
-    reGetUserinfo() {
-      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
-      this.loginDialogVisible = false
-      this.joinDialogVisible = false
     }
   }
 }
@@ -881,7 +711,7 @@ body {
     .more {
       padding-left: 26px;
     }
-    .stress{
+    .stress {
       font-weight: bold;
     }
     .paracraft-info {
