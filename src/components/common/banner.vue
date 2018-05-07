@@ -65,9 +65,9 @@ export default {
 </script>
 <style lang="scss">
 .banner {
-  height: 724px;
+  height: 625px;
   position: relative;
-  img{
+  img {
     max-width: 100%;
   }
   .bg {
@@ -80,15 +80,18 @@ export default {
     object-fit: cover;
   }
   .banner-content {
-    padding-top: 100px;
+    padding-top: 110px;
     text-align: center;
   }
   .buttons {
-    margin-top: 60px;
+    margin-top: 70px;
   }
   .img-btn {
     cursor: pointer;
     margin-right: 30px;
+  }
+  .img-btn:last-child {
+    margin-right: 0;
   }
 }
 </style>

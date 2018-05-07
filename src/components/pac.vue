@@ -42,6 +42,10 @@
           <div class="classify clearfix">
             <div class="item-box">
               <img class="trophy-img" src="@/assets/pac/trophy.png" alt="">
+              <div class="decoration hidden-xs-only">
+                <div class="white-bg"></div>
+                <div class="transparent-bg"></div>
+              </div>
               <div class="rank-item">
                 <h1>
                   <span>公开组
@@ -118,6 +122,10 @@
             </div>
             <div class="item-box">
               <img class="trophy-img" src="@/assets/pac/trophy.png" alt="">
+              <div class="decoration hidden-xs-only">
+                <div class="white-bg"></div>
+                <div class="transparent-bg"></div>
+              </div>
               <div class="rank-item">
                 <h1>
                   <span>
@@ -328,6 +336,84 @@
               <span class="time">2019年1月</span>
               <span class="title">颁奖典礼</span>
             </p>
+          </div>
+        </div>
+      </div>
+      <div class="works-row">
+        <div class="container">
+          <h1 class="title">
+            <img src="@/assets/pac/past_title.png" alt="">
+          </h1>
+          <div class="works">
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_qq846704851/keepworkdatasource/raw/master/qq846704851_images/img_1509606407416.png" alt="">
+              </div>
+              <h4>宇宙快递</h4>
+              <div class="info">
+                <p>作者： HM</p>
+                <p>2017年10月13日 16:20</p>
+                <span class="label">一等奖</span>
+              </div>
+            </div>
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_lin77622307/world_base32_42b2p2fqqe/raw/master/preview.jpg?ver=104" alt="">
+              </div>
+              <h4>惧谁</h4>
+              <div class="info">
+                <p>作者： colin</p>
+                <p>2017年10月12日 10:40</p>
+                <span class="label">二等奖</span>
+              </div>
+            </div>
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_pcljj/world_base32_4wnzvz5gqe/raw/master/preview.jpg?ver=320" alt="">
+              </div>
+              <h4>囚禁</h4>
+              <div class="info">
+                <p>作者： 阿杰</p>
+                <p>2017年10月30日 09:37</p>
+                <span class="label">二等奖</span>
+              </div>
+            </div>
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_werpc/world_base32_4woinz42qttjlbpexkfte/raw/master/preview.jpg?ver=178" alt="">
+              </div>
+              <h4>圆的故事2</h4>
+              <div class="info">
+                <p>作者： 阿杰/无心/奇仔</p>
+                <p>2017年10月30日 09:37</p>
+                <span class="label">二等奖</span>
+              </div>
+            </div>
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_keep2017/world_base32_jvqxe4zqg4zdo/raw/master/preview.jpg?ver=2695" alt="">
+              </div>
+              <h4>火星探险</h4>
+              <div class="info">
+                <p>作者： 哆/李晴晴</p>
+                <p>2017年09月06日 08:48</p>
+                <span class="label">二等奖</span>
+              </div>
+            </div>
+            <div class="work-item">
+              <div class="cover">
+                <img src="http://git.keepwork.com/gitlab_rls_qizai/world_FindYou/raw/master/preview.jpg?ver=660" alt="">
+              </div>
+              <h4>寻找你</h4>
+              <div class="info">
+                <p>作者： 奇仔</p>
+                <p>2017年10月11日 23:57</p>
+                <span class="label">三等奖</span>
+              </div>
+            </div>
+          </div>
+          <div class="read-more-box">
+            <a class="read-more-btn" href="http://keepwork.com/official/pac2017/index" target="_blank">查看全部</a>
           </div>
         </div>
       </div>
@@ -558,6 +644,8 @@ body {
   }
   .title {
     text-align: center;
+    position: relative;
+    z-index: 2;
     span {
       position: relative;
       z-index: 1;
@@ -743,7 +831,7 @@ body {
       height: 620px;
       overflow-y: auto;
       background-color: #fff;
-      padding: 20px 28px;
+      padding: 2px 28px 20px;
       box-sizing: border-box;
       box-shadow: 0px 8px 0 0px rgba(208, 206, 206, 0.4);
       h1 {
@@ -763,6 +851,7 @@ body {
       position: absolute;
       right: 60px;
       top: -56px;
+      z-index: 1;
     }
     .item-info {
       font-size: 17px;
@@ -770,7 +859,27 @@ body {
       padding: 24px 0 22px;
       line-height: 27px;
       height: 50px;
-      border-bottom: 8px solid #e6e6e8;
+      position: relative;
+    }
+    .item-info::before {
+      content: '';
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 8px;
+      background-color: #e6e6e8;
+      position: absolute;
+    }
+    .item-info::after {
+      content: '';
+      left: 17px;
+      right: 17px;
+      bottom: -8px;
+      height: 8px;
+      background-color: #e6e6e8;
+      position: absolute;
+      border: 19px solid #fff;
+      border-width: 0 19px;
     }
     .el-collapse {
       border: none;
@@ -801,6 +910,31 @@ body {
     }
     .el-collapse-item__wrap {
       border: none;
+    }
+    .decoration {
+      display: flex;
+      position: relative;
+      height: 28px;
+      .white-bg {
+        background-color: #fff;
+        flex: 1;
+      }
+      .transparent-bg {
+        width: 40px;
+        background-color: transparent;
+        position: relative;
+      }
+      .transparent-bg::before {
+        content: '';
+        display: inline-block;
+        width: 36px;
+        height: 27px;
+        background-color: #fff;
+        position: absolute;
+        left: 13px;
+        bottom: 16px;
+        box-shadow: 0px 8px 0px 0px #afafaf;
+      }
     }
   }
   .process-row {
@@ -992,6 +1126,123 @@ body {
       top: 20px;
     }
   }
+  .works-row {
+    background-color: #f5f5f5;
+    .container {
+      border: 1px solid #efefef;
+      border-width: 0 1px;
+      position: relative;
+      padding: 75px 0 50px;
+    }
+    .container::before {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: 0;
+      bottom: 0;
+      border: 1px solid #efefef;
+      border-width: 0 1px;
+      z-index: 1;
+    }
+    .container::after {
+      content: '';
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      background-color: #efefef;
+    }
+    .cover {
+      width: 280px;
+      height: 157px;
+      overflow: hidden;
+      padding: 10px;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .works {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 45px;
+    }
+    .work-item {
+      width: 300px;
+      margin: 20px;
+      background-color: #fff;
+      box-shadow: 0 5px 0 0 #dfdfdf;
+      z-index: 2;
+    }
+    h4 {
+      height: 40px;
+      line-height: 40px;
+      padding-left: 10px;
+      border-bottom: 2px solid #f5f5f5;
+    }
+    .info {
+      font-size: 12px;
+      color: #909399;
+      padding: 9px 10px;
+      position: relative;
+      p:first-child {
+        padding-bottom: 5px;
+      }
+    }
+    .label {
+      width: 66px;
+      height: 33px;
+      line-height: 33px;
+      background-color: #f6d63f;
+      display: inline-block;
+      text-align: center;
+      color: #4f4720;
+      font-weight: bold;
+      position: absolute;
+      right: 20px;
+      top: 13px;
+      border-radius: 4px;
+    }
+    .read-more-box {
+      text-align: center;
+      padding: 45px 0 56px;
+      position: relative;
+      z-index: 2;
+    }
+    .read-more-box::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 20px;
+      background-color: transparent;
+      background-size: 20px 20px;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 5.6px,
+        #d8d8d8 5.6px,
+        #d8d8d8 6.1px,
+        #3b3b3b 6.1px,
+        #3b3b3b 6.6px,
+        #d8d8d8 7.1px
+      );
+    }
+    .read-more-btn {
+      display: inline-block;
+      text-align: center;
+      width: 162px;
+      height: 45px;
+      line-height: 45px;
+      font-size: 14px;
+      background-color: #253994;
+      color: #fff;
+    }
+  }
   .orgs-row {
     padding: 75px 0 25px;
     h2 {
@@ -1057,14 +1308,14 @@ body {
       }
     }
   }
-  .account-row{
+  .account-row {
     text-align: center;
     background-color: #f5f5f5;
     padding: 88px 0 70px;
     background-image: url('../assets/pac/bottom_dotline.png');
     background-repeat: no-repeat;
     background-position: center bottom;
-    img{
+    img {
       padding-bottom: 20px;
     }
   }
