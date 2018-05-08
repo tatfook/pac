@@ -55,7 +55,7 @@
           <!-- <a href='#'>课程学习</a> -->
         </li>
         <li>
-          <a href='#'>相关下载</a>
+          <a href='http://www.paracraft.cn/download?lang=zh' target="_blank">相关下载</a>
         </li>
         <li class="join-btn" @click="toApply"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="profile" v-if="userinfo && userinfo.portrait">
@@ -86,7 +86,7 @@
           <el-dropdown-item>
             <a href="#">首页</a>
           </el-dropdown-item>
-          <el-dropdown-item>
+          <!-- <el-dropdown-item>
             <a href="#">参赛作品</a>
           </el-dropdown-item>
           <el-dropdown-item>
@@ -112,9 +112,9 @@
           </el-dropdown-item>
           <el-dropdown-item>
             <a href="#">课程学习</a>
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item>
-            <a href="#">相关下载</a>
+            <a href="http://www.paracraft.cn/download?lang=zh">相关下载</a>
           </el-dropdown-item>
           <el-dropdown-item>
             <a href="#">我要报名</a>
@@ -162,10 +162,11 @@ export default {
     },
     toApply() {
       if (this.userinfo) {
+        // this.$router.push({ path: '/register' })
         this.applyDialogVisible = true
         return
       }
-      this.$router.push({ path: '/register' })
+      this.loginDialogVisible = true
     },
     toLogout() {
       this.$emit('onLogOut')

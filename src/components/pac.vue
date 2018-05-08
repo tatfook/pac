@@ -29,7 +29,8 @@
                 <p>了解更多</p>
               </div>
             </div>
-            <p class="paracraft-info"><img src="@/assets/pac/little_dot.png" alt="">Paracraft创意空间是官方指定唯一的比赛创作软件。<img class="transform-img" src="@/assets/pac/little_dot.png" alt=""></p>
+            <p class="paracraft-info"><img src="@/assets/pac/little_dot.png" alt="">Paracraft创意空间是官方指定唯一的比赛创作软件。<img class="transform-img cla
+            hidden-xs-only" src="@/assets/pac/little_dot.png" alt=""></p>
           </div>
         </div>
       </div>
@@ -38,7 +39,7 @@
           <h1 class="title">
             <img src="@/assets/pac/award_title.png" alt="">
           </h1>
-          <p class="row-info">努力，并不容易，而你一直在努力，付出，并不容易，而你付出了很多很多。</p>
+          <p class="row-info">努力，并不容易，而你一直在努力！付出，并不容易，而你付出了很多很多。</p>
           <div class="classify clearfix">
             <div class="item-box">
               <img class="trophy-img" src="@/assets/pac/trophy.png" alt="">
@@ -148,7 +149,8 @@
                     <template slot='title'>
                       <h3>NPL 最佳游戏作品奖
                         <span>(20个，
-                          <span>最高可获得5万元</span> )</span>
+                          <span>最高
+                            <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
                       </h3>
                     </template>
                     <div>以主题材质包的形式，参照现有方块的类型制作全新风格的方块材质。所有参赛电影、小程序的自定义材质包同步参与本奖项的角逐，也能以材质包的形式独立参赛。</div>
@@ -157,7 +159,8 @@
                     <template slot='title'>
                       <h3>NPL 最佳材质奖
                         <span>(20个，
-                          <span>最高可获得5万元</span> )</span>
+                          <span>最高
+                            <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
                       </h3>
                     </template>
                     <div>以主题材质包的形式，参照现有方块的类型制作全新风格的方块材质。所有参赛电影、小程序的自定义材质包同步参与本奖项的角逐，也能以材质包的形式独立参赛。</div>
@@ -166,7 +169,8 @@
                     <template slot='title'>
                       <h3>NPL 最佳视觉特效奖
                         <span>(20个，
-                          <span>最高可获得5万元</span> )</span>
+                          <span>最高
+                            <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
                       </h3>
                     </template>
                     <div>以电影短片的形式，展现精彩卓绝的运镜和剪辑手法，或是勾勒宏伟壮阔的像素世界，带给观众以极具冲击力的视觉体验。</div>
@@ -175,7 +179,8 @@
                     <template slot='title'>
                       <h3>NPL 最佳原创音效奖
                         <span>(20个，
-                          <span>最高可获得5万元</span> )</span>
+                          <span>最高
+                            <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
                       </h3>
                     </template>
                     <div>本奖项主要针对于在电影短片中专为推动电影情节、哄托场景气氛所作的场景的原创配乐和原创音效。参赛选手也可以从表现自然风光、主场场景的角度入手，组织相关的背景音乐。（即，是否允许用户以制作背景音乐的形式参赛，还是本奖只评判电影中的音乐）</div>
@@ -184,7 +189,8 @@
                     <template slot='title'>
                       <h3>NPL 最佳剧本创意奖
                         <span>(20个，
-                          <span>最高可获得5万元</span> )</span>
+                          <span>最高
+                            <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
                       </h3>
                     </template>
                     <div>本奖项旨在鼓励那些具有极佳故事创作才能，受软件制作限制无法完整诠释自己作品的剧本作者。根据电影剧情、立意以及对人物的刻画进行相应的评判。</div>
@@ -301,18 +307,21 @@
           <div class="shaft-item">
             <p>
               <span class="time">2018年5月10日</span>
+              /
               <span class="title">作品征集</span>
             </p>
           </div>
           <div class="shaft-item">
             <p>
               <span class="time">11月30日</span>
+              /
               <span class="title">截稿</span>
             </p>
           </div>
           <div class="shaft-item">
             <p>
               <span class="time">12月3日~10日</span>
+              /
               <span class="title">网络投票</span>
             </p>
             <p class='detail'>此环节由网络投票和媒体代表投票产生人气十佳，评分标准：网络*60%+媒体代表*40%。</p>
@@ -320,6 +329,7 @@
           <div class="shaft-item">
             <p>
               <span class="time">12月10日~17日</span>
+              /
               <span class="title">初赛</span>
             </p>
             <p class='detail'>所有作品按分类分配给相应组别的评委团，每部作品安排3位不同的评委打分，最后取平均分，周期为一个星期。</p>
@@ -327,6 +337,7 @@
           <div class="shaft-item">
             <p>
               <span class="time">12月底</span>
+              /
               <span class="title">决赛</span>
             </p>
             <p class='detail'>邀请评委专家到深圳，对分类作品进行评审。同一幅作品由该类目的所有评委打分取平均分，按分数从高到低产生排序。</p>
@@ -334,6 +345,7 @@
           <div class="shaft-item">
             <p>
               <span class="time">2019年1月</span>
+              /
               <span class="title">颁奖典礼</span>
             </p>
           </div>
@@ -353,7 +365,7 @@
               <div class="info">
                 <p>作者： HM</p>
                 <p>2017年10月13日 16:20</p>
-                <span class="label">一等奖</span>
+                <span class="label hidden-xs-only">一等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -364,7 +376,7 @@
               <div class="info">
                 <p>作者： colin</p>
                 <p>2017年10月12日 10:40</p>
-                <span class="label">二等奖</span>
+                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -375,7 +387,7 @@
               <div class="info">
                 <p>作者： 阿杰</p>
                 <p>2017年10月30日 09:37</p>
-                <span class="label">二等奖</span>
+                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -386,7 +398,7 @@
               <div class="info">
                 <p>作者： 阿杰/无心/奇仔</p>
                 <p>2017年10月30日 09:37</p>
-                <span class="label">二等奖</span>
+                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -397,7 +409,7 @@
               <div class="info">
                 <p>作者： 哆/李晴晴</p>
                 <p>2017年09月06日 08:48</p>
-                <span class="label">二等奖</span>
+                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -408,7 +420,7 @@
               <div class="info">
                 <p>作者： 奇仔</p>
                 <p>2017年10月11日 23:57</p>
-                <span class="label">三等奖</span>
+                <span class="label hidden-xs-only">三等奖</span>
               </div>
             </div>
           </div>
@@ -701,6 +713,7 @@ body {
       padding: 50px 0;
       margin-top: 30px;
       position: relative;
+      color: #606266;
       // border-top: 8px solid #cfcfcf;
     }
     .intro::before {
@@ -728,9 +741,8 @@ body {
     .paracraft {
       display: flex;
       align-items: center;
-      background-color: #dae4ef;
-      box-shadow: 0px 8px 0px 0px #9fb2c6;
-      border: 4px dashed #5896b2;
+      background-color: #dcecff;
+      border: 4px dashed #5583ba;
       padding: 10px 30px;
       p {
         line-height: 28px;
@@ -1330,28 +1342,44 @@ body {
     }
   }
   .pac {
+    h1 {
+      font-size: 22px;
+    }
+    h3 {
+      font-size: 16px;
+    }
+    .title {
+      img {
+        width: 110px;
+      }
+    }
     .intro-row {
+      padding: 15px;
       .content {
         padding: 15px;
-        top: 0;
+        top: -40px;
       }
       .intro {
-        line-height: 24px;
+        line-height: 30px;
         font-size: 14px;
         margin-top: 15px;
         padding: 20px 0;
         white-space: pre-wrap;
+        max-height: 200px;
+        overflow-y: auto;
       }
       .paracraft {
         flex-direction: column;
         padding: 10px 15px;
+        margin: 20px 0 28px;
       }
       .paracraft-intro {
         padding: 0;
         border: none;
       }
       .more {
-        align-self: flex-end;
+        align-self: center;
+        font-weight: bold;
         img {
           width: 28px;
           margin-right: 5px;
@@ -1369,14 +1397,33 @@ body {
           vertical-align: sub;
         }
       }
+      .paracraft-intro {
+        border: 1px dashed #fff;
+        border-width: 2px 0;
+        margin: 15px 0;
+        padding: 10px 0;
+      }
     }
     .wards-row {
       padding: 35px 15px 15px;
+      .el-collapse-item__arrow {
+        display: inline-block;
+        position: absolute;
+        left: -20px;
+        top: 14px;
+      }
+      .el-collapse-item__header::before {
+        display: none;
+      }
+      .el-collapse {
+        padding-left: 20px;
+      }
       .classify {
         padding: 0;
       }
       .rank-item {
         padding: 20px 15px;
+        height: auto;
       }
       .item-box {
         max-width: 100%;
@@ -1406,8 +1453,8 @@ body {
       }
       .time-shaft-xs::after {
         content: '';
-        width: 4px;
-        left: 17px;
+        width: 2px;
+        left: 18px;
         top: 30px;
         bottom: 30px;
         position: absolute;
@@ -1442,6 +1489,42 @@ body {
     .works-row {
       .container {
         border: none;
+        padding: 30px 0 20px;
+      }
+      .works {
+        margin-top: 20px;
+      }
+      .work-item {
+        width: 160px;
+        margin: 10px;
+      }
+      .cover {
+        width: 140px;
+        height: 70px;
+      }
+    }
+    .orgs-row {
+      padding: 30px 0 0;
+      .orgs {
+        margin-top: 20px;
+      }
+      .org-item {
+        min-height: auto;
+        width: 170px;
+        padding: 7px 5px;
+        margin: 0 3px 20px;
+        font-size: 12px;
+      }
+      ul {
+        min-height: auto;
+      }
+      .cooperator h2::before {
+        left: 17px;
+        right: 17px;
+      }
+      .cooperator h2::after {
+        left: 8px;
+        right: 8px;
       }
     }
     .guest-row {

@@ -99,12 +99,26 @@ export default {
 @media (max-width: 768px) {
   .banner {
     height: 460px;
+    background-image: url('../../assets/pac/banner.png');
+    background-size: auto 100%;
+    background-position: 82%;
     .banner-content {
       padding-top: 20px;
+      img {
+        width: 290px;
+        margin-top: 45px;
+      }
+    }
+    .bg {
+      object-position: right;
     }
     .buttons {
       text-align: center;
-      margin-top: 0;
+      margin-top: 52px;
+      img {
+        width: 200px;
+        margin: 0 0 10px 15px;
+      }
     }
   }
 }
