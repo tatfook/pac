@@ -3,22 +3,22 @@
     <div class="container">
       <ul>
         <li>
-          <a href="http://keepwork.com/official/open">开放平台</a>
+          <a href="http://keepwork.com/official/open" target="_blank">开放平台</a>
         </li>
         <li>
-          <a href="http://keepwork.com/official/company/joinus">加入我们</a>
+          <a href="http://keepwork.com/official/company/joinus" target="_blank">加入我们</a>
         </li>
         <li>
-          <a href="http://keepwork.com/wiki/statics">网站统计</a>
+          <a href="http://keepwork.com/wiki/statics" target="_blank">网站统计</a>
         </li>
         <li>
-          <a href="http://keepwork.com/intro/keepwork/changelog">更新信息</a>
+          <a href="http://keepwork.com/intro/keepwork/changelog" target="_blank">更新信息</a>
         </li>
         <li>
-          <a href="https://github.com/tatfook/wikicraft/issues">问题反馈</a>
+          <a href="https://github.com/tatfook/wikicraft/issues" target="_blank">问题反馈</a>
         </li>
         <li>
-          <a href="https://github.com/LiXizhi/NPLRuntime/wiki">POWER BY NPL</a>
+          <a href="https://github.com/LiXizhi/NPLRuntime/wiki" target="_blank">POWER BY NPL</a>
         </li>
       </ul>
       <p>粤ICP备14002196号-2 © Tatfook</p>
