@@ -383,7 +383,6 @@
               <div class="info">
                 <p>作者： HM</p>
                 <p>2017年10月13日 16:20</p>
-                <span class="label hidden-xs-only">一等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -394,7 +393,6 @@
               <div class="info">
                 <p>作者： colin</p>
                 <p>2017年10月12日 10:40</p>
-                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -405,7 +403,6 @@
               <div class="info">
                 <p>作者： 阿杰</p>
                 <p>2017年10月30日 09:37</p>
-                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -416,7 +413,6 @@
               <div class="info">
                 <p>作者： 阿杰/无心/奇仔</p>
                 <p>2017年10月30日 09:37</p>
-                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -427,7 +423,6 @@
               <div class="info">
                 <p>作者： 哆/李晴晴</p>
                 <p>2017年09月06日 08:48</p>
-                <span class="label hidden-xs-only">二等奖</span>
               </div>
             </div>
             <div class="work-item">
@@ -438,7 +433,6 @@
               <div class="info">
                 <p>作者： 奇仔</p>
                 <p>2017年10月11日 23:57</p>
-                <span class="label hidden-xs-only">三等奖</span>
               </div>
             </div>
           </div>
@@ -1224,20 +1218,6 @@ body {
       p:first-child {
         padding-bottom: 5px;
       }
-    }
-    .label {
-      width: 66px;
-      height: 33px;
-      line-height: 33px;
-      background-color: #f6d63f;
-      display: inline-block;
-      text-align: center;
-      color: #4f4720;
-      font-weight: bold;
-      position: absolute;
-      right: 20px;
-      top: 13px;
-      border-radius: 4px;
     }
     .read-more-box {
       text-align: center;
