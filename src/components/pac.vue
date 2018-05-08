@@ -15,7 +15,7 @@
             <h1 class="title">
               <img src="@/assets/pac/game_info_title.png" alt="">
             </h1>
-            <p class="intro">国际智能创意大奖赛是的以培养青少年的科学技术“童子功”和计算机思维，提高自主创新创造能力，为人工智能未来产业提供网络技术支撑和人才储备为目的的国家级、国际性年度赛事。赛事指定创作软件《 Paracraft 》和作品展示平台[图片]Keepwork.com基于拥有自主知识产权的神经元并行计算机语言NPL写成。赛事主要面向学生群体和计算机从业人员，倡导参赛者利用Paracraft软件进行3D动画制作和编程，并将创作的作品集中在Keepwork平台上集中存储、分享、展示。大奖赛将表彰优秀的参赛者和参赛作品，采用“奖励基金+学习基金+培育基金”的激励模式，以此驱动人们在参赛中重塑学习方式。2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”</p>
+            <p class="intro">“国际智能创意大奖赛”（International Intellectual Creation Contest）,简称IICC，是中国首个以自主开发的计算机编程语言NPL为基础，以自主研发的创作软件Paracraft 为工具的科技与文化融合的创新性品牌；是一项由政府、业界、学界共同支持、倾力打造的人工智能产业领域的顶级赛事；是一个以评选原创优秀创意作品和优秀编程作品为载体，旨在激发全民的自主创新意识，培育青少年的基础计算机科学素养，提升青少年的基础计算机思维能力和创新创造能力的国际性权威赛事。IICC 以“创新·合作·开放·协同 ”为原则，倡导“高品质、高品格、高品位”的理念，鼓励自主开发和内容原创，打造精品；宏扬优秀文化，挖掘产业价值；培育人工智能领域顶级技术人才和创意人才，引导和推动人工智能产业的战略升级和科学发展。<br/>IICC每年举办一次，2018国际智能产业大奖赛在深圳市福田区人民政府的大力支持下，由中国教育台和深圳市大富配天集团共同举办。IICC 面向全球的专业创作团队、技术型创业团队和在校学生征集作品，通过国际化、专业性评委团队评审，评选出百余个奖项，并对获奖者进行表彰，真正培养青少年的科学技术·人工智能的工业童子功，为未来产业升级提供人才储备。<br/>2018年的赛事时间为2018年5月-2018年12月，主题设定为“梦想·未来”，赛事口号为“智创未来·乘云而上”。</p>
             <div class="paracraft">
               <img src="@/assets/pac/paracraft_topmenu_logo.png" alt="">
               <div class="paracraft-intro">
@@ -25,8 +25,8 @@
                 <p>可观看百部优秀的用户电影作品，创造属于你的个人作品。</p>
               </div>
               <div class="more">
-                <img src="@/assets/pac/know.png" alt="">
-                <p>了解更多</p>
+                <a href="http://www.paracraft.cn/?lang=zh" target="_blank"><img src="@/assets/pac/know.png" alt=""></a>
+                <p><a href="http://www.paracraft.cn/?lang=zh" target="_blank">了解更多</a></p>
               </div>
             </div>
             <p class="paracraft-info"><img src="@/assets/pac/little_dot.png" alt="">Paracraft创意空间是官方指定唯一的比赛创作软件。<img class="transform-img cla
@@ -53,7 +53,7 @@
                     <img class="circle-decoration" src="@/assets/pac/circle.png" alt="">
                   </span>
                 </h1>
-                <p class="item-info">全球的动画爱好者<br>和编程爱好者</p>
+                <p class="item-info">面向全球的动画爱好者<br>和编程爱好者</p>
                 <el-collapse v-model="rank1ActiveName" accordion>
                   <el-collapse-item name="1">
                     <template slot='title'>
@@ -111,6 +111,24 @@
                   </el-collapse-item>
                   <el-collapse-item name="7">
                     <template slot='title'>
+                      <h3>NPL 老顽童奖
+                        <span>(1个，
+                          <span>10万元</span> )</span>
+                      </h3>
+                    </template>
+                    <div>鼓励老年群体积极参赛，表彰年龄在65岁以上且能提交完整作品的参赛者。</div>
+                  </el-collapse-item>
+                  <el-collapse-item name="8">
+                    <template slot='title'>
+                      <h3>NPL 小小梦想家
+                        <span>(3个，
+                          <span>最高可获得4.5万元</span> )</span>
+                      </h3>
+                    </template>
+                    <div>小朋友利用逻辑塔智能积木搭建各种要素造型（动植物、建筑物等），利用骨骼动画技术，控制一个或数个动物，结合故事剧情可以配以文字，融入音乐音效，亲子共同参与并在APP 3D环境中呈现。</div>
+                  </el-collapse-item>
+                  <el-collapse-item name="9">
+                    <template slot='title'>
                       <h3>NPL 人气十佳
                         <span>(10个，
                           <span>1万元</span> )</span>
@@ -134,7 +152,7 @@
                     <img class="circle-decoration" src="@/assets/pac/circle.png" alt="">
                   </span>
                 </h1>
-                <p class="item-info">针对在校学生</p>
+                <p class="item-info">面向在校学生</p>
                 <el-collapse v-model="rank2ActiveName" accordion>
                   <el-collapse-item name="1">
                     <template slot='title'>
@@ -263,7 +281,7 @@
             <p>截稿</p>
           </div>
           <div class="shaft-item third">
-            <p class='time'>12月3日~10日</p>
+            <p class='time'>12月</p>
             <p class="dot-box">
               <span class="dot"></span>
             </p>
@@ -304,29 +322,29 @@
           </div>
         </div>
         <div class="time-shaft-xs hidden-sm-and-up">
-          <div class="shaft-item">
+          <div class="shaft-item first">
             <p>
               <span class="time">2018年5月10日</span>
               /
               <span class="title">作品征集</span>
             </p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item second">
             <p>
               <span class="time">11月30日</span>
               /
               <span class="title">截稿</span>
             </p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item third">
             <p>
-              <span class="time">12月3日~10日</span>
+              <span class="time">12月</span>
               /
               <span class="title">网络投票</span>
             </p>
             <p class='detail'>此环节由网络投票和媒体代表投票产生人气十佳，评分标准：网络*60%+媒体代表*40%。</p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item forth">
             <p>
               <span class="time">12月10日~17日</span>
               /
@@ -334,7 +352,7 @@
             </p>
             <p class='detail'>所有作品按分类分配给相应组别的评委团，每部作品安排3位不同的评委打分，最后取平均分，周期为一个星期。</p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item fifth">
             <p>
               <span class="time">12月底</span>
               /
@@ -342,7 +360,7 @@
             </p>
             <p class='detail'>邀请评委专家到深圳，对分类作品进行评审。同一幅作品由该类目的所有评委打分取平均分，按分数从高到低产生排序。</p>
           </div>
-          <div class="shaft-item">
+          <div class="shaft-item sixth">
             <p>
               <span class="time">2019年1月</span>
               /
@@ -448,6 +466,34 @@
                 <li>深圳市大富配天集团</li>
               </ul>
             </div>
+            <div class="org-item cooperator">
+              <h2>合作单位</h2>
+              <ul>
+                <li>北京拓维研究院</li>
+                <li>国际先进动态影像协会</li>
+                <li>香港动漫电玩节组委会</li>
+                <li>深圳市方块动漫文化发展有限公司</li>
+                <!-- <li>前海拉瓦动漫（深圳）有限公司</li> -->
+                <li>深圳市时代科腾文化传媒有限公司</li>
+                <li>深圳市噢深商贸有限公司</li>
+              </ul>
+            </div>
+            <div class="org-item copyright">
+              <h2>版权服务</h2>
+              <ul>
+                <li>中国版权保护中心粤港澳版权登记大厅</li>
+                <li>深圳市凯德版权代理有限公司</li>
+              </ul>
+            </div>
+            <div class="org-item">
+              <h2>协办单位</h2>
+              <ul>
+                <li>凌速博览有限公司</li>
+                <li>上海配天智慧云物联网技术有限公司</li>
+                <li>深圳市帕拉卡科技有限公司</li>
+                <li>深圳市爱致科技有限公司</li>
+              </ul>
+            </div>
             <div class="org-item">
               <h2>承办单位</h2>
               <ul>
@@ -457,37 +503,11 @@
                 <li>深圳市一网乾坤科技文化发展有限公司</li>
               </ul>
             </div>
-            <div class="org-item">
-              <h2>协办单位</h2>
-              <ul>
-                <li>深圳市帕拉卡科技有限公司</li>
-                <li>深圳市爱致科技有限公司</li>
-                <li>上海配天智慧云物联网技术有限公司</li>
-              </ul>
-            </div>
-            <div class="org-item cooperator">
-              <h2>合作单位</h2>
-              <ul>
-                <li>国际先进动态影像协会</li>
-                <li>香港动漫电玩节组委会</li>
-                <li>深圳市方块动漫文化发展有限公司</li>
-                <li>前海拉瓦动漫（深圳）有限公司</li>
-                <li>深圳市时代科腾文化传媒有限公司</li>
-                <li>深圳市噢深商贸有限公司</li>
-              </ul>
-            </div>
-            <div class="org-item copyright">
-              <h2>版权服务</h2>
-              <ul>
-                <li>深圳市凯德版权代理有限公司</li>
-                <li>中国版权保护中心粤港澳版权登记大厅</li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
       <div class="row account-row">
-        <img src="@/assets/pac/code.jpg" alt="">
+        <img src="@/assets/pac/code.png" alt="">
         <h4>关注公众号，了解比赛实时动态</h4>
       </div>
     </main>
@@ -708,25 +728,27 @@ body {
         #d8d8d8 7.1px
       );
     }
+    .title {
+      padding-bottom: 30px;
+    }
     .intro {
       line-height: 37px;
       padding: 50px 0;
-      margin-top: 30px;
       position: relative;
       color: #606266;
-      // border-top: 8px solid #cfcfcf;
+      position: relative;
     }
-    .intro::before {
+    .title::before {
       content: '';
       display: inline-block;
       width: 100%;
       height: 8px;
       position: absolute;
       left: 0;
-      top: 0;
+      bottom: -8px;
       background-color: #cfcfcf;
     }
-    .intro::after {
+    .title::after {
       content: '';
       display: inline-block;
       height: 8px;
@@ -735,7 +757,7 @@ body {
       right: 20px;
       border: 15px solid #fff;
       border-width: 0 15px;
-      top: 0;
+      bottom: -8px;
       background-color: #cfcfcf;
     }
     .paracraft {
@@ -840,7 +862,7 @@ body {
       float: right;
     }
     .rank-item {
-      height: 620px;
+      height: 650px;
       overflow-y: auto;
       background-color: #fff;
       padding: 2px 28px 20px;
@@ -1006,7 +1028,6 @@ body {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: red;
     }
     .first .dot {
       background-color: transparent;
@@ -1458,7 +1479,8 @@ body {
         top: 30px;
         bottom: 30px;
         position: absolute;
-        background-color: #fff;
+        // background-color: #fff;
+        background-image: linear-gradient(180deg, #b10cfe, #2e0cfe);
       }
       .shaft-item {
         width: 100%;
@@ -1477,10 +1499,30 @@ body {
         position: absolute;
         left: -20px;
         top: 6px;
+        z-index: 1;
+      }
+      .first::before {
+        background-color: #b117fc;
+      }
+      .second::before {
+        background-color: #a417fc;
+      }
+      .third::before {
+        background-color: #9717fc;
+      }
+      .forth::before {
+        background-color: #7b17fc;
+      }
+      .fifth::before {
+        background-color: #5717fc;
+      }
+      .sixth::before {
+        background-color: #3417fc;
       }
       .detail {
         margin-top: 5px;
         line-height: 22px;
+        opacity: 0.5;
       }
     }
     .process-row::after {
