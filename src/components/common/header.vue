@@ -157,7 +157,7 @@ export default {
         this.applyDialogVisible = true
         return
       }
-      this.loginDialogVisible = true
+      this.$router.push({path:'/register'})
     },
     toLogout() {
       this.$emit('onLogOut')
