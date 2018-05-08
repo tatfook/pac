@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>   
+    <Header @onLogOut='toLogout'></Header>   
     <main>
-      <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
+      <Banner></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
           <div class="decoration hidden-xs-only">
@@ -19,16 +19,16 @@
                 <table>
                   <tr>
                     <td width='94'><label for="name">姓名</label></td>
-                    <td colspan="2"><input type="text" id="name" class="inputsty" placeholder="请输入您的姓名" /></td>
+                    <td colspan="2"><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr>
                     <td><label for="qq">QQ号码</label></td>
-                    <td colspan="2"><input type="text" id="qq" class="inputsty" placeholder="请输入您的QQ号"/></td>
+                    <td colspan="2"><input type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
                     <td width="82">
-                     <el-select v-model="value2" placeholder="请选择">
+                     <el-select v-model="value2">
                         <el-option
                           v-for="item in options2"
                           :key="item.value"
@@ -38,18 +38,18 @@
                         </el-option>
                       </el-select>
                     </td>
-                    <td><input type="text" id="tel" class="inputtel" placeholder="请输入您的手机号码"/></td>
+                    <td><input type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
                   </tr>
                   <tr>
                     <td><label for="idcard">身份证件</label></td>
-                    <td colspan="2"><input type="text" id="idcard" class="inputsty" placeholder="请输入您的身份证号码"/></td>
+                    <td colspan="2"><input type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
                   </tr>
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
                 <div class="radio_1">
-                  <input type="checkbox" id="isagree" name="agree" :disabled="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;">《2018国际智能创意大奖赛比赛协议》</span><br>
+                  <input type="checkbox" id="isagree" name="agree" v-model="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;">《2018国际智能创意大奖赛比赛协议》</span><br>
                 </div>
-                <input type="submit" value="提价信息" class="btn" >
+                <input type="submit" value="提价信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
           </div>
@@ -82,14 +82,32 @@ export default {
             value: '4',
             label: '+89'
         }],
-        value2: '',
-        isdisabled:false
+        value2: '+86',
+        isdisabled:false,
+        user_name: '',
+        qq_no: '',
+        tel: '',
+        idcard_no: '',
       }
-    },
+  },
+  computed: {
+    _pass: function(){
+      if (this.user_name && this.qq_no && this.tel && this.idcard_no && this.isdisabled) {
+        return this.pass = true
+      }
+      return this.pass = false
+    }
+  },
   components: {
     Header,
     Banner,
     Footer
+  },
+  methods:{
+    toLogout() {
+      this.userinfo = undefined
+      localStorage.removeItem('userinfo')
+    }
   }
 };
 </script>

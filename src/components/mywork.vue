@@ -17,42 +17,7 @@
            <div class="reg_info">
               <form action="" >
                 <table>
-                  <tr>
-                    <td width='94'><label for="name">姓名</label></td>
-                    <td colspan="2"><input type="text" id="name" class="inputsty" /></td>
-                  </tr>
-                  <tr>
-                    <td><label for="qq">QQ号码</label></td>
-                    <td colspan="2"><input type="text" id="qq" class="inputsty"/></td>
-                  </tr>
-                  <tr>
-                    <td><label for="tel">手机号码</label></td>
-                    <td width="0">
-                      <el-dropdown placement='bottom'>
-            <span class="el-dropdown-link">
-              +86
-              <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
-              <img src="@/assets/pac/bottom-dot.png" alt="">
-            </span>
-            <el-dropdown-menu class="header-dropdown" slot="dropdown">
-              <el-dropdown-item>
-                <a href="#">+01</a>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <a href="#">+02</a>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <a href="#">+03</a>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-                    </td>
-                    <td><input type="text" id="tel" class="inputtel"/></td>
-                  </tr>
-                  <tr>
-                    <td><label for="idcard">身份证件</label></td>
-                    <td colspan="2"><input type="text" id="idcard" class="inputsty"/></td>
-                  </tr>
+                 我的作品开发中
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
                 <div class="radio_1">
