@@ -162,10 +162,11 @@ export default {
     },
     toApply() {
       if (this.userinfo) {
+        // this.$router.push({ path: '/register' })
         this.applyDialogVisible = true
         return
       }
-      this.$router.push({ path: '/register' })
+      this.loginDialogVisible = true
     },
     toLogout() {
       this.$emit('onLogOut')
