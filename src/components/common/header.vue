@@ -5,17 +5,22 @@
         <img src="@/assets/pac/logo.png" alt="">
       </div>
       <ul class="hidden-xs-only clearfix">
-        <li>
-          <a href='#'>首页</a>
+        <li :class="{'active': activeRoutePage ==='index'}">
+          <a href='/'>首页</a>
         </li>
         <li>
-          <a href='#'>参赛作品</a>
+          <el-tooltip class="item" effect="dark" content="暂未开放，敬请期待" placement="top">
+            <span class="disabled-link">参赛作品</span>
+          </el-tooltip>
+          <!-- <a href='#'>参赛作品</a> -->
         </li>
         <li>
-          <el-dropdown placement='bottom'>
+          <el-tooltip class="item" effect="dark" content="暂未开放，敬请期待" placement="top">
+            <span class="disabled-link">活动专区 <img src="@/assets/pac/bottom-dot.png" alt=""></span>
+          </el-tooltip>
+          <!-- <el-dropdown placement='bottom'>
             <span class="el-dropdown-link">
               活动专区
-              <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               <img src="@/assets/pac/bottom-dot.png" alt="">
             </span>
             <el-dropdown-menu class="header-dropdown" slot="dropdown">
@@ -41,11 +46,13 @@
                 <a href="#">作品展示</a>
               </el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
-          <!-- <a href='#'>活动专区</a> -->
+          </el-dropdown> -->
         </li>
         <li>
-          <a href='#'>课程学习</a>
+          <el-tooltip class="item" effect="dark" content="暂未开放，敬请期待" placement="top">
+            <span class="disabled-link">课程学习</span>
+          </el-tooltip>
+          <!-- <a href='#'>课程学习</a> -->
         </li>
         <li>
           <a href='#'>相关下载</a>
@@ -142,6 +149,7 @@ export default {
       loginDialogVisible: false,
       joinDialogVisible: false,
       applyDialogVisible: false,
+      activeRoutePage: this.$route.name,
       isLogined: this.userinfo ? true : false
     }
   },
@@ -157,7 +165,7 @@ export default {
         this.applyDialogVisible = true
         return
       }
-      this.$router.push({path:'/register'})
+      this.$router.push({ path: '/register' })
     },
     toLogout() {
       this.$emit('onLogOut')
@@ -256,6 +264,25 @@ export default {
   .el-dropdown {
     font-size: 16px;
     cursor: pointer;
+  }
+  .disabled-link {
+    cursor: not-allowed;
+    color: #606266;
+  }
+  li.active a {
+    font-weight: bold;
+    color: #303133;
+    position: relative;
+  }
+  li.active a::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 3px;
+    background-color: #253994;
   }
 }
 </style>

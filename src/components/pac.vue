@@ -20,7 +20,7 @@
               <img src="@/assets/pac/paracraft_topmenu_logo.png" alt="">
               <div class="paracraft-intro">
                 <p>
-                  <span class="stress">Paracraft 创意空间</span>是一款面向7岁以上用户的免费的3D创作软件。</p>
+                  <span class="stress">Paracraft 创意空间</span>是一款面向全年龄用户的免费的3D创作软件。</p>
                 <p>你可以用它创建3D场景和人物，制作动画和电影，学习和编写计算机程序。下载软件后，</p>
                 <p>可观看百部优秀的用户电影作品，创造属于你的个人作品。</p>
               </div>
@@ -52,7 +52,7 @@
                     <img class="circle-decoration" src="@/assets/pac/circle.png" alt="">
                   </span>
                 </h1>
-                <p class="item-info">针对优秀的动画制作团队<br>及动画爱好者</p>
+                <p class="item-info">全球的动画爱好者<br>和编程爱好者</p>
                 <el-collapse v-model="rank1ActiveName" accordion>
                   <el-collapse-item name="1">
                     <template slot='title'>
@@ -204,7 +204,7 @@
           </div>
         </div>
       </div>
-      <div class="row guest-row">
+      <!-- <div class="row guest-row">
         <div class="container">
           <h1 class="title">
             <img src="@/assets/pac/guest_title.png" alt="">
@@ -236,7 +236,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="row process-row">
         <h1 class="title">
           <img src="@/assets/pac/process_title.png" alt="">
