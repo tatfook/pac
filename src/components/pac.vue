@@ -39,7 +39,7 @@
           <h1 class="title">
             <img src="@/assets/pac/award_title.png" alt="">
           </h1>
-          <p class="row-info">努力，并不容易，而你一直在努力！付出，并不容易，而你付出了很多很多。</p>
+          <p class="row-info">成功需要强烈的兴趣和顽强的入迷</p>
           <div class="classify clearfix">
             <div class="item-box">
               <img class="trophy-img" src="@/assets/pac/trophy.png" alt="">
@@ -165,7 +165,7 @@
                   </el-collapse-item>
                   <el-collapse-item name="2">
                     <template slot='title'>
-                      <h3>NPL 最佳游戏作品奖
+                      <h3>NPL 优秀游戏作品奖
                         <span>(20个，
                           <span>最高
                             <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
@@ -175,7 +175,7 @@
                   </el-collapse-item>
                   <el-collapse-item name="3">
                     <template slot='title'>
-                      <h3>NPL 最佳材质奖
+                      <h3>NPL 优秀材质奖
                         <span>(20个，
                           <span>最高
                             <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
@@ -185,7 +185,7 @@
                   </el-collapse-item>
                   <el-collapse-item name="4">
                     <template slot='title'>
-                      <h3>NPL 最佳视觉特效奖
+                      <h3>NPL 优秀视觉特效奖
                         <span>(20个，
                           <span>最高
                             <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
@@ -195,7 +195,7 @@
                   </el-collapse-item>
                   <el-collapse-item name="5">
                     <template slot='title'>
-                      <h3>NPL 最佳原创音效奖
+                      <h3>NPL 优秀原创音效奖
                         <span>(20个，
                           <span>最高
                             <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
@@ -205,7 +205,7 @@
                   </el-collapse-item>
                   <el-collapse-item name="6">
                     <template slot='title'>
-                      <h3>NPL 最佳剧本创意奖
+                      <h3>NPL 优秀剧本创意奖
                         <span>(20个，
                           <span>最高
                             <span class="hidden-xs-only">可获得</span>5万元</span> )</span>
@@ -731,6 +731,7 @@ body {
       position: relative;
       color: #606266;
       position: relative;
+      font-size: 14px;
     }
     .title::before {
       content: '';
@@ -927,7 +928,7 @@ body {
       position: absolute;
       left: -25px;
       top: 16px;
-      background-color: #3b5bed;
+      background-color: #019fe8;
     }
     .el-collapse-item__arrow {
       display: none;
@@ -1079,18 +1080,18 @@ body {
       right: 25%;
       top: 0;
       bottom: 0;
-      border: 1px solid #efefef;
-      border-width: 0 1px;
+      border: 2px solid #ededed;
+      border-width: 0 2px;
       z-index: 1;
     }
     .container::after {
       content: '';
-      width: 1px;
+      width: 2px;
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      background-color: #efefef;
+      background-color: #ededed;
     }
     h3 {
       margin: 20px 0 30px;
@@ -1156,8 +1157,8 @@ body {
   .works-row {
     background-color: #f5f5f5;
     .container {
-      border: 1px solid #efefef;
-      border-width: 0 1px;
+      border: 2px solid #ededed;
+      border-width: 0 2px;
       position: relative;
       padding: 75px 0 50px;
     }
@@ -1168,18 +1169,18 @@ body {
       right: 25%;
       top: 0;
       bottom: 0;
-      border: 1px solid #efefef;
-      border-width: 0 1px;
+      border: 2px solid #ededed;
+      border-width: 0 2px;
       z-index: 1;
     }
     .container::after {
       content: '';
-      width: 1px;
+      width: 2px;
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      background-color: #efefef;
+      background-color: #ededed;
     }
     .cover {
       width: 280px;

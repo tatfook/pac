@@ -3,48 +3,45 @@
     <img class="bg" src="@/assets/pac/banner.jpg" alt="">
     <div class="codes">
       <pre class="code-block1">
-        &lt;script&gt;
-          &lt;template&gt;
-            &lt;el-select v-model="value" placeholder="请选择"&gt;
-              &lt;el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"&gt;
-              &lt;/el-option&gt;
-            &lt;/el-select&gt;
-          &lt;/template&gt;
-        &lt;script&gt;
+        -- generate a random tree
+        local function random(min_value, max_value)
+            return math.random()*(max_value - min_value);
+        end
+
+        scale(1/5)
+        math.randomseed(12345678);
+        make_tree(6, 4, 0.5, 0.3);
       </pre>
       <pre class="code-block2 hidden-xs-only">
-        ul, li {
-          margin: 0;
-          padding: 0;
-        }
-        li {
-          list-style: none;
-        }
-        p {
-          margin: 0;
-        }
-        img {
-          max-width: 100%;
-        }
+        function CreateCylinders()
+          push()
+              translate(0, height - outer_radius, 0)
+              difference()
+                  cylinder({
+                    from = {0,0,0}, 
+                    to = {clinder_length,0,0}, 
+                    r1 = outer_radius, 
+                    r2 = outer_radius
+                  });
+                  cylinder({
+                    from = {0,0,0}, 
+                    to = {clinder_length,0,0}, 
+                    r1 = inner_radius, 
+                    r2 = inner_radius
+                  });
+          pop()
+        end
       </pre>
       <pre class="code-block3 hidden-xs-only">
-        &lt;script&gt;
-          import Header from './common/header'
-          import Banner from './common/banner'
-          import Footer from './common/footer'
-          export default {
-            name: 'App',
-            components: {
-              Header,
-              Banner,
-              Footer
-            }
-          }
-        &lt;/script&gt;
+        -- generate a random tree
+        local function random(min_value, max_value)
+            return min_value + max_value - min_value;
+        end
+        difference()
+        color({1,0,0});
+        cube({size=3,center = true});
+        color({0,0,1});
+        sphere({r = 2});
       </pre>
     </div>
     <div class="container">
@@ -141,13 +138,13 @@ export default {
   .code-block1 {
     color: #e8cf00;
     left: 0;
-    bottom: -230px;
+    bottom: -150px;
     animation: blockAnimate 14s infinite;
     animation-timing-function: linear;
   }
   .code-block2 {
     left: 30%;
-    bottom: -180px;
+    bottom: -270px;
     animation: blockAnimate2 14s infinite;
     animation-delay:6s;
     animation-timing-function: linear;
@@ -155,7 +152,7 @@ export default {
   }
   .code-block3 {
     right: 5%;
-    bottom: -180px;
+    bottom: -200px;
     animation: blockAnimate3 14s infinite;
     animation-delay:2s;
     animation-timing-function: linear;
@@ -163,26 +160,26 @@ export default {
   }
   @keyframes blockAnimate {
     from {
-      bottom: -230px;
+      bottom: -150px;
     }
     to {
-      bottom: 540px;
+      bottom: 570px;
     }
   }
   @keyframes blockAnimate2 {
     from {
-      bottom: -160px;
+      bottom: -270px;
     }
     to {
-      bottom: 520px;
+      bottom: 570px;
     }
   }
   @keyframes blockAnimate3 {
     from {
-      bottom: -150px;
+      bottom: -200px;
     }
     to {
-      bottom: 520px;
+      bottom: 570px;
     }
   }
   .bg {
