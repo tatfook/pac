@@ -49,6 +49,7 @@
                 <div class="radio_1">
                   <input type="checkbox" id="isagree" name="agree" v-model="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;">《2018国际智能创意大奖赛比赛协议》</span><br>
                 </div>
+                <div style="margin:8px auto;text-align:center;color:red" v-show="showerr">{{errmsg}}</div>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
@@ -64,6 +65,7 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
+import axios from 'axios'
 
 export default {
   name: "register",
@@ -83,12 +85,14 @@ export default {
             value: '4',
             label: '+89'
         }],
+        showerr: false,
+        errmsg: "",
         value2: '+86',
         isdisabled:false,
-        user_name: '',
-        qq_no: '',
-        tel: '',
-        idcard_no: '',
+        user_name: '花花',
+        qq_no: '2307898877',
+        tel: '15767899874',
+        idcard_no: '431189677545633454',
       }
   },
   computed: {
@@ -111,26 +115,34 @@ export default {
     },
     register() {
       if ( !/^[1-9][0-9]{4,}$/.test(this.qq_no) ){
-          alert('qq号错误')
-          // console.log(this);
-          // this.$alert('qq号错误', '标题名称', {
-          //   confirmButtonText: '确定111',
-          //   callback: action => {
-          //     this.$message({
-          //       type: 'info',
-          //       message: `action: ${ action }`
-          //     });
-          //   }
-          // });
+          // alert('qq号错误')
+          this.showerr = true;
+          this.errmsg = "qq号错误"
           return false
         }else if(!/^1\d{10}$/.test(this.tel)) {
-          alert('手机号码有错')
+          this.showerr = true;
+          this.errmsg = "手机号码错误"
           return false
         }else if(!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)){
-          alert('身份证不正确')
+          this.showerr = true;
+          this.errmsg = "身份证不正确"
           return false
         }else{
-          alert('提交成功')
+          let that = this;
+          axios.create({
+            baseURL:"http://10.27.3.3:8900/api/wiki/models"
+          }).post('/website_works/submitWorksApply',{
+            realname: this.user_name,
+            QQId: this.qq_no,
+            cellphoneId: this.tel,
+            identifyCardId: this.idcard_no
+          }).then(function(result) {
+            console.log(result);
+            that.showerr = false;
+            // alert('提交成功')
+            }).catch(function(error){});
+          return true
+
         }
 
     }
