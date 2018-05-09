@@ -15,7 +15,7 @@
             </h1>
             <div class="line"></div>
            <div class="reg_info">
-              <form action="" >
+              <form @submit.prevent="register">
                 <table>
                   <tr>
                     <td width='94'><label for="name">姓名</label></td>
@@ -49,7 +49,7 @@
                 <div class="radio_1">
                   <input type="checkbox" id="isagree" name="agree" v-model="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;">《2018国际智能创意大奖赛比赛协议》</span><br>
                 </div>
-                <input type="submit" value="提价信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
+                <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
           </div>
@@ -64,6 +64,7 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
+
 export default {
   name: "register",
   data() {
@@ -93,9 +94,9 @@ export default {
   computed: {
     _pass: function(){
       if (this.user_name && this.qq_no && this.tel && this.idcard_no && this.isdisabled) {
-        return this.pass = true
+        return true
       }
-      return this.pass = false
+      return false
     }
   },
   components: {
@@ -107,6 +108,31 @@ export default {
     toLogout() {
       this.userinfo = undefined
       localStorage.removeItem('userinfo')
+    },
+    register() {
+      if ( !/^[1-9][0-9]{4,}$/.test(this.qq_no) ){
+          alert('qq号错误')
+          // console.log(this);
+          // this.$alert('qq号错误', '标题名称', {
+          //   confirmButtonText: '确定111',
+          //   callback: action => {
+          //     this.$message({
+          //       type: 'info',
+          //       message: `action: ${ action }`
+          //     });
+          //   }
+          // });
+          return false
+        }else if(!/^1\d{10}$/.test(this.tel)) {
+          alert('手机号码有错')
+          return false
+        }else if(!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)){
+          alert('身份证不正确')
+          return false
+        }else{
+          alert('提交成功')
+        }
+
     }
   }
 };
