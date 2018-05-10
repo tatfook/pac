@@ -58,7 +58,7 @@
       </div>
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
-      </el-dialog>  
+      </el-dialog>
     </main> 
     <Footer></Footer>    
   </div>
@@ -135,6 +135,8 @@ export default {
           this.showerr = true;
           this.errmsg = "身份证不正确"
           return false
+        }else if(!localStorage.getItem('userinfo')) {
+          alert("你还没用登录，请登录")
         }else{
           let that = this;
           let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
@@ -156,7 +158,7 @@ export default {
             console.log(JSON.parse(localStorage.getItem('userinfo')).username)
             that.showerr = false;
           }).catch(function(error){});
-          this.registerOkVisible = true;
+          // this.registerOkVisible = true;
           return true
         }
 

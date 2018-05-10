@@ -472,14 +472,15 @@ export default {
   font-size: 14px;
 }
 
- .uploadwork_table .compete_works .el-select{
-  border-radius: 0;
-  border: 0;
-  background: #efefef;
-  width: 100%;
-  height: 48px;
-  margin-left: 8px;
-}
+//  .uploadwork_table .compete_works .el-select{
+//   border-radius: 0;
+//   border: 0;
+//   width: 100%;
+//   background: #efefef;
+//   height: 48px;
+//   line-height: 48px;
+//   margin-left: 8px;
+// }
 // 点击上传
 .idcard{
   display: flex;
@@ -526,18 +527,15 @@ export default {
   top: 3px;
   left: 8px;
 }
-
 </style>
 <style>
-
- /* .uploadwork_table .compete_works .el-input .el-input__inner{
+ .uploadwork_table .compete_works .el-input .el-input__inner{
   border-radius: 0;
   border: 0;
-  background: blue;
-  width: 386px;
+  width: 394px;
   height: 48px;
   margin-left: 8px;
-} */
+}
 </style>
 
 
