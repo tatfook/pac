@@ -161,9 +161,10 @@ export default {
   input {
     border-radius: 0;
     width: 372px;
-    margin-left: 9px;
+    margin: 0 0 0 9px;
     padding-left: 16px;
     height: 48px;
+    
   }
 }
  
@@ -471,12 +472,11 @@ export default {
   font-size: 14px;
 }
 
-// 选择作品
- .uploadwork_table .compete_works #my-compete-works .el-input .el-input__inner{
+ .uploadwork_table .compete_works .el-select{
   border-radius: 0;
   border: 0;
-  background: blue;
-  width: 386px;
+  background: #efefef;
+  width: 100%;
   height: 48px;
   margin-left: 8px;
 }
@@ -528,4 +528,16 @@ export default {
 }
 
 </style>
+<style>
+
+ /* .uploadwork_table .compete_works .el-input .el-input__inner{
+  border-radius: 0;
+  border: 0;
+  background: blue;
+  width: 386px;
+  height: 48px;
+  margin-left: 8px;
+} */
+</style>
+
 
