@@ -3,9 +3,9 @@
     <Header @onLogOut='toLogout'></Header>   
     <main>
       <Banner></Banner>
-      <div class="intro-row-reg">
+      <div class="register-container">
         <div class="container-reg">
-          <div class="decoration hidden-xs-only">
+          <div class="top-square">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
           </div>
@@ -158,7 +158,7 @@ export default {
             console.log(JSON.parse(localStorage.getItem('userinfo')).username)
             that.showerr = false;
           }).catch(function(error){});
-          // this.registerOkVisible = true;
+          this.registerOkVisible = true;
           return true
         }
 
@@ -204,7 +204,7 @@ export default {
   transition: transform 0.2s ease-out;
 }
 
-.intro-row-reg {
+.register-container {
   background-color: #f5f5f5;
   .container-reg {
     width: 100%;
@@ -239,7 +239,7 @@ export default {
     #d8d8d8 7.1px
   );
 }
-.decoration {
+.top-square {
   display: flex;
   position: relative;
   top: -90px;

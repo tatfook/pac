@@ -5,7 +5,7 @@
       <Banner></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
-          <div class="decoration hidden-xs-only">
+          <div class="top-square-uploadpage">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
           </div>
@@ -343,7 +343,7 @@ export default {
     #d8d8d8 7.1px
   );
 }
-.decoration {
+.top-square-uploadpage {
   display: flex;
   position: relative;
   top: -90px;
