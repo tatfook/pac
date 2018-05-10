@@ -3,7 +3,7 @@ MAINTAINER xuntian "li.zq@foxmail.com"
 COPY ./ /code/
 WORKDIR /code
 RUN npm install
-CMD npm run build
+RUN npm run build
 
 FROM nginx
 WORKDIR /usr/share/nginx/html
