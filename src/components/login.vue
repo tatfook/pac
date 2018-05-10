@@ -110,6 +110,10 @@ export default {
     border-bottom: 7px solid #dcdcdc;
     padding-bottom: 40px;
     margin-bottom: 30px;
+    img{
+      vertical-align: middle;
+      margin: 0 15px;
+    }
   }
   .input-group {
     border: 5px solid #e0e0e0;

@@ -55,10 +55,10 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false>
+    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
       <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='onLogined'></login>
     </el-dialog>
-    <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
+    <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
     <el-dialog :visible.sync='applyDialogVisible' width='500px'>
@@ -108,6 +108,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.login-dialog, .join-dialog{
+  max-width: 90%;
+}
 .banner {
   height: 625px;
   position: relative;
