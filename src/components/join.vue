@@ -249,6 +249,7 @@ export default {
             that.$emit('onLogined')
             return
           }
+          loading.close()
           that.joinErrMsg = data.error.message
         })
         .catch(function(error) {
