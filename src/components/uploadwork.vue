@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>   
+    <Header @onLogOut='toLogout'></Header>   
     <main>
-      <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
+      <Banner></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
           <div class="decoration hidden-xs-only">
@@ -11,20 +11,78 @@
           </div>
           <div class="content">
             <h1 class="title">
-              <span><img src="@/assets/pac/fill_reg_info.png" alt=""></span>
+              <span><img src="@/assets/pac/upload_work.png" alt=""></span>
             </h1>
             <div class="line"></div>
            <div class="reg_info">
-              <form action="" >
+              <form @submit.prevent="register">
                 <table>
-                  上传作品开发中
+                  <tr>
+                    <td width='94'><label for="name">参赛组别</label></td>
+                    <td><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="qq">作品名称</label></td>
+                    <td><input type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="tel">作品简介</label></td>
+                    <td><input type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="idcard">学校名称</label></td>
+                    <td><input type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="idcard">作品封面</label></td>
+                    <td><input type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><div>预览区域</div></td>
+                  </tr>
+                  <tr>
+                    <td>选择作品</td>
+                    <td>
+                      <select name="sel_work" id="">
+                        <option value="1">作品1</option>
+                        <option value="1">作品2</option>
+                        <option value="1">作品3</option>
+                        <option value="1">作品4</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>报名奖项</td>
+                    <td>
+                      <div>
+                        <input type="checkbox">NPL 大奖
+                        <input type="checkbox">NPL 最佳编辑奖
+                        <input type="checkbox">NPL 最佳教程奖
+                      </div>
+                      <div>
+                        <input type="checkbox">NPL 最佳场景设置奖
+                        <input type="checkbox">NPL 3D角色制作奖
+                        <input type="checkbox">NPL 最佳开源贡献奖
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>身份证复印件/扫描件</td>
+                    <td>点击上传</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">预览区域</td>
+                  </tr>
+                  <tr>
+                    <td>生活照</td>
+                    <td>点击上传</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">预览区域</td>
+                  </tr>
                 </table>
-                <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
-                <div class="radio_1">
-                  <input type="radio" id="isagree" name="agree" checked><label for="isagree"></label>同意<span style="color:#5196e7;">《2018国际智能创意大奖赛比赛协议》</span><br>
-                  <input type="radio" id="notagree" name="agree"><label for="notagree"></label><br>
-                </div>
-                <input type="submit" value="提价信息" class="btn" >
+                <div style="margin:8px auto;text-align:center;color:red" v-show="showerr">{{errmsg}}</div>
+                <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
           </div>
@@ -39,17 +97,31 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
+import axios from 'axios'
+
 export default {
   name: "register",
+  data() {
+      return {
+      }
+  },
+  computed: {
+  },
   components: {
     Header,
     Banner,
     Footer
+  },
+  methods:{
+    toLogout() {
+      this.userinfo = undefined
+      localStorage.removeItem('userinfo')
+    },
   }
 };
 </script>
 <style lang="scss">
-.radio_1 [type="radio"] {
+.radio_1 [type="checkbox"] {
   display: none;
 }
 .radio_1 label {
@@ -75,12 +147,12 @@ export default {
   transform: scale(0);
   transition: transform 0.2s ease-out;
 }
-.radio_1 [type="radio"]:checked + label {
+.radio_1 [type="checkbox"]:checked + label {
   border: 3px #303133 solid;
   background-color: #eee;
   transition: background-color 0.2s ease-in;
 }
-.radio_1 [type="radio"]:checked + label::after {
+.radio_1 [type="checkbox"]:checked + label::after {
   background-color: #303133;
   transform: scale(1);
   transition: transform 0.2s ease-out;
@@ -230,7 +302,7 @@ export default {
   width: 38px;
 }
 .inputtel {
-  width: 274px;
+  width: 234px;
 }
 .reg_info tr td {
   font-weight: 700;
@@ -242,6 +314,8 @@ export default {
   background-color: #efefef;
   border: none;
   height: 36px;
+  border-radius: 6px;
+  padding:0 5px;
   // width: 320px;
 }
 .slash {

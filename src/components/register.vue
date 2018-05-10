@@ -16,9 +16,9 @@
             <div class="line"></div>
            <div class="reg_info">
               <form @submit.prevent="register">
-                <table>
+                <table width="480px">
                   <tr>
-                    <td width='94'><label for="name">姓名</label></td>
+                    <td width='850'>姓名</td>
                     <td colspan="2"><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr>
@@ -27,10 +27,10 @@
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
-                    <td width="82">
-                     <el-select v-model="value2">
+                    <td width="75">
+                     <el-select class="phone-suffix-select" v-model="value2">
                         <el-option
-                          v-for="item in options2"
+                          v-for="item in options"
                           :key="item.value"
                           :label="item.label"
                           :value="item.value"
@@ -55,7 +55,10 @@
             </div> 
           </div>
         </div>
-      </div>  
+      </div>
+      <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
+        <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
+      </el-dialog>  
     </main> 
     <Footer></Footer>    
   </div>
@@ -64,6 +67,7 @@
 import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
+import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import axios from 'axios'
 
@@ -71,20 +75,21 @@ export default {
   name: "register",
   data() {
       return {
-        options2: [{
-            value: '1',
+        options: [{
+            value: '+86',
             label: '+86'
           }, {
-            value: '2',
+            value: '+87',
             label: '+87',
             disabled: true
           }, {
-            value: '3',
+            value: '+88',
             label: '+88'
           }, {
-            value: '4',
+            value: '+89',
             label: '+89'
         }],
+        registerOkVisible: false,
         showerr: false,
         errmsg: "",
         value2: '+86',
@@ -106,16 +111,19 @@ export default {
   components: {
     Header,
     Banner,
-    Footer
+    Footer,
+    registerok
   },
   methods:{
+    setDialogVisible(key, value) {
+      this[key] = value
+    },
     toLogout() {
       this.userinfo = undefined
       localStorage.removeItem('userinfo')
     },
     register() {
-      if ( !/^[1-9][0-9]{4,}$/.test(this.qq_no) ){
-          // alert('qq号错误')
+      if ( !/^[1-9][0-9]{4,13}$/.test(this.qq_no) ){
           this.showerr = true;
           this.errmsg = "qq号错误"
           return false
@@ -129,20 +137,27 @@ export default {
           return false
         }else{
           let that = this;
+          let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
           axios.create({
-            baseURL:"http://10.27.3.3:8900/api/wiki/models"
-          }).post('/website_works/submitWorksApply',{
+            baseURL:"http://10.27.3.3:8900/api/wiki/models",
+            headers: {'Authorization': authorization}
+          }).post('website_member/submitMemberApply',{
+            websiteId: "5",
+            username: JSON.parse(localStorage.getItem('userinfo')).username,
+            portrait: '',
+            sex: '',
             realname: this.user_name,
+            email: '',
             QQId: this.qq_no,
-            cellphoneId: this.tel,
+            cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
           }).then(function(result) {
             console.log(result);
+            console.log(JSON.parse(localStorage.getItem('userinfo')).username)
             that.showerr = false;
-            // alert('提交成功')
-            }).catch(function(error){});
+          }).catch(function(error){});
+          this.registerOkVisible = true;
           return true
-
         }
 
     }
@@ -293,7 +308,7 @@ export default {
   width: 480px;
   margin: 0 auto;
   .hint {
-    color: red;
+    color: #ec2828;
     font-size: 14px;
     text-align: left;
   }
@@ -302,9 +317,9 @@ export default {
     display: block;
     color: #ffffff;
     border: none;
-    width: 360px;
-    height: 50px;
-    font-size: 24px;
+    width: 364px;
+    height: 65px;
+    font-size: 20px;
     margin: 34px auto;
     box-shadow: inset 0px -8px 0px 0px rgb(81, 85, 92);
   }
@@ -313,39 +328,43 @@ export default {
     display: block;
     color: #ffffff;
     border: none;
-    width: 360px;
-    height: 50px;
-    font-size: 24px;
+    width: 364px;
+    height: 65px;
+    font-size: 20px;
     margin: 34px auto;
     box-shadow: inset 0px -8px 0px 0px rgb(9, 20, 138);
   }
 }
 .reg_info tr {
   height: 48px;
-  line-height: 58px;
+  line-height: 48px;
 }
 .inputsty {
-  width: 320px;
+  width: 381px;
+}
+.phone-suffix-select .el-input__inner{
+  border-radius: 0;
 }
 .smallinput {
   width: 38px;
 }
 .inputtel {
-  width: 234px;
+  width: 301px;
 }
 .reg_info tr td {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   text-align: left;
+  color: #303133;
   // padding-right: 14px;
 }
 .reg_info tr td input {
   background-color: #efefef;
   border: none;
   height: 36px;
-  border-radius: 6px;
+  font-size: 14px;
   padding:0 5px;
-  // width: 320px;
+  // width: 391px;
 }
 .slash {
   height: 20px;

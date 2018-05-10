@@ -11,7 +11,7 @@
           </div>
           <div class="content">
             <h1 class="title">
-              <span><img src="@/assets/pac/fill_reg_info.png" alt=""></span>
+              <span><img src="@/assets/pac/my_work.png" alt=""></span>
             </h1>
             <div class="line"></div>
            <div class="reg_info">
