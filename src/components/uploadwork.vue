@@ -528,14 +528,18 @@ export default {
   left: 8px;
 }
 </style>
-<style>
- .uploadwork_table .compete_works .el-input .el-input__inner{
-  border-radius: 0;
-  border: 0;
-  width: 394px;
-  height: 48px;
-  margin-left: 8px;
-}
+<style lang="scss">
+ .uploadwork_table .compete_works .el-input{
+   margin-left: 11px;
+   background-color: #efefef;
+ .el-input__inner{
+      border-radius: 0;
+      border: 0;
+      width: 380px;
+      height: 48px;
+      background-color: #efefef;
+    }
+ }
 </style>
 
 
