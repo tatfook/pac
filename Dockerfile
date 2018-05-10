@@ -1,7 +1,7 @@
-From xuntian/node-yarn as builder
-MAINTAINER xuntian "li.zq@foxmail.com"
-COPY ./ /code/
-WORKDIR /code
+# From xuntian/node-yarn as builder
+# MAINTAINER xuntian "li.zq@foxmail.com"
+# COPY ./ /code/
+# WORKDIR /code
 # RUN npm --registry https://registry.npm.taobao.org install
 # RUN npm --registry https://registry.npm.taobao.org update
 # RUN npm run build
@@ -9,8 +9,8 @@ WORKDIR /code
 # RUN yarn install
 # RUN NODE_ENV=${BUILD_ENV} TZ=Asia/Shanghai yarn build
 
-RUN npm install
-CMD npm run build
+# RUN npm install
+# CMD npm run build
 
 From xuntian/node-yarn as builder
 MAINTAINER xuntian "li.zq@foxmail.com"
