@@ -12,7 +12,7 @@
 # RUN npm install
 # CMD npm run build
 
-From xuntian/node-yarn as builder
+FROM xuntian/node-yarn as builder
 MAINTAINER xuntian "li.zq@foxmail.com"
 COPY ./ /code/
 WORKDIR /code
@@ -22,5 +22,5 @@ CMD npm run build
 FROM nginx
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /code/dist .
-COPY --from=builder /code/node_modules /node_modules
+# COPY --from=builder /code/node_modules /node_modules
 CMD ["nginx", "-g", "daemon off;"]
