@@ -350,20 +350,22 @@ export default {
 }
 .inputtel {
   width: 301px;
+  // margin-top: 7px;
 }
 .reg_info tr td {
   font-weight: 700;
   font-size: 16px;
   text-align: left;
   color: #303133;
-  // padding-right: 14px;
 }
 .reg_info tr td input {
+  border-radius: 0;
   background-color: #efefef;
   border: none;
-  height: 36px;
+  height: 48px;
   font-size: 14px;
   padding:0 5px;
+  margin: 10px 0;
   // width: 391px;
 }
 .slash {
