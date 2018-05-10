@@ -78,7 +78,7 @@
           </el-dropdown>
         </li>
       </ul>
-      <el-dropdown class="hidden-sm-and-up xs-dropdown" placement='bottom-end'>
+      <el-dropdown class="hidden-sm-and-up xs-dropdown" placement='bottom-end' @command="handleCommand">
         <span class="el-dropdown-link">
           <i class="el-icon-menu"></i>
         </span>
@@ -116,16 +116,16 @@
           <el-dropdown-item>
             <a href="http://www.paracraft.cn/download?lang=zh">相关下载</a>
           </el-dropdown-item>
-          <el-dropdown-item>
-            <a href="#">我要报名</a>
+          <el-dropdown-item command='apply'>
+            我要报名
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false>
+    <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
       <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='onLogined'></login>
     </el-dialog>
-    <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false>
+    <el-dialog :visible.sync="joinDialogVisible" width='500px' custom-class="join-dialog" :show-close=false :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
     <el-dialog :visible.sync='applyDialogVisible' width='500px'>
@@ -175,11 +175,23 @@ export default {
       this.loginDialogVisible = false
       this.joinDialogVisible = false
       this.$emit('onLogined')
+    },
+    handleCommand(type){
+      switch (type) {
+        case 'apply':
+          this.toApply()
+          break;
+        default:
+          break;
+      }
     }
   }
 }
 </script>
 <style lang="scss">
+.login-dialog, .join-dialog{
+  max-width: 90%;
+}
 .header-dropdown.el-popper {
   margin-top: 0;
   border: none;
