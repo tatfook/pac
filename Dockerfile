@@ -14,7 +14,7 @@
 
 FROM xuntian/node-yarn as builder
 MAINTAINER xuntian "li.zq@foxmail.com"
-COPY ./ /code/
+COPY ./* /code/
 WORKDIR /code
 RUN npm install
 CMD npm run build
