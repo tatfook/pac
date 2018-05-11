@@ -176,20 +176,21 @@ export default {
       this.joinDialogVisible = false
       this.$emit('onLogined')
     },
-    handleCommand(type){
+    handleCommand(type) {
       switch (type) {
         case 'apply':
           this.toApply()
-          break;
+          break
         default:
-          break;
+          break
       }
     }
   }
 }
 </script>
 <style lang="scss">
-.login-dialog, .join-dialog{
+.login-dialog,
+.join-dialog {
   max-width: 90%;
 }
 .header-dropdown.el-popper {
@@ -216,11 +217,13 @@ export default {
 }
 .pac-header {
   height: 70px;
-  line-height: 56px;
-  padding: 8px 0;
+  line-height: 48px;
+  padding: 11px 0;
   box-sizing: border-box;
   .brand {
     float: left;
+    top: -3px;
+    position: relative;
   }
   .container {
     width: 100%;
@@ -258,11 +261,14 @@ export default {
     color: #fff;
     font-weight: bold;
     margin-left: 24px;
+    border-radius: 4px;
+    padding: 0 20.5px;
+    font-size: 15px;
     cursor: pointer;
     img {
       margin-right: 10px;
       vertical-align: middle;
-      top: -5px;
+      top: -2px;
       position: relative;
     }
   }

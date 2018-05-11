@@ -2,7 +2,7 @@
   <div class="join-form">
     <img @click="closeDialog" class="close-btn" src="@/assets/pac/close.png" alt="">
     <h1 class="title">
-      <img src="@/assets/pac/form_big_dot_left.png" alt="">账号注册<img src="@/assets/pac/form_big_dot_right.png" alt="">
+      <img src="@/assets/pac/form_big_dot_left.png" alt="">账号注册<img class="rotate-180-deg" src="@/assets/pac/form_big_dot_left.png" alt="">
     </h1>
     <div class="form">
       <div class="input-group">
@@ -23,8 +23,10 @@
         <input v-model="code" class="input-content" type="text" name="code" placeholder="请输入验证码">
         <div class="get-code-btn" :class="{'get-code-btn-disabled': reSendCodeTime>0}" @click='getVerifyCode'>{{sendCodeBtnText}}</div>
       </div>
-      <div class="agree-service-line" @click="toggleAgreeServices">
-        <span class="fake-checkbox" :class="{'active': isAgreeService}"></span>申请即视为同意<a href="#" target="_blank">《Keepwork用户协议》</a>
+      <div class="agree-service-line">
+        <span class="fake-checkbox" :class="{'active': isAgreeService}" @click="toggleAgreeServices"></span>
+        <span @click="toggleAgreeServices">申请即视为同意</span>
+        <a href="http://keepwork.com/wiki/license" target="_blank">《Keepwork用户协议》</a>
       </div>
       <p class="error-msg" v-show="joinErrMsg">{{joinErrMsg}}</p>
       <div class="register-button" :class="{'active': isAgreeService}" @click='toRegister'>
@@ -52,7 +54,7 @@ export default {
     sendCodeBtnText() {
       return this.reSendCodeTime > 0
         ? `重新发送(${this.reSendCodeTime}s)`
-        : '发送验证码'
+        : '获取验证码'
     }
   },
   data() {
@@ -273,17 +275,43 @@ export default {
     padding: 15px;
     cursor: pointer;
   }
+  .rotate-180-deg {
+    transform: rotate(180deg);
+  }
+  input:focus{
+    outline: none;
+  }
   .form {
     padding: 0 20px;
   }
   .title {
-    border-bottom: 7px solid #dcdcdc;
+    position: relative;
     padding-bottom: 40px;
     margin-bottom: 30px;
-    img{
+    img {
       vertical-align: middle;
       margin: 0 15px;
     }
+  }
+  .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7px;
+    background-color: #dcdcdc;
+    bottom: 0;
+  }
+  .title::after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: 0;
+    height: 7px;
+    background-color: #dcdcdc;
+    border: 16px solid #fff;
+    border-width: 0 16px;
   }
   .input-group {
     border: 5px solid #e0e0e0;
@@ -311,31 +339,23 @@ export default {
   }
   .register-button {
     width: 100%;
-    border: 4px solid;
     height: 65px;
-    line-height: 50px;
     font-size: 20px;
-    background-color: #fef50c;
-    color: #434103;
     font-weight: bold;
     position: relative;
     margin: 32px 0 22px;
     box-sizing: border-box;
     opacity: 0.5;
     cursor: not-allowed;
+    line-height: 60px;
+    background-color: #3b5bed;
+    color: #fff;
+    box-shadow: inset 0 -8px 0 0 #273da4;
+    border-radius: 4px;
   }
-  .register-button.active{
+  .register-button.active {
     opacity: 1;
     cursor: pointer;
-  }
-  .register-button::after {
-    content: '';
-    width: 100%;
-    height: 10px;
-    background-color: #cdc401;
-    position: absolute;
-    left: 0;
-    bottom: 0;
   }
   .error-msg {
     text-align: left;
@@ -349,19 +369,26 @@ export default {
     background-color: #faac23;
     color: #434103;
     font-weight: bold;
-    outline: 5px solid;
     box-sizing: border-box;
     cursor: pointer;
+    margin: -5px;
+    box-shadow: 0 10px 0 0 #c89f2e;
+    height: 100%;
+    line-height: 55px;
   }
   .get-code-btn-disabled {
     cursor: not-allowed;
     opacity: 0.8;
   }
-  .agree-service-line{
+  .agree-service-line {
     text-align: left;
     padding-left: 12px;
     cursor: pointer;
     margin-bottom: 16px;
+    a {
+      text-decoration: none;
+      color: #237efa;
+    }
   }
   .fake-checkbox {
     display: inline-block;
@@ -373,7 +400,7 @@ export default {
     margin-right: 10px;
     position: relative;
   }
-  .fake-checkbox.active::after{
+  .fake-checkbox.active::after {
     content: '';
     display: inline-block;
     width: 8px;
