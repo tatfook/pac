@@ -1,25 +1,27 @@
 <template>
   <div class="login-form">
     <img @click="closeDialog" class="close-btn" src="@/assets/pac/close.png" alt="">
-    <h1 class="title">
-      <img src="@/assets/pac/form_big_dot_left.png" alt="">登录账号<img src="@/assets/pac/form_big_dot_right.png" alt="">
-    </h1>
-    <div class="form">
-      <div class="input-group">
-        <img class="input-addon" src="@/assets/pac/user.png" alt="">
-        <input v-model="username" class="input-content" type="text" name="username" placeholder="请输入账号">
+    <div class="login-main-content">
+      <h1 class="title">
+        <img src="@/assets/pac/form_big_dot_left.png" alt="">登录账号<img class="rotate-180-deg" src="@/assets/pac/form_big_dot_left.png" alt="">
+      </h1>
+      <div class="form">
+        <div class="input-group">
+          <img class="input-addon" src="@/assets/pac/user.png" alt="">
+          <input v-model="username" class="input-content" type="text" name="username" placeholder="请输入账号">
+        </div>
+        <div class="input-group">
+          <img class="input-addon" src="@/assets/pac/unlock.png" alt="">
+          <input v-model="password" class="input-content" type="text" name="password" placeholder="请输入密码">
+        </div>
+        <p class="error-msg" v-show="loginErrMsg">{{loginErrMsg}}</p>
+        <div class="login-button" @click='toLogin'>
+          立即登录
+        </div>
+        <p class="extra-operations">
+          <span class="to-join-button" @click="showJoinDialog">立即注册</span>
+        </p>
       </div>
-      <div class="input-group">
-        <img class="input-addon" src="@/assets/pac/unlock.png" alt="">
-        <input v-model="password" class="input-content" type="text" name="password" placeholder="请输入密码">
-      </div>
-      <p class="error-msg" v-show="loginErrMsg">{{loginErrMsg}}</p>
-      <div class="login-button" @click='toLogin'>
-        立即登录
-      </div>
-      <p class="extra-operations">
-        <span class="to-join-button" @click="showJoinDialog">立即注册</span>
-      </p>
     </div>
   </div>
 </template>
@@ -35,10 +37,10 @@ export default {
     }
   },
   methods: {
-    closeDialog(){
+    closeDialog() {
       this.$emit('close')
     },
-    showJoinDialog(){
+    showJoinDialog() {
       this.$emit('showJoinDialog')
       this.closeDialog()
     },
@@ -96,6 +98,12 @@ export default {
 .login-form {
   text-align: center;
   padding: 0 28px;
+  .rotate-180-deg {
+    transform: rotate(180deg);
+  }
+  input:focus{
+    outline: none;
+  }
   .close-btn {
     position: absolute;
     right: 0;
@@ -107,13 +115,33 @@ export default {
     padding: 0 20px;
   }
   .title {
-    border-bottom: 7px solid #dcdcdc;
     padding-bottom: 40px;
     margin-bottom: 30px;
-    img{
+    position: relative;
+    img {
       vertical-align: middle;
       margin: 0 15px;
     }
+  }
+  .title::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7px;
+    background-color: #dcdcdc;
+    bottom: -7px;
+  }
+  .title::after{
+    content: "";
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: -7px;
+    height: 7px;
+    background-color: #dcdcdc;
+    border: 16px solid #fff;
+    border-width: 0 16px;
   }
   .input-group {
     border: 5px solid #e0e0e0;
@@ -141,26 +169,19 @@ export default {
   }
   .login-button {
     width: 100%;
-    border: 4px solid;
     height: 65px;
-    line-height: 50px;
     font-size: 20px;
-    background-color: #fef50c;
-    color: #434103;
+    line-height: 60px;
+    background-color: #3b5bed;
+    color: #fff;
+    box-shadow: inset 0 -8px 0 0 #273da4;
+    border: none;
+    border-radius: 4px;
     font-weight: bold;
     position: relative;
     margin: 32px 0 22px;
     cursor: pointer;
     box-sizing: border-box;
-  }
-  .login-button::after {
-    content: '';
-    width: 100%;
-    height: 10px;
-    background-color: #cdc401;
-    position: absolute;
-    left: 0;
-    bottom: 0;
   }
   .extra-operations {
     span {
@@ -172,7 +193,7 @@ export default {
     text-align: left;
     color: red;
   }
-  .to-join-button{
+  .to-join-button {
     cursor: pointer;
   }
 }

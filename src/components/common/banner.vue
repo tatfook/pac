@@ -199,7 +199,7 @@ export default {
     text-align: center;
   }
   .buttons {
-    margin-top: 70px;
+    margin-top: 46px;
   }
   .img-btn {
     cursor: pointer;
