@@ -16,7 +16,7 @@
             <div class="line"></div>
            <div class="reg_info">
               <form @submit.prevent="register">
-                <table width="476px">
+                <table width="476px" cellspacing="0">
                   <tr>
                     <td width='850'>姓名</td>
                     <td colspan="2"><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
@@ -27,7 +27,7 @@
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
-                    <td width="75">
+                    <td width="80">
                      <el-select class="phone-suffix-select" v-model="value2">
                         <el-option
                           v-for="item in options"
@@ -161,44 +161,55 @@ import Banner from "./common/banner";
 import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "register",
   data() {
-      return {
-        options: [{
-            value: '+86',
-            label: '+86'
-          }, {
-            value: '+87',
-            label: '+87',
-            disabled: true
-          }, {
-            value: '+88',
-            label: '+88'
-          }, {
-            value: '+89',
-            label: '+89'
-        }],
-        show_agreement: false,
-        registerOkVisible: false,
-        showerr: false,
-        errmsg: "",
-        value2: '+86',
-        isdisabled:false,
-        user_name: '太阳',
-        qq_no: '2307898877',
-        tel: '15767899874',
-        idcard_no: '431189677545633454',
-      }
+    return {
+      options: [
+        {
+          value: "+86",
+          label: "+86"
+        },
+        {
+          value: "+87",
+          label: "+87",
+          disabled: true
+        },
+        {
+          value: "+88",
+          label: "+88"
+        },
+        {
+          value: "+89",
+          label: "+89"
+        }
+      ],
+      show_agreement: false,
+      registerOkVisible: false,
+      showerr: false,
+      errmsg: "",
+      value2: "+86",
+      isdisabled: false,
+      user_name: "太阳",
+      qq_no: "2307898877",
+      tel: "15767899874",
+      idcard_no: "431189677545633454"
+    };
   },
   computed: {
-    _pass: function(){
-      if (this.user_name && this.qq_no && this.tel && this.idcard_no && this.isdisabled) {
-        return true
+    _pass: function() {
+      if (
+        this.user_name &&
+        this.qq_no &&
+        this.tel &&
+        this.idcard_no &&
+        this.isdisabled
+      ) {
+        return true;
       }
-      return false
+      return false;
     }
   },
   components: {
@@ -207,103 +218,111 @@ export default {
     Footer,
     registerok
   },
-  methods:{
-    show_agree(){
+  methods: {
+    show_agree() {
       this.show_agreement = true;
     },
     setDialogVisible(key, value) {
-      this[key] = value
+      this[key] = value;
     },
     toLogout() {
-      this.userinfo = undefined
-      localStorage.removeItem('userinfo')
+      this.userinfo = undefined;
+      localStorage.removeItem("userinfo");
     },
     register() {
-      if ( !/^[1-9][0-9]{4,13}$/.test(this.qq_no) ){
-          this.showerr = true;
-          this.errmsg = "qq号错误"
-          return false
-        }else if(!/^1\d{10}$/.test(this.tel)) {
-          this.showerr = true;
-          this.errmsg = "手机号码错误"
-          return false
-        }else if(!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)){
-          this.showerr = true;
-          this.errmsg = "身份证不正确"
-          return false
-        }else if(!localStorage.getItem('userinfo')) {
-          alert("你还没用登录，请登录")
-        }else{
-          let that = this;
-          let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
-          axios.create({
-            baseURL:"http://10.27.3.3:8900/api/wiki/models",
-            headers: {'Authorization': authorization}
-          }).post('website_member/submitMemberApply',{
+      if (!/^[1-9][0-9]{4,13}$/.test(this.qq_no)) {
+        this.showerr = true;
+        this.errmsg = "qq号错误";
+        return false;
+      } else if (!/^1\d{10}$/.test(this.tel)) {
+        this.showerr = true;
+        this.errmsg = "手机号码错误";
+        return false;
+      } else if (
+        !/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)
+      ) {
+        this.showerr = true;
+        this.errmsg = "身份证不正确";
+        return false;
+      } else if (!localStorage.getItem("userinfo")) {
+        alert("你还没用登录，请登录");
+      } else {
+        let that = this;
+        let authorization =
+          "bearer " + JSON.parse(localStorage.getItem("token"));
+        axios
+          .create({
+            baseURL: "http://10.27.3.3:8900/api/wiki/models",
+            headers: { Authorization: authorization }
+          })
+          .post("website_member/submitMemberApply", {
             websiteId: "5",
-            username: JSON.parse(localStorage.getItem('userinfo')).username,
-            portrait: '',
-            sex: '',
+            username: JSON.parse(localStorage.getItem("userinfo")).username,
+            portrait: "",
+            sex: "",
             realname: this.user_name,
-            email: '',
+            email: "",
             QQId: this.qq_no,
             cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
-          }).then(function(result) {
+          })
+          .then(function(result) {
             console.log(result);
-            console.log(JSON.parse(localStorage.getItem('userinfo')).username)
+            console.log(JSON.parse(localStorage.getItem("userinfo")).username);
             that.showerr = false;
-          }).catch(function(error){});
-          this.registerOkVisible = true;
-          return true
-        }
-
+          })
+          .catch(function(error) {});
+        this.registerOkVisible = true;
+        return true;
+      }
     }
   }
 };
 </script>
 <style lang="scss">
 .register-wrap {
-  .agreement-sty .el-dialog__body{
+  .agreement-sty .el-dialog__body {
     height: 800px;
     overflow-y: scroll;
-    
   }
   .radio_1 [type="checkbox"] {
     display: none;
   }
-  .radio_1 label {
-    margin-right: 10px;
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    width: 10px;
-    height: 10px;
-    border: 3px #c0c1c1 solid;
-    background-color: #fff;
-    cursor: pointer;
-  }
-  .radio_1 label::after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 4px;
-    height: 4px;
-    background-color: #c0c1c1;
-    cursor: pointer;
-    transform: scale(0);
-    transition: transform 0.2s ease-out;
-  }
-  .radio_1 [type="checkbox"]:checked + label {
-    border: 3px #303133 solid;
-    background-color: #eee;
-    transition: background-color 0.2s ease-in;
-  }
-  .radio_1 [type="checkbox"]:checked + label::after {
-    background-color: #303133;
-    transform: scale(1);
-    transition: transform 0.2s ease-out;
+  .radio_1 {
+    font-size: 14px;
+    label {
+      margin-right: 10px;
+      display: inline-block;
+      position: relative;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border: 3px #c0c1c1 solid;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    label::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 10px;
+      height: 10px;
+      background-color: #c0c1c1;
+      cursor: pointer;
+      transform: scale(0);
+      transition: transform 0.2s ease-out;
+    }
+    [type="checkbox"]:checked + label {
+      border: 3px #303133 solid;
+      background-color: #eee;
+      transition: background-color 0.2s ease-in;
+    }
+    [type="checkbox"]:checked + label::after {
+      background-color: #303133;
+      transform: scale(1);
+      transition: transform 0.2s ease-out;
+    }
   }
 
   .register-container {
@@ -422,7 +441,7 @@ export default {
       color: #ffffff;
       border: none;
       width: 364px;
-      height: 65px;
+      height: 60px;
       font-size: 20px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(81, 85, 92);
@@ -433,8 +452,9 @@ export default {
       color: #ffffff;
       border: none;
       width: 364px;
-      height: 65px;
+      height: 60px;
       font-size: 20px;
+      border-radius: 4px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(9, 20, 138);
     }
@@ -444,33 +464,36 @@ export default {
     line-height: 48px;
   }
   .inputsty {
-    width: 381px;
+    width: 368px;
   }
-  .phone-suffix-select .el-input__inner{
+  .phone-suffix-select .el-input__inner {
     border-radius: 0;
   }
   .smallinput {
     width: 38px;
-  }
-  .inputtel {
-    width: 301px;
-    // margin-top: 7px;
   }
   .reg_info tr td {
     font-weight: 700;
     font-size: 16px;
     text-align: left;
     color: #303133;
-  }
-  .reg_info tr td input {
-    border-radius: 0;
-    background-color: #efefef;
-    border: none;
-    height: 48px;
-    font-size: 14px;
-    padding:0 5px;
-    margin: 10px 0;
-    // width: 391px;
+    input {
+      border-radius: 0;
+      background-color: #efefef;
+      border: none;
+      height: 48px;
+      font-size: 14px;
+      padding: 0 5px 0 18px;
+      margin: 8px 0;
+    }
+    input:focus {
+      outline: none;
+      border: 1px solid #ccc;
+    }
+    .inputtel {
+      width: 278px;
+      margin-left: 8px;
+    }
   }
   .slash {
     height: 20px;
