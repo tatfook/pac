@@ -26,15 +26,15 @@
                   </tr>
                   <tr>
                     <td>作品名称</td>
-                    <td><input type="text" id="qq" v-model="qq_no" placeholder="请输入您的作品名称"/></td>
+                    <td><input type="text" v-model="work_title" placeholder="请输入您的作品名称"/></td>
                   </tr>
                   <tr>
                     <td>作品简介</td>
-                    <td><input type="text" id="tel" v-model="tel" placeholder="请输入作品简介"/></td>
+                    <td><input type="text" v-model="work_brief" placeholder="请输入作品简介"/></td>
                   </tr>
                   <tr>
                     <td>学校名称</td>
-                    <td><input type="text" id="idcard" v-model="idcard_no" placeholder="请输入您的学校全名"/></td>
+                    <td><input type="text" v-model="school_name" placeholder="请输入您的学校全名"/></td>
                   </tr>
                   <tr>
                     <td colspan="2">
@@ -101,7 +101,6 @@
                     <td colspan="2"><div class="preview">预览区域</div></td>
                   </tr>
                 </table>
-                <div style="margin:8px auto;text-align:center;color:red" v-show="showerr">{{errmsg}}</div>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
@@ -145,10 +144,22 @@ export default {
       picked: 0,
       checked_item: [false,false,false,false,false,false],
       awards_item: ['NPL 大奖','NPL 最佳编辑奖','NPL 最佳教程奖','NPL 最佳场景设置奖','NPL 3D角色制作奖','NPL 最佳开源贡献奖'],
+      work_title: "太阳花",
+      work_brief: "一朵有能量的花",
+      school_name: "xxx大学",
       aim_work: "选择您要比赛的作品"
     };
   },
-  computed: {},
+  computed: {
+    _pass: function() {
+      if (
+        this.work_title
+      ) {
+        return true;
+      }
+      return false;
+    }
+  },
   components: {
     Header,
     Banner,

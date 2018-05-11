@@ -1,8 +1,8 @@
 <template>
   <div class="register-wrap">
-    <Header @onLogOut='toLogout'></Header>   
+    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>   
     <main>
-      <Banner></Banner>
+      <Banner :userinfo='userinfo'></Banner>
       <div class="register-container">
         <div class="container-reg">
           <div class="top-square">
@@ -186,6 +186,7 @@ export default {
           label: "+89"
         }
       ],
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
       show_agreement: false,
       registerOkVisible: false,
       showerr: false,
@@ -488,7 +489,6 @@ export default {
     }
     input:focus {
       outline: none;
-      border: 1px solid #ccc;
     }
     .inputtel {
       width: 278px;
