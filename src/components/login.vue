@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import keepwork from '@/api/keepwork'
 export default {
   name: 'login',
   data() {
@@ -63,29 +63,25 @@ export default {
         return
       }
       let that = this
-      axios
-        .create({
-          baseURL: 'http://keepwork.com/api/wiki/models'
-        })
-        .post('/user/login', {
+      keepwork.user
+        .login({
           username: this.username,
           password: this.password
         })
-        .then(function(result) {
-          let data = result.data
-          if (data.data) {
-            let userinfo = JSON.stringify(data.data.userinfo)
-            let token = JSON.stringify(data.data.token)
+        .then((result) => {
+          if (result.data) {
+            let resultData = result.data
+            let userinfo = JSON.stringify(resultData.userinfo)
+            let token = JSON.stringify(resultData.token)
             localStorage.setItem('userinfo', userinfo)
             localStorage.setItem('token', token)
             that.$emit('onLogined')
             loading.close()
             return
           }
-          that.loginErrMsg = data.error.message
+          that.loginErrMsg = result.error.message
           loading.close()
-        })
-        .catch(function(error) {
+        }).catch((error)=>{
           that.loginErrMsg = '出错了，请检查网络后重试'
           loading.close()
           console.log(error)
@@ -101,7 +97,7 @@ export default {
   .rotate-180-deg {
     transform: rotate(180deg);
   }
-  input:focus{
+  input:focus {
     outline: none;
   }
   .close-btn {
@@ -123,8 +119,8 @@ export default {
       margin: 0 15px;
     }
   }
-  .title::before{
-    content: "";
+  .title::before {
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
@@ -132,8 +128,8 @@ export default {
     background-color: #dcdcdc;
     bottom: -7px;
   }
-  .title::after{
-    content: "";
+  .title::after {
+    content: '';
     position: absolute;
     left: 25px;
     right: 25px;
