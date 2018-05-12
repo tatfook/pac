@@ -59,6 +59,9 @@
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
       </el-dialog>
+      <el-dialog :visible.sync='loginBeforeLogin' width='500px'>
+        <p style="text-align: center;">您还没有登录，请先登录</p>
+      </el-dialog>
       <el-dialog :visible.sync='show_agreement' width='500px' class="agreement-sty">
         <div>
           <h1 style="text-align:center;">2018国际智能创意大奖赛赛事机制</h1>
@@ -186,6 +189,7 @@ export default {
           label: "+89"
         }
       ],
+      loginBeforeLogin: false,
       userinfo: JSON.parse(localStorage.getItem('userinfo')),
       show_agreement: false,
       registerOkVisible: false,
@@ -246,7 +250,7 @@ export default {
         this.errmsg = "身份证不正确";
         return false;
       } else if (!localStorage.getItem("userinfo")) {
-        alert("你还没用登录，请登录");
+        this.loginBeforeLogin = true;
       } else {
         let that = this;
         let authorization =

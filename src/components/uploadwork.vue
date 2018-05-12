@@ -37,17 +37,53 @@
                     <td><input type="text" v-model="school_name" placeholder="请输入您的学校全名"/></td>
                   </tr>
                   <tr>
-                    <td colspan="2">
+                    <!-- <td colspan="2">
                       <div class="idcard">
                         <div class="idcard-type">作品封面</div>
-                        <div class="clicktoup clicktoup2"><div class="add-center"><div class="add-icon"><div class="add"></div></div>点击上传</div></div>
+                        <div class="clicktoup clicktoup2">
+                          <div class="add-center">
+                            <div class="add-icon">
+                              <div class="add"></div>
+                            </div>
+                            点击上传
+                          </div>
+                          <div class="input_file"><input type="file"></div>
+                        </div>
+                      </div>
+                    </td> -->
+                    <td colspan="2">
+                      <div class="up_pic">
+                        <div class="idcard">
+                          <div class="idcard-type">作品封面</div>
+                          <div class="clicktoup clicktoup2">
+                            <div class="add-center">
+                              <div class="add-icon">
+                                <div class="add"></div>
+                              </div>
+                              点击上传
+                            </div>
+                            <!-- <div class="input_file"><input type="file"></div> -->
+                          </div>
+
+                          <!-- <div class="preview">预览区域</div> -->
+                        </div>
+                        <el-upload
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            list-type="picture-card"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                          <el-dialog :visible.sync="dialogVisible">
+                              <img width="100%" :src="dialogImageUrl" alt="">
+                          </el-dialog>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="2">
                       <div class="tip">(一张JPG格式，分辨率1024*768以上)</div>
-                      <div class="preview">预览区域<div class="del"></div></div>
+                      <!-- <div class="preview">预览区域<div class="del"><img src="@/assets/pac/delete.png" alt=""></div></div> -->
                     </td>
                   </tr>
                   <tr>
@@ -78,27 +114,82 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2">
+                    <!-- <td colspan="2">
                       <div class="idcard">
                         <div class="idcard-type">身份证复印件/扫描件</div>
-                        <div class="clicktoup"><div class="add-center"><div class="add-icon"><div class="add"></div></div>点击上传</div></div>
+                        <div class="clicktoup">
+                          <div class="add-center">
+                            <div class="add-icon">
+                              <div class="add"></div>
+                            </div>
+                              点击上传
+                          </div>
+                          <div class="input_file"><input type="file"></div>
+                        </div>
+                      </div>
+                    </td> -->
+                    <td colspan="2">
+                      <div class="up_pic">
+                        <div class="idcard">
+                          <div class="idcard-type">身份证复印件/扫描件</div>
+                          <div class="clicktoup">
+                            <div class="add-center">
+                              <div class="add-icon">
+                                <div class="add"></div>
+                              </div>
+                              点击上传
+                            </div>
+                            <!-- <div class="input_file"><input type="file"></div> -->
+                          </div>
+
+                          <!-- <div class="preview">预览区域</div> -->
+                        </div>
+                        <el-upload
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            list-type="picture-card"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                          <el-dialog :visible.sync="dialogVisible">
+                              <img width="100%" :src="dialogImageUrl" alt="">
+                          </el-dialog>
                       </div>
                     </td>
-                    
+
                   </tr>
-                  <tr>
-                    <td colspan="2"><div class="preview">预览区域</div></td>
-                  </tr>
+                  <!-- <tr> -->
+                    <!-- <td colspan="2"><div class="preview">预览区域</div></td> -->
+                  <!-- </tr> -->
                   <tr>
                     <td colspan="2">
-                      <div class="idcard">
-                        <div class="idcard-type">生活照</div>
-                        <div class="clicktoup clicktoup2"><div class="add-center"><div class="add-icon"><div class="add"></div></div>点击上传</div></div>
+                      <div class="up_pic">
+                        <div class="idcard">
+                          <div class="idcard-type">生活照</div>
+                          <div class="clicktoup clicktoup2">
+                            <div class="add-center">
+                              <div class="add-icon">
+                                <div class="add"></div>
+                              </div>
+                              点击上传
+                            </div>
+                            <!-- <div class="input_file"><input type="file"></div> -->
+                          </div>
+
+                          <!-- <div class="preview">预览区域</div> -->
+                        </div>
+                        <el-upload
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            list-type="picture-card"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                          <el-dialog :visible.sync="dialogVisible">
+                              <img width="100%" :src="dialogImageUrl" alt="">
+                          </el-dialog>
                       </div>
                     </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2"><div class="preview">预览区域</div></td>
                   </tr>
                 </table>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
@@ -107,6 +198,9 @@
           </div>
         </div>
       </div>  
+      <el-dialog :visible.sync='uploadworkVisible' width='500px'>
+        <p>提交作品出错了</p>
+      </el-dialog>
     </main> 
     <Footer></Footer>    
   </div>
@@ -142,19 +236,27 @@ export default {
         }
       ],
       picked: 0,
-      checked_item: [false,false,false,false,false,false],
-      awards_item: ['NPL 大奖','NPL 最佳编辑奖','NPL 最佳教程奖','NPL 最佳场景设置奖','NPL 3D角色制作奖','NPL 最佳开源贡献奖'],
+      checked_item: [false, false, false, false, false, false],
+      awards_item: [
+        "NPL 大奖",
+        "NPL 最佳编辑奖",
+        "NPL 最佳教程奖",
+        "NPL 最佳场景设置奖",
+        "NPL 3D角色制作奖",
+        "NPL 最佳开源贡献奖"
+      ],
       work_title: "太阳花",
       work_brief: "一朵有能量的花",
       school_name: "xxx大学",
-      aim_work: "选择您要比赛的作品"
+      aim_work: "选择您要比赛的作品",
+      uploadworkVisible: false,
+      dialogImageUrl: "",
+      dialogVisible: false
     };
   },
   computed: {
     _pass: function() {
-      if (
-        this.work_title
-      ) {
+      if (this.work_title) {
         return true;
       }
       return false;
@@ -169,6 +271,21 @@ export default {
     toLogout() {
       this.userinfo = undefined;
       localStorage.removeItem("userinfo");
+    },
+    uploadwork() {
+      if (this.work_title) {
+        this.uploadworkVisible = true;
+        return false;
+      } else {
+        return true;
+      }
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     }
   }
 };
@@ -248,37 +365,17 @@ export default {
   .preview {
     text-align: center;
     line-height: 146px;
-    width: 275px;
-    height: 146px;
+    width: 273px;
+    height: 142px;
     color: #606266;
-    position: relative;
+    position: absolute;
+    top: 69px;
     background-color: rgba(239, 239, 239, 0.3);
     border: 2px dashed rgba(0, 0, 0, 0.3);
     .del {
       position: absolute;
-      top: 12px;
-      right: 3px;
-      width: 15px;
-      height: 15px;
-      border: 2px solid #db1616;
-    }
-    .del::after {
-      content: "";
-      position: absolute;
-      top: 3px;
-      left: 4px;
-      width: 7px;
-      height: 9px;
-      background: #db1616;
-    }
-    .del::before {
-      content: "";
-      position: absolute;
-      top: -8px;
-      left: 5px;
-      width: 6px;
-      height: 4px;
-      background: #db1616;
+      top: -54px;
+      right: 4px;
     }
   }
   // 奖项选择
@@ -498,6 +595,8 @@ export default {
   }
   .idcard {
     display: flex;
+    margin-bottom: 20px;
+    // height: 190px;
     .idcard-type {
       flex: 1;
     }
@@ -509,12 +608,18 @@ export default {
       color: #606266;
       position: relative;
       border-radius: 24px;
+      .input_file {
+        position: absolute;
+        top: -15px;
+        left: -10px;
+        opacity: 0;
+      }
     }
     .clicktoup2 {
       width: 391px;
     }
   }
-  .add-center{
+  .add-center {
     width: 78px;
     height: 48px;
     line-height: 48px;
@@ -565,6 +670,28 @@ export default {
       width: 381px;
       height: 48px;
       background-color: #efefef;
+    }
+  }
+  .up_pic {
+    position: relative;
+    .el-upload {
+      position: absolute;
+      top: 0;
+      left: 90px;
+      width: 380px;
+      height: 48px;
+      opacity: 0;
+      i {
+        display: none;
+      }
+    }
+    .el-upload-list {
+      
+      .el-upload-list__item {
+        width: 270px;
+        height: 148px;
+        border: 2px dashed rgba(0, 0, 0, 0.3);
+      }
     }
   }
 }
