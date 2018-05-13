@@ -297,7 +297,6 @@ export default {
       localStorage.removeItem("userinfo");
     },
     uploadwork() {
-      debugger
       console.log(this.awords);
       if (!this.work_title) {
         this.uploadworkVisible = true;

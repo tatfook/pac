@@ -257,7 +257,7 @@ export default {
           "bearer " + JSON.parse(localStorage.getItem("token"));
         axios
           .create({
-            baseURL: "http://10.27.3.3:8900/api/wiki/models",
+            baseURL: "http://keepwork.com/api/wiki/models",
             headers: { Authorization: authorization }
           })
           .post("website_member/submitMemberApply", {
