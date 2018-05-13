@@ -20,8 +20,8 @@
                   <tr class="groups">
                     <td width='94'>参赛组别</td>
                     <td>
-                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="1"/><label for="radio_1"></label><span :class="picked == 1 ? 'group_name_sel' : 'group_name'" >学生组</span>
-                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="2"/><label for="radio_2"></label><span :class="picked == 2 ? 'group_name_sel' : 'group_name'" >公开组</span>
+                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="3"/><label for="radio_1"></label><span :class="picked == 1 ? 'group_name_sel' : 'group_name'" >学生组</span>
+                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="4"/><label for="radio_2"></label><span :class="picked == 2 ? 'group_name_sel' : 'group_name'" >公开组</span>
                     </td>
                   </tr>
                   <tr>
@@ -89,7 +89,7 @@
                   <tr>
                     <td>选择作品</td>
                     <td class="compete_works">
-                      <el-select id="my-compete-works" v-model="aim_work">
+                      <el-select id="my-compete-works" v-model="value2">
                         <el-option
                           v-for="item in myworks"
                           :key="item.value"
@@ -248,18 +248,42 @@ export default {
       work_title: "太阳花",
       work_brief: "一朵有能量的花",
       school_name: "xxx大学",
-      aim_work: "选择您要比赛的作品",
+      value2: "选择您要比赛的作品",
       uploadworkVisible: false,
       dialogImageUrl: "",
       dialogVisible: false
     };
   },
   computed: {
+    already_checked_item: function() {
+      for (let i = 0; i < this.checked_item.length; i++) {
+        if (this.checked_item[i]) {
+          return true;
+        }
+      }
+      return false;
+    },
     _pass: function() {
-      if (this.work_title) {
+      if (
+        this.work_title &&
+        this.picked &&
+        this.work_brief &&
+        this.school_name &&
+        this.value2 != "选择您要比赛的作品" &&
+        this.already_checked_item
+      ) {
         return true;
       }
       return false;
+    },
+    awords: function(){
+      let tempArr = [];
+      for(let i = 0;i < this.checked_item.length;i++){
+        if(this.checked_item[i]){
+          tempArr.push(this.awards_item[i]);
+        }
+      }
+      return tempArr.join()
     }
   },
   components: {
@@ -273,10 +297,53 @@ export default {
       localStorage.removeItem("userinfo");
     },
     uploadwork() {
-      if (this.work_title) {
+      debugger
+      console.log(this.awords);
+      if (!this.work_title) {
         this.uploadworkVisible = true;
         return false;
       } else {
+        let that = this;
+        let authorization =
+          "bearer " + JSON.parse(localStorage.getItem("token"));
+        axios
+          .create({
+            baseURL: "http://keepwork.com/api/wiki/models",
+            headers: { Authorization: authorization }
+          })
+          .post("website_works/submitWorksApply", {
+            websiteId: "5",
+            username: JSON.parse(localStorage.getItem("userinfo")).username,
+            portrait: "",
+            sex: "",
+            realname: this.user_name,
+            email: "",
+            QQId: this.qq_no,
+            cellphoneId: this.value2 + this.tel,
+            identifyCardId: this.idcard_no,
+            worksName:  this.work_title,
+            worksDesc:  this.work_brief,
+            worksLogo:  '',
+            worksFlag:  this.picked,
+            worksUrl:   '',//作品地址
+            schoolName: this.school_name,
+            awords: this.awords,//奖项
+            identifyUrl: '',
+            liveUrl: '',
+            visitCount: '',
+            voteCount: '',
+            todayVoteCount: '',
+            commentCount:''
+          })
+          .then(function(result) {
+            console.log(result);
+            console.log(JSON.parse(localStorage.getItem("userinfo")).username);
+            that.showerr = false;
+          })
+          .catch(function(error) {
+            console.log(err);
+          });
+
         return true;
       }
     },
@@ -686,7 +753,6 @@ export default {
       }
     }
     .el-upload-list {
-      
       .el-upload-list__item {
         width: 270px;
         height: 148px;

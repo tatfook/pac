@@ -162,8 +162,8 @@ export default {
     },
     toApply() {
       if (this.userinfo) {
-        // this.$router.push({ path: '/register' })
-        this.applyDialogVisible = true
+        this.$router.push({ path: '/register' })
+        // this.applyDialogVisible = true
         return
       }
       this.loginDialogVisible = true
