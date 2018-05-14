@@ -274,6 +274,7 @@ export default {
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
+            localStorage.setItem('realname', that.user_name);
             that.showerr = false;
           })
           .catch(function(error) {});
