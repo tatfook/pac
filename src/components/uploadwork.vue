@@ -28,29 +28,20 @@
                     <td>作品名称</td>
                     <td><input type="text" v-model="work_title" placeholder="请输入您的作品名称"/></td>
                   </tr>
-                  <tr>
-                    <td>作品简介</td>
-                    <td><input type="text" v-model="work_brief" placeholder="请输入作品简介"/></td>
+                  
+                    <tr class="select_items">
+                      <td><div>作品简介</div></td>
+                      <td>
+                        <div class="brief_wrap">
+                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="62" rows="8" placeholder="请输入您的作品简介..."></textarea>
+                        </div>
+                      </td>                
                   </tr>
                   <tr>
                     <td>学校名称</td>
                     <td><input type="text" v-model="school_name" placeholder="请输入您的学校全名"/></td>
                   </tr>
                   <tr>
-                    <!-- <td colspan="2">
-                      <div class="idcard">
-                        <div class="idcard-type">作品封面</div>
-                        <div class="clicktoup clicktoup2">
-                          <div class="add-center">
-                            <div class="add-icon">
-                              <div class="add"></div>
-                            </div>
-                            点击上传
-                          </div>
-                          <div class="input_file"><input type="file"></div>
-                        </div>
-                      </div>
-                    </td> -->
                     <td colspan="2">
                       <div class="up_pic">
                         <div class="idcard">
@@ -62,11 +53,9 @@
                               </div>
                               点击上传
                             </div>
-                            <!-- <div class="input_file"><input type="file"></div> -->
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
-                            <div class="preview">预览区域</div>
                           </div>
                         </div>
                         <el-upload
@@ -110,23 +99,9 @@
                     </td>
                   </tr>
                   <tr>
-                    <!-- <td colspan="2">
-                      <div class="idcard">
-                        <div class="idcard-type">身份证复印件/扫描件</div>
-                        <div class="clicktoup">
-                          <div class="add-center">
-                            <div class="add-icon">
-                              <div class="add"></div>
-                            </div>
-                              点击上传
-                          </div>
-                          <div class="input_file"><input type="file"></div>
-                        </div>
-                      </div>
-                    </td> -->
                     <td colspan="2">
                       <div class="up_pic">
-                        <div class="idcard">
+                        <div class="idcard" style="margin-bottom:0">
                           <div class="idcard-type">身份证复印件/扫描件</div>
                           <div class="clicktoup">
                             <div class="add-center">
@@ -135,11 +110,6 @@
                               </div>
                               点击上传
                             </div>
-                            <!-- <div class="input_file"><input type="file"></div> -->
-                          </div>
-                          <div class="preview-location">
-                            <div class="tip">&nbsp;</div> 
-                            <div class="preview">预览区域</div>
                           </div>
                         </div>
                         <el-upload
@@ -154,11 +124,7 @@
                           </el-dialog>
                       </div>
                     </td>
-
                   </tr>
-                  <!-- <tr> -->
-                    <!-- <td colspan="2"><div class="preview">预览区域</div></td> -->
-                  <!-- </tr> -->
                   <tr>
                     <td colspan="2">
                       <div class="up_pic">
@@ -171,11 +137,9 @@
                               </div>
                               点击上传
                             </div>
-                            <!-- <div class="input_file"><input type="file"></div> -->
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
-                            <div class="preview">预览区域</div>
                           </div>
                         </div>
                         <el-upload
@@ -331,6 +295,7 @@ export default {
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
+            console.log(that.dialogImageUrl);
             that.showerr = false;
           })
           .catch(function(error) {
@@ -419,6 +384,14 @@ export default {
 
   // 奖项选择
   .uploadwork_table .select_items {
+    .brief_wrap {
+      margin-left: 8px;
+      width: 391px;
+      .work_brief{
+        background-color: #efefef;
+        border: none;
+      }
+    }
     .item_wrap {
       display: flex;
       div {
@@ -586,6 +559,7 @@ export default {
       border: none;
       width: 360px;
       height: 50px;
+      border-radius: 4px;
       font-size: 20px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(81, 85, 92);
@@ -597,6 +571,7 @@ export default {
       border: none;
       width: 360px;
       height: 50px;
+      border-radius: 4px;
       font-size: 20px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(9, 20, 138);
@@ -634,8 +609,8 @@ export default {
   }
   .idcard {
     display: flex;
-    margin-bottom: 20px;
-    height: 200px;
+    margin-bottom: 30px;
+    // height: 200px;
     .idcard-type {
       flex: 1;
     }
@@ -663,7 +638,7 @@ export default {
       width: 389px;
       .tip {
         font-size: 12px;
-        padding:8px 90px;
+        padding: 8px 90px;
         color: #606266;
         line-height: 12px;
       }
@@ -749,11 +724,19 @@ export default {
         display: none;
       }
     }
+    div{
+      
+    }
     .el-upload-list {
       .el-upload-list__item {
-        width: 270px;
-        height: 148px;
+        width: 227px;
+        height: 127px;
+        margin: 0 9px 0 0;
+        background: #cccccc;
         border: 2px dashed rgba(0, 0, 0, 0.3);
+        label {
+          display: none;
+        }
       }
     }
   }

@@ -197,10 +197,10 @@ export default {
       errmsg: "",
       value2: "+86",
       isdisabled: false,
-      user_name: "太阳",
-      qq_no: "2307898877",
-      tel: "15767899874",
-      idcard_no: "431189677545633454"
+      user_name: "",
+      qq_no: "",
+      tel: "",
+      idcard_no: ""
     };
   },
   computed: {
@@ -449,6 +449,7 @@ export default {
       width: 364px;
       height: 60px;
       font-size: 20px;
+      border-radius: 4px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(81, 85, 92);
     }
