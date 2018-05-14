@@ -73,6 +73,7 @@ import keepwork from '@/api/keepwork'
 import 'element-ui/lib/theme-chalk/display.css'
 import login from '../login'
 import join from '../join'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'CommonBanner',
   components: {
@@ -120,7 +121,7 @@ export default {
         let username = this.userinfo.username
         keepwork.websiteMember
           .getBySiteUsername({
-            websiteId: 5,
+            websiteId: iiccWebsiteId,
             username: username
           })
           .then(result => {

@@ -165,7 +165,7 @@ import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
-
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: "register",
   data() {
@@ -255,7 +255,7 @@ export default {
         let that = this;
         keepwork.user
           .submitMemberApply({
-            websiteId: 5,
+            websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait: "",
             sex: "",
@@ -274,7 +274,7 @@ export default {
           .catch(function(error) {});
         keepwork.user
           .agreeMemberApply({
-            websiteId: "5",
+            websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait: "",
             sex: "",

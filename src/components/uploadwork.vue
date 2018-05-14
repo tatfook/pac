@@ -175,7 +175,7 @@ import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
 import axios from "axios";
-
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: "register",
   data() {
@@ -275,7 +275,7 @@ export default {
             headers: { Authorization: authorization }
           })
           .post("website_works/submitWorksApply", {
-            websiteId: "5",
+            websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),
             worksName: this.work_title,
