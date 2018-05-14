@@ -64,8 +64,10 @@
                             </div>
                             <!-- <div class="input_file"><input type="file"></div> -->
                           </div>
-
-                          <!-- <div class="preview">预览区域</div> -->
+                          <div class="preview-location">
+                            <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
+                            <div class="preview">预览区域</div>
+                          </div>
                         </div>
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
@@ -78,12 +80,6 @@
                               <img width="100%" :src="dialogImageUrl" alt="">
                           </el-dialog>
                       </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div class="tip">(一张JPG格式，分辨率1024*768以上)</div>
-                      <!-- <div class="preview">预览区域<div class="del"><img src="@/assets/pac/delete.png" alt=""></div></div> -->
                     </td>
                   </tr>
                   <tr>
@@ -141,8 +137,10 @@
                             </div>
                             <!-- <div class="input_file"><input type="file"></div> -->
                           </div>
-
-                          <!-- <div class="preview">预览区域</div> -->
+                          <div class="preview-location">
+                            <div class="tip">&nbsp;</div> 
+                            <div class="preview">预览区域</div>
+                          </div>
                         </div>
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
@@ -175,8 +173,10 @@
                             </div>
                             <!-- <div class="input_file"><input type="file"></div> -->
                           </div>
-
-                          <!-- <div class="preview">预览区域</div> -->
+                          <div class="preview-location">
+                            <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
+                            <div class="preview">预览区域</div>
+                          </div>
                         </div>
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
@@ -276,14 +276,14 @@ export default {
       }
       return false;
     },
-    awords: function(){
+    awords: function() {
       let tempArr = [];
-      for(let i = 0;i < this.checked_item.length;i++){
-        if(this.checked_item[i]){
+      for (let i = 0; i < this.checked_item.length; i++) {
+        if (this.checked_item[i]) {
           tempArr.push(this.awards_item[i]);
         }
       }
-      return tempArr.join()
+      return tempArr.join();
     }
   },
   components: {
@@ -314,19 +314,19 @@ export default {
             websiteId: "5",
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),
-            worksName:  this.work_title,
-            worksDesc:  this.work_brief,
-            worksLogo:  '',
-            worksFlag:  this.picked,
-            worksUrl:   '',//作品地址
+            worksName: this.work_title,
+            worksDesc: this.work_brief,
+            worksLogo: "",
+            worksFlag: this.picked,
+            worksUrl: "", //作品地址
             schoolName: this.school_name,
-            awords: this.awords,//奖项
-            identifyUrl: '',
-            liveUrl: '',
-            visitCount: '',
-            voteCount: '',
-            todayVoteCount: '',
-            commentCount:''
+            awords: this.awords, //奖项
+            identifyUrl: "",
+            liveUrl: "",
+            visitCount: "",
+            voteCount: "",
+            todayVoteCount: "",
+            commentCount: ""
           })
           .then(function(result) {
             console.log(result);
@@ -416,28 +416,7 @@ export default {
       transition: transform 0.2s ease-out;
     }
   }
-  .tip {
-    font-size: 12px;
-    padding-left: 90px;
-    color: #606266;
-  }
 
-  .preview {
-    text-align: center;
-    line-height: 146px;
-    width: 273px;
-    height: 142px;
-    color: #606266;
-    position: absolute;
-    top: 69px;
-    background-color: rgba(239, 239, 239, 0.3);
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    .del {
-      position: absolute;
-      top: -54px;
-      right: 4px;
-    }
-  }
   // 奖项选择
   .uploadwork_table .select_items {
     .item_wrap {
@@ -656,7 +635,7 @@ export default {
   .idcard {
     display: flex;
     margin-bottom: 20px;
-    // height: 190px;
+    height: 200px;
     .idcard-type {
       flex: 1;
     }
@@ -677,6 +656,31 @@ export default {
     }
     .clicktoup2 {
       width: 391px;
+    }
+    .preview-location {
+      position: absolute;
+      top: 50px;
+      width: 389px;
+      .tip {
+        font-size: 12px;
+        padding:8px 90px;
+        color: #606266;
+        line-height: 12px;
+      }
+      .preview {
+        text-align: center;
+        line-height: 146px;
+        width: 273px;
+        height: 144px;
+        color: #606266;
+        background-color: rgba(239, 239, 239, 0.3);
+        border: 2px dashed rgba(0, 0, 0, 0.3);
+        .del {
+          position: absolute;
+          top: -54px;
+          right: 4px;
+        }
+      }
     }
   }
   .add-center {
