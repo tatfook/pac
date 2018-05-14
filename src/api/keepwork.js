@@ -27,7 +27,8 @@ export const websiteMember = {
 }
 export const keepwork = {
   user,
-  pages
+  pages,
+  websiteMember
 }
 
 export default keepwork
