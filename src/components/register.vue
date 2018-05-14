@@ -19,7 +19,7 @@
                 <table width="476px" cellspacing="0">
                   <tr>
                     <td width='850'>姓名</td>
-                    <td colspan="2"><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
+                    <td colspan="2"><input maxlength="12" type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr>
                     <td><label for="qq">QQ号码</label></td>
