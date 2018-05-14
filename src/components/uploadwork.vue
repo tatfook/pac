@@ -174,7 +174,7 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
-import axios from "axios";
+import keepwork from "@/api/keepwork";
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: "register",
@@ -267,14 +267,7 @@ export default {
         return false;
       } else {
         let that = this;
-        let authorization =
-          "bearer " + JSON.parse(localStorage.getItem("token"));
-        axios
-          .create({
-            baseURL: "http://keepwork.com/api/wiki/models",
-            headers: { Authorization: authorization }
-          })
-          .post("website_works/submitWorksApply", {
+        keepwork.user.submitWorksApply({
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),

@@ -2,7 +2,7 @@ import axios from 'axios'
 export const keepworkEndpoint = axios.create({
   baseURL: process.env.KEEPWORK_API_PREFIX,
   headers: {
-    Authorization: '"bearer " + JSON.parse(localStorage.getItem("token"))'
+    Authorization: 'bearer ' + JSON.parse(localStorage.getItem('token'))
   }
 })
 
@@ -17,7 +17,8 @@ export const user = {
   verifyCellphoneOne: (...args) => post('/user/verifyCellphoneOne', ...args),
   getProfile: (...args) => post('/user/getProfile', ...args),
   submitMemberApply: (...args) => post('website_member/submitMemberApply', ...args),
-  agreeMemberApply: (...args) => post('website_member/agreeMemberApply', ...args)
+  agreeMemberApply: (...args) => post('website_member/agreeMemberApply', ...args),
+  submitWorksApply: (...args) => post('website_works/submitWorksApply', ...args)
 }
 export const pages = {
   insert: (...args) => post('/pages/insert', ...args)
