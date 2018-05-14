@@ -23,7 +23,7 @@
                   </tr>
                   <tr>
                     <td><label for="qq">QQ号码</label></td>
-                    <td colspan="2"><input type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
+                    <td colspan="2"><input maxlength="13" type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
@@ -38,11 +38,11 @@
                         </el-option>
                       </el-select>
                     </td>
-                    <td><input type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
+                    <td><input maxlength="11" type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
                   </tr>
                   <tr>
                     <td><label for="idcard">身份证件</label></td>
-                    <td colspan="2"><input type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
+                    <td colspan="2"><input maxlength="18" type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
                   </tr>
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
@@ -164,7 +164,7 @@ import Banner from "./common/banner";
 import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
-import axios from "axios";
+import keepwork from "@/api/keepwork";
 
 export default {
   name: "register",
@@ -190,7 +190,7 @@ export default {
         }
       ],
       loginBeforeLogin: false,
-      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      userinfo: JSON.parse(localStorage.getItem("userinfo")),
       show_agreement: false,
       registerOkVisible: false,
       showerr: false,
@@ -253,15 +253,9 @@ export default {
         this.loginBeforeLogin = true;
       } else {
         let that = this;
-        let authorization =
-          "bearer " + JSON.parse(localStorage.getItem("token"));
-        axios
-          .create({
-            baseURL: "http://keepwork.com/api/wiki/models",
-            headers: { Authorization: authorization }
-          })
-          .post("website_member/submitMemberApply", {
-            websiteId: "5",
+        keepwork.user
+          .submitMemberApply({
+            websiteId: 5,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait: "",
             sex: "",
@@ -274,10 +268,32 @@ export default {
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-            localStorage.setItem('realname', that.user_name);
+            localStorage.setItem("realname", that.user_name);
             that.showerr = false;
           })
           .catch(function(error) {});
+        keepwork.user
+          .agreeMemberApply({
+            websiteId: "5",
+            username: JSON.parse(localStorage.getItem("userinfo")).username,
+            portrait: "",
+            sex: "",
+            realname: this.user_name,
+            email: "",
+            QQId: this.qq_no,
+            cellphoneId: this.value2 + this.tel,
+            identifyCardId: this.idcard_no
+          })
+          .then(function(result) {
+            console.log(result);
+            console.log(
+              JSON.parse(localStorage.getItem("userinfo")).username + "同意成员"
+            );
+            localStorage.setItem("realname", that.user_name);
+            that.showerr = false;
+          })
+          .catch(function(error) {});
+
         this.registerOkVisible = true;
         return true;
       }
