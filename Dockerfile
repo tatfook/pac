@@ -3,7 +3,7 @@ MAINTAINER xuntian "li.zq@foxmail.com"
 COPY ./ /code/
 WORKDIR /code
 ARG NODE_ENV
-AGR KEEPWORK_LOCALE
+ARG KEEPWORK_LOCALE
 RUN npm install
 RUN npm run build
 
