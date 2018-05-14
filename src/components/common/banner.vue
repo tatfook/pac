@@ -48,7 +48,7 @@
       <div class="banner-content">
         <img src="@/assets/pac/banner-title.png" alt="">
         <div class="buttons">
-          <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="">
+          <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="" v-show="!isApplyPage">
           <a href="http://www.paracraft.cn/download?lang=zh" target="_blank" class="img-btn">
             <img src="@/assets/pac/button-download.png" alt="">
           </a>
@@ -85,7 +85,8 @@ export default {
       loginDialogVisible: false,
       joinDialogVisible: false,
       applyDialogVisible: false,
-      isLogined: this.userinfo ? true : false
+      isLogined: this.userinfo ? true : false,
+      isApplyPage: this.$route.name === 'register'
     }
   },
   methods: {

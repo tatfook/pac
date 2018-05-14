@@ -2,6 +2,8 @@ FROM xuntian/node-yarn as pac_builder
 MAINTAINER xuntian "li.zq@foxmail.com"
 COPY ./ /code/
 WORKDIR /code
+ARG NODE_ENV
+ARG KEEPWORK_LOCALE
 RUN npm install
 RUN npm run build
 
