@@ -17,6 +17,9 @@ export const user = {
 export const pages = {
   insert: (...args) => post('/pages/insert', ...args)
 }
+export const websiteMember = {
+  getBySiteUsername: (...args) => post('/website_member/getBySiteUsername', ...args)
+}
 export const keepwork = {
   user,
   pages

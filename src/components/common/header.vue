@@ -57,7 +57,7 @@
         <li>
           <a href='http://www.paracraft.cn/download?lang=zh' target="_blank">相关下载</a>
         </li>
-        <li class="join-btn" @click="toApply"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
+        <li class="join-btn" @click="toApply" v-show="!isApplyPage"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="profile" v-if="userinfo && userinfo.portrait">
           <el-dropdown placement='bottom' trigger='click'>
             <span class="el-dropdown-link">
@@ -116,7 +116,7 @@
           <el-dropdown-item>
             <a href="http://www.paracraft.cn/download?lang=zh">相关下载</a>
           </el-dropdown-item>
-          <el-dropdown-item command='apply'>
+          <el-dropdown-item command='apply' v-show="!isApplyPage">
             我要报名
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -150,7 +150,8 @@ export default {
       joinDialogVisible: false,
       applyDialogVisible: false,
       activeRoutePage: this.$route.name,
-      isLogined: this.userinfo ? true : false
+      isLogined: this.userinfo ? true : false,
+      isApplyPage: this.$route.name === 'register'
     }
   },
   props: {
