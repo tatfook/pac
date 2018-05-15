@@ -7,29 +7,34 @@ export const keepworkEndpoint = axios.create({
 })
 
 export const post = (...args) =>
-  keepworkEndpoint
-    .post(...args)
-    .then(res => res.data)
+  keepworkEndpoint.post(...args).then(res => res.data)
 
 export const user = {
   login: (...args) => post('/user/login', ...args),
   register: (...args) => post('/user/register', ...args),
   verifyCellphoneOne: (...args) => post('/user/verifyCellphoneOne', ...args),
   getProfile: (...args) => post('/user/getProfile', ...args),
-  submitMemberApply: (...args) => post('website_member/submitMemberApply', ...args),
-  agreeMemberApply: (...args) => post('website_member/agreeMemberApply', ...args),
+  submitMemberApply: (...args) =>
+    post('website_member/submitMemberApply', ...args),
+  agreeMemberApply: (...args) =>
+    post('website_member/agreeMemberApply', ...args),
   submitWorksApply: (...args) => post('website_works/submitWorksApply', ...args)
 }
 export const pages = {
   insert: (...args) => post('/pages/insert', ...args)
 }
 export const websiteMember = {
-  getBySiteUsername: (...args) => post('/website_member/getBySiteUsername', ...args)
+  getBySiteUsername: (...args) =>
+    post('/website_member/getBySiteUsername', ...args)
+}
+export const websiteWorks = {
+  getByUsername: (...args) => post('/website_works/getByUsername', ...args)
 }
 export const keepwork = {
   user,
   pages,
-  websiteMember
+  websiteMember,
+  websiteWorks
 }
 
 export default keepwork

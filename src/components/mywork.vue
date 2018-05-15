@@ -1,22 +1,70 @@
 <template>
-  <div>
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>   
+  <div class="myworks">
+    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
       <Banner></Banner>
-      <div class="myworks">
-        <h2>上传作品功能开发中，敬请期待</h2>
+      <div class="main-container">
+        <div class="decoration hidden-xs-only">
+          <div class="white-bg"></div>
+          <div class="transparent-bg"></div>
+        </div>
+        <div class="container">
+          <h1 class="title">
+            <img src="@/assets/pac/my_works_title.png" alt="">
+          </h1>
+          <div class="works">
+            <div class="work-item" v-for="(work, index) in myworksArr" :key="index">
+              <div class="work-title">
+                <h3>{{work.worksName}}</h3>
+                <p class="time">{{work.updateDate}}</p>
+                <span class="id-label">{{(work.worksFlag === 4) ? `B ${work._id}` : `A ${work._id}`}}</span>
+              </div>
+              <div class="work-content">
+                <img class="profile" :src='work.worksLogo' alt="">
+                <div class="info">
+                  <div class="info-item">
+                    <span class="label">参赛组别：</span>
+                    <div class="info-content">{{(work.worksFlag === 4) ? '学生组' : '公开组'}}</div>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">参赛奖项：</span>
+                    <div class="info-content">
+                      <span class="ward-item" v-for="(ward, index) in work.awords.split(',')" :key='index'>{{ward}}</span>
+                    </div>
+                  </div>
+                  <div class="info-item intro">
+                    <span class="label">作品简介：</span>
+                    <div class="info-content">{{work.worksDesc}}</div>
+                  </div>
+                  <div class="other-info clearfix">
+                    <div class="pull-left">
+                      <span class="other-info-item"><img src="@/assets/pac/icon_browse.png" alt=""> {{work.visitCount || 0}}</span>
+                      <span class="other-info-item"><img src="@/assets/pac/icon_comment.png" alt=""> {{work.commentCount || 0}}</span>
+                      <span class="other-info-item"><img src="@/assets/pac/icon_vote.png" alt=""> {{work.starCount || 0}}</span>
+                    </div>
+                    <div class="pull-right">
+                      分享
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
     <Footer></Footer>
   </div>
 </template>
 <script>
-import Header from "./common/header";
-import Banner from "./common/banner";
-import Footer from "./common/footer";
-import "element-ui/lib/theme-chalk/display.css";
+import keepwork from '@/api/keepwork'
+import Header from './common/header'
+import Banner from './common/banner'
+import Footer from './common/footer'
+import 'element-ui/lib/theme-chalk/display.css'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
-  name: "register",
+  name: 'register',
   components: {
     Header,
     Banner,
@@ -24,8 +72,12 @@ export default {
   },
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem('userinfo'))
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      myworksArr: []
     }
+  },
+  mounted() {
+    this.getAllWorks()
   },
   methods: {
     reGetUserinfo() {
@@ -34,10 +86,223 @@ export default {
     toLogout() {
       this.userinfo = undefined
       localStorage.removeItem('userinfo')
+    },
+    getAllWorks() {
+      keepwork.websiteWorks
+        .getByUsername({
+          websiteId: iiccWebsiteId
+        })
+        .then(result => {
+          console.log(result)
+          if (result.data) {
+            this.myworksArr = result.data
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
-};
+}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.main-container {
+  background-color: #f5f5f5;
+  margin-bottom: -70px;
+}
+.container,
+.decoration {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1080px;
+  font-size: 14px;
+  padding: 0 50px 50px;
+  background-color: #fff;
+  position: relative;
+  top: -95px;
+  box-sizing: border-box;
+}
+.container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: transparent;
+  background-size: 20px 20px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 5.6px,
+    #d8d8d8 5.6px,
+    #d8d8d8 6.1px,
+    #3b3b3b 6.1px,
+    #3b3b3b 6.6px,
+    #d8d8d8 7.1px
+  );
+}
+h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #303133;
+}
+p {
+  margin: 0;
+}
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.decoration {
+  display: flex;
+  position: relative;
+  top: -95px;
+  height: 40px;
+  padding: 0;
+  background-color: transparent;
+  .white-bg {
+    background-color: #fff;
+    flex: 1;
+  }
+  .transparent-bg {
+    width: 40px;
+    background-color: transparent;
+    position: relative;
+  }
+  .transparent-bg::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 27px;
+    background-color: #fff;
+    position: absolute;
+    left: 15px;
+    bottom: 25px;
+    box-shadow: 0px 8px 0px 0px #afafaf;
+  }
+  .transparent-bg::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 27px;
+    background-color: #fff;
+    position: absolute;
+    left: 55px;
+    bottom: -12px;
+    box-shadow: 0px 8px 0px 0px #afafaf;
+  }
+}
+.title {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 40px;
+  margin-bottom: 50px;
+  position: relative;
+}
+.title::before {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  background-color: #cfcfcf;
+}
+.title::after {
+  content: '';
+  display: inline-block;
+  height: 8px;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  border: 15px solid #fff;
+  border-width: 0 15px;
+  bottom: -8px;
+  background-color: #cfcfcf;
+}
+.work-item {
+  margin-bottom: 30px;
+}
+.work-title {
+  padding: 6px 20px;
+  background-color: #f5f5f5;
+  position: relative;
+  border: 2px solid #e5e5e5;
+  .time {
+    font-size: 12px;
+    color: #909399;
+    margin-top: 5px;
+  }
+}
+.id-label {
+  display: inline-block;
+  width: 60px;
+  height: 26px;
+  background-color: #3b5bed;
+  color: #fff;
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  top: 12px;
+  text-align: center;
+  line-height: 26px;
+}
+.work-content {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e5e5e5;
+  border-top: none;
+}
+.profile {
+  width: 280px;
+  height: 160px;
+  object-fit: cover;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+.info {
+  flex: 1;
+}
+.info-item {
+  display: flex;
+  margin-bottom: 5px;
+  .label {
+    color: #909399;
+    flex-shrink: 0;
+  }
+  .info-content {
+    color: #303133;
+  }
+}
+.intro {
+  margin-top: 10px;
+  .info-content {
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+}
+.other-info {
+  margin-top: 40px;
+  color: #b0b4bb;
+  .other-info-item {
+    margin-right: 15px;
+  }
+  img {
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+}
 </style>
 
