@@ -19,15 +19,15 @@
                 <table width="476px" cellspacing="0">
                   <tr>
                     <td width='850'>姓名</td>
-                    <td colspan="2"><input maxlength="12" type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
+                    <td colspan="2"><input maxlength="15" type="text" id="name" class="inputsty" v-model.trim="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr>
-                    <td><label for="qq">QQ号码</label></td>
-                    <td colspan="2"><input maxlength="13" type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
+                    <td><label for="qq">邮箱</label></td>
+                    <td colspan="2"><input maxlength="20" type="text" id="qq" class="inputsty" v-model.trim="email" placeholder="请输入您的邮箱地址"/></td>
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
-                    <td width="80">
+                    <td width="151">
                      <el-select class="phone-suffix-select" v-model="value2">
                         <el-option
                           v-for="item in options"
@@ -38,11 +38,11 @@
                         </el-option>
                       </el-select>
                     </td>
-                    <td><input maxlength="11" type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
+                    <td><input maxlength="11" type="text" id="tel" class="inputtel" v-model.trim="tel" placeholder="请输入您的手机号码"/></td>
                   </tr>
                   <tr>
-                    <td><label for="idcard">身份证件</label></td>
-                    <td colspan="2"><input maxlength="18" type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
+                    <td><label for="idcard">证件号码</label></td>
+                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="idcard_no" placeholder="请输入身份证、护照等有效证件号码"/></td>
                   </tr>
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
@@ -165,7 +165,7 @@ import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
   data() {
@@ -173,21 +173,20 @@ export default {
       options: [
         {
           value: "+86",
-          label: "+86"
-        },
-        // {
-        //   value: "+87",
-        //   label: "+87",
-        //   disabled: true
-        // },
-        {
-          value: "+88",
-          label: "+88"
+          label: "China (中国) +86"
         },
         {
-          value: "+89",
-          label: "+89"
-        }
+          value: "+263",
+          label: "Zimbabwe +263"
+        },
+        {
+          value: "+358",
+          label: "Åland Islands +358"
+        },
+        {
+          value: "+93",
+          label: "Afghanistan (‫افغانستان‬‎) +93"
+        },
       ],
       loginBeforeLogin: false,
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
@@ -198,7 +197,7 @@ export default {
       value2: "+86",
       isdisabled: false,
       user_name: "",
-      qq_no: "",
+      email: "",
       tel: "",
       idcard_no: ""
     };
@@ -207,7 +206,7 @@ export default {
     _pass: function() {
       if (
         this.user_name &&
-        this.qq_no &&
+        this.email &&
         this.tel &&
         this.idcard_no &&
         this.isdisabled
@@ -234,20 +233,24 @@ export default {
       this.userinfo = undefined;
       localStorage.removeItem("userinfo");
     },
+    showErr(err) {
+      this.showerr = true;
+      this.errmsg = err;
+    },
     register() {
-      if (!/^[1-9][0-9]{4,13}$/.test(this.qq_no)) {
-        this.showerr = true;
-        this.errmsg = "qq号错误";
-        return false;
-      } else if (!/^1\d{10}$/.test(this.tel)) {
-        this.showerr = true;
-        this.errmsg = "手机号码错误";
+      if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
+        this.showErr("姓名中不能包含特殊字符");
         return false;
       } else if (
-        !/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)
+        !/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.email)
       ) {
-        this.showerr = true;
-        this.errmsg = "身份证不正确";
+        this.showErr("邮箱地址不正确");
+        return false;
+      } else if (!/^1\d{10}$/.test(this.tel)) {
+        this.showErr("手机号码错误");
+        return false;
+      } else if (!/\d{5,}$/g.test(this.idcard_no)) {
+        this.showErr("证件号码不正确");
         return false;
       } else if (!localStorage.getItem("userinfo")) {
         this.loginBeforeLogin = true;
@@ -260,8 +263,8 @@ export default {
             portrait: "",
             sex: "",
             realname: this.user_name,
-            email: "",
-            QQId: this.qq_no,
+            email: this.email,
+            QQId: "",
             cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
           })
@@ -279,8 +282,8 @@ export default {
             portrait: "",
             sex: "",
             realname: this.user_name,
-            email: "",
-            QQId: this.qq_no,
+            email: this.email,
+            QQId: "",
             cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
           })
@@ -513,14 +516,24 @@ export default {
       outline: none;
     }
     .inputtel {
-      width: 278px;
-      margin-left: 8px;
+      // width: 278px;
+      width: 213px;
+      margin-left: 2px;
     }
   }
   .slash {
     height: 20px;
     border: 1px solid red;
   }
+  
 }
+.el-popper[x-placement^=bottom] {
+    margin-top: 3px;
+}
+.el-scrollbar__view{
+  height: 260px;
+  overflow-y: scroll;
+}
+
 </style>
 

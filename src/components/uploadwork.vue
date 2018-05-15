@@ -99,9 +99,9 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2">
+                    <td colspan="2" style="padding-bottom:0">
                       <div class="up_pic">
-                        <div class="idcard" style="margin-bottom:0">
+                        <div class="idcard" style="margin-bottom:13px;">
                           <div class="idcard-type">身份证复印件/扫描件</div>
                           <div class="clicktoup">
                             <div class="add-center">
@@ -722,6 +722,8 @@ export default {
       
     }
     .el-upload-list {
+      display: block;
+      // height: 130px;
       .el-upload-list__item {
         width: 227px;
         height: 127px;
@@ -730,6 +732,9 @@ export default {
         border: 2px dashed rgba(0, 0, 0, 0.3);
         label {
           display: none;
+        }
+        .el-upload-list__item-thumbnail {
+          object-fit: cover;
         }
       }
     }
