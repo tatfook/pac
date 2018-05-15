@@ -143,6 +143,8 @@
                           </div>
                         </div>
                         <el-upload
+                            :before-upload="beforeUpload"
+                            :http-request="httpRequest"
                             action="https://jsonplaceholder.typicode.com/posts/"
                             list-type="picture-card"
                             :on-preview="handlePictureCardPreview"
@@ -175,6 +177,7 @@ import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
+import gitLabAPIGenerator from "@/api/node-gitlab-api"
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: "register",
@@ -184,15 +187,6 @@ export default {
         {
           value: "1",
           label: "1太阳"
-        },
-        {
-          value: "2",
-          label: "2星星",
-          disabled: true
-        },
-        {
-          value: "3",
-          label: "3月亮"
         },
         {
           value: "4",
@@ -215,7 +209,8 @@ export default {
       value2: "选择您要比赛的作品",
       uploadworkVisible: false,
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      filePath: ''
     };
   },
   computed: {
@@ -256,6 +251,17 @@ export default {
     Footer
   },
   methods: {
+    beforeUpload(file,fileList){
+      console.log(file);
+      this.fileName = file.name
+      this.filePath = file
+    },
+    httpRequest(){
+      let {projectId, dataSourceToken, apiBaseUrl, dataSourceUsername} = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      console.log(projectId, dataSourceToken)
+      let api = gitLabAPIGenerator({apiBaseUrl, dataSourceToken})
+      api.projects.repository.files.create(projectId, filePath, branch = 'master', options)
+    },
     toLogout() {
       this.userinfo = undefined;
       localStorage.removeItem("userinfo");

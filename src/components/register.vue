@@ -165,7 +165,7 @@ import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
-import areaCode from "@/assets/area_code.js"
+import areaCode from "@/assets/area_code.js";
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
@@ -240,6 +240,7 @@ export default {
         this.loginBeforeLogin = true;
       } else {
         let that = this;
+        that.showerr = false;
         keepwork.user
           .submitMemberApply({
             websiteId: iiccWebsiteId,
@@ -256,32 +257,37 @@ export default {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
             localStorage.setItem("realname", that.user_name);
-            that.showerr = false;
-          })
-          .catch(function(error) {});
-        keepwork.user
-          .agreeMemberApply({
-            websiteId: iiccWebsiteId,
-            username: JSON.parse(localStorage.getItem("userinfo")).username,
-            portrait: "",
-            sex: "",
-            realname: this.user_name,
-            email: this.email,
-            QQId: "",
-            cellphoneId: this.value2 + this.tel,
-            identifyCardId: this.idcard_no
-          })
-          .then(function(result) {
-            console.log(result);
-            console.log(
-              JSON.parse(localStorage.getItem("userinfo")).username + "同意成员"
-            );
-            localStorage.setItem("realname", that.user_name);
-            that.showerr = false;
+            console.log(result.error.id)
+            if (result.error.id == 0) {
+              keepwork.user
+                .agreeMemberApply({
+                  websiteId: iiccWebsiteId,
+                  username: JSON.parse(localStorage.getItem("userinfo"))
+                    .username,
+                  portrait: "",
+                  sex: "",
+                  realname: that.user_name,
+                  email: that.email,
+                  QQId: "",
+                  cellphoneId: that.value2 + that.tel,
+                  identifyCardId: that.idcard_no
+                })
+                .then(function(result) {
+                  console.log(result);
+                  console.log(
+                    JSON.parse(localStorage.getItem("userinfo")).username +
+                      "同意成员"
+                  );
+                  if (result.error.id == 0) {
+                    localStorage.setItem("realname", that.user_name);
+                    that.registerOkVisible = true;
+                  }
+                })
+                .catch(function(error) {});
+            }
           })
           .catch(function(error) {});
 
-        this.registerOkVisible = true;
         return true;
       }
     }
@@ -509,15 +515,13 @@ export default {
     height: 20px;
     border: 1px solid red;
   }
-  
 }
-.el-popper[x-placement^=bottom] {
-    margin-top: 3px;
+.el-popper[x-placement^="bottom"] {
+  margin-top: 3px;
 }
-.el-scrollbar__view{
+.el-scrollbar__view {
   height: 260px;
   overflow-y: scroll;
 }
-
 </style>
 
