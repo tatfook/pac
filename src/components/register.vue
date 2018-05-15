@@ -165,29 +165,13 @@ import Footer from "./common/footer";
 import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
+import areaCode from "@/assets/area_code.js"
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
   data() {
     return {
-      options: [
-        {
-          value: "+86",
-          label: "China (中国) +86"
-        },
-        {
-          value: "+263",
-          label: "Zimbabwe +263"
-        },
-        {
-          value: "+358",
-          label: "Åland Islands +358"
-        },
-        {
-          value: "+93",
-          label: "Afghanistan (‫افغانستان‬‎) +93"
-        },
-      ],
+      options: areaCode,
       loginBeforeLogin: false,
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
       show_agreement: false,
