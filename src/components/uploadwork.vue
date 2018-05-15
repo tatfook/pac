@@ -33,7 +33,7 @@
                       <td><div>作品简介</div></td>
                       <td>
                         <div class="brief_wrap">
-                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="62" rows="8" placeholder="请输入您的作品简介..."></textarea>
+                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="7" placeholder="请输入您的作品简介..."></textarea>
                         </div>
                       </td>                
                   </tr>
@@ -383,6 +383,7 @@ export default {
       .work_brief{
         background-color: #efefef;
         border: none;
+        padding: 8px;
       }
     }
     .item_wrap {
