@@ -61,7 +61,7 @@
       </el-dialog>
       <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
-    </el-dialog>
+      </el-dialog>
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
       </el-dialog>
@@ -237,7 +237,7 @@ export default {
     reGetUserinfo() {
       this.loginDialogVisible = false;
       this.joinDialogVisible = false;
-      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
     },
     register() {
       if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
@@ -258,8 +258,6 @@ export default {
         this.showErr("证件号码不正确");
         return false;
       } else if (!localStorage.getItem("userinfo")) {
-        // this.loginBeforeLogin = true;
-        // this.reminder = "您还没有登录，请先登录";
         this.loginDialogVisible = true;
       } else {
         let that = this;
