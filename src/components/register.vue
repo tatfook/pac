@@ -60,7 +60,7 @@
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
       </el-dialog>
       <el-dialog :visible.sync='loginBeforeLogin' width='500px'>
-        <p style="text-align: center;">您还没有登录，请先登录</p>
+        <p style="text-align: center;">{{reminder}}</p>
       </el-dialog>
       <el-dialog :visible.sync='show_agreement' width='500px' class="agreement-sty">
         <div>
@@ -183,7 +183,8 @@ export default {
       user_name: "",
       email: "",
       tel: "",
-      idcard_no: ""
+      idcard_no: "",
+      reminder:''
     };
   },
   computed: {
@@ -238,6 +239,7 @@ export default {
         return false;
       } else if (!localStorage.getItem("userinfo")) {
         this.loginBeforeLogin = true;
+        this.reminder = '您还没有登录，请先登录'
       } else {
         let that = this;
         that.showerr = false;
@@ -281,9 +283,15 @@ export default {
                   if (result.error.id == 0) {
                     localStorage.setItem("realname", that.user_name);
                     that.registerOkVisible = true;
+                  }else{
+                    that.loginBeforeLogin = true;
+                    that.reminder = '网络错误，请稍后重试!!'
                   }
                 })
                 .catch(function(error) {});
+            }else{
+              that.loginBeforeLogin = true;
+              that.reminder = '网络错误，请稍后重试!'
             }
           })
           .catch(function(error) {});

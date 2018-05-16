@@ -314,7 +314,7 @@ export const areaCode = [{
   label: 'Kiribati +686',
   value: '+686'
 }, {
-  label: 'Kosovo =383',
+  label: 'Kosovo +383',
   value: '+383'
 }, {
   label: 'Kuwait (الكويت‎) +965',
