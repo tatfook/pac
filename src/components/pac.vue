@@ -529,13 +529,6 @@ export default {
     }
   },
   methods: {
-    toApply() {
-      if (this.userinfo) {
-        this.applyDialogVisible = true
-        return
-      }
-      this.loginDialogVisible = true
-    },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
