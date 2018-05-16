@@ -5,10 +5,12 @@
       恭喜你，报名成功！
     </h1>
     <div class="form">
-      <img src="@/assets/pac/flag.png" alt="">
-      <p class="error-msg" v-show="loginErrMsg">{{loginErrMsg}}</p>
-      <div class="login-button" @click='toUploadWork'>
+      <!-- <img src="@/assets/pac/flag.png" alt=""> -->  
+      <!-- <div class="login-button" @click='toUploadWork'>
         去上传作品
+      </div> -->
+      <div class="login-button" @click='toUploadWork'>
+        确定
       </div>
     </div>
   </div>
@@ -21,7 +23,6 @@ export default {
     return {
       username: '',
       password: '',
-      loginErrMsg: ''
     }
   },
   methods: {
@@ -29,7 +30,8 @@ export default {
       this.$emit('close')
     },
     toUploadWork(){
-        this.$router.push({ path: '/uploadwork' })
+        // this.$router.push({ path: '/uploadwork' })
+        this.$router.push({ path: '/' })
     }
   }
 }

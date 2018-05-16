@@ -27,7 +27,7 @@
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
-                    <td width="151">
+                    <td width="151" class="tel-prefix-sty">
                      <el-select class="phone-suffix-select" v-model="value2">
                         <el-option
                           v-for="item in options"
@@ -542,6 +542,14 @@ export default {
     height: 20px;
     border: 1px solid red;
   }
+  .tel-prefix-sty{
+    .el-input{
+      .el-input__inner{
+        padding:0 25px 0 16px;
+
+      }
+    }
+}
 }
 .el-popper[x-placement^="bottom"] {
   margin-top: 3px;
@@ -550,5 +558,18 @@ export default {
   height: 260px;
   overflow-y: scroll;
 }
+.el-dialog{
+  position: relative;
+  .el-dialog__header{
+    .el-dialog__headerbtn{
+      .el-icon-close{
+        position: absolute;
+        top: -14px;
+        right: -10px;
+      }
+    }
+  }
+}
+
 </style>
 
