@@ -87,7 +87,6 @@ export default {
   },
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem('userinfo')),
       myworksArr: [],
       uploadDialogVisible: false,
       userinfo: JSON.parse(localStorage.getItem('userinfo'))

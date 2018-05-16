@@ -1,13 +1,20 @@
 import axios from 'axios'
 export const keepworkEndpoint = axios.create({
-  baseURL: process.env.KEEPWORK_API_PREFIX,
-  headers: {
-    Authorization: 'bearer ' + JSON.parse(localStorage.getItem('token'))
-  }
+  baseURL: process.env.KEEPWORK_API_PREFIX
 })
 
-export const post = (...args) =>
-  keepworkEndpoint.post(...args).then(res => res.data)
+export const getToken = () => {
+  let token = JSON.parse(localStorage.getItem('token'))
+  return {
+    headers: { Authorization: `Bearer ${token}` }
+  }
+}
+
+export const post = (...args) => {
+  args.push(getToken())
+  console.log(args)
+  return keepworkEndpoint.post(...args).then(res => res.data)
+}
 
 export const user = {
   login: (...args) => post('/user/login', ...args),
