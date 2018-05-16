@@ -2,7 +2,7 @@
   <div class="myworks">
     <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
-      <Banner></Banner>
+      <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       <div class="main-container">
         <div class="decoration hidden-xs-only">
           <div class="white-bg"></div>
