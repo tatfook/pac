@@ -1,6 +1,6 @@
 <template>
   <div class="register-wrap">
-    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>   
+    <Header :userinfo='userinfo' @onLogOut='toLogout' ref="header"></Header>   
     <main>
       <Banner :userinfo='userinfo'></Banner>
       <div class="register-container">
@@ -56,6 +56,12 @@
           </div>
         </div>
       </div>
+      <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
+        <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
+      </el-dialog>
+      <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
+      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
+    </el-dialog>
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
       </el-dialog>
@@ -163,6 +169,8 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import registerok from "./register-ok";
+import login from "./login";
+import join from "./join";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import areaCode from "@/assets/area_code.js";
@@ -176,6 +184,8 @@ export default {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
       show_agreement: false,
       registerOkVisible: false,
+      loginDialogVisible: false,
+      joinDialogVisible: false,
       showerr: false,
       errmsg: "",
       value2: "+86",
@@ -184,7 +194,7 @@ export default {
       email: "",
       tel: "",
       idcard_no: "",
-      reminder:''
+      reminder: ""
     };
   },
   computed: {
@@ -205,6 +215,8 @@ export default {
     Header,
     Banner,
     Footer,
+    login,
+    join,
     registerok
   },
   methods: {
@@ -222,6 +234,11 @@ export default {
       this.showerr = true;
       this.errmsg = err;
     },
+    reGetUserinfo() {
+      this.loginDialogVisible = false;
+      this.joinDialogVisible = false;
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+    },
     register() {
       if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
         this.showErr("姓名中不能包含特殊字符");
@@ -231,15 +248,19 @@ export default {
       ) {
         this.showErr("邮箱地址不正确");
         return false;
-      } else if (!/^1\d{10}$/.test(this.tel)) {
+      } else if (this.value2 == "+86" && !/^1\d{10}$/.test(this.tel)) {
+        this.showErr("手机号码错误");
+        return false;
+      } else if (this.value2 != "+86" && !/\d{4,}$/.test(this.tel)) {
         this.showErr("手机号码错误");
         return false;
       } else if (!/\d{5,}$/g.test(this.idcard_no)) {
         this.showErr("证件号码不正确");
         return false;
       } else if (!localStorage.getItem("userinfo")) {
-        this.loginBeforeLogin = true;
-        this.reminder = '您还没有登录，请先登录'
+        // this.loginBeforeLogin = true;
+        // this.reminder = "您还没有登录，请先登录";
+        this.loginDialogVisible = true;
       } else {
         let that = this;
         that.showerr = false;
@@ -259,7 +280,7 @@ export default {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
             localStorage.setItem("realname", that.user_name);
-            console.log(result.error.id)
+            console.log(result.error.id);
             if (result.error.id == 0) {
               keepwork.user
                 .agreeMemberApply({
@@ -283,15 +304,15 @@ export default {
                   if (result.error.id == 0) {
                     localStorage.setItem("realname", that.user_name);
                     that.registerOkVisible = true;
-                  }else{
+                  } else {
                     that.loginBeforeLogin = true;
-                    that.reminder = '网络错误，请稍后重试!!'
+                    that.reminder = "网络错误，请稍后重试!!";
                   }
                 })
                 .catch(function(error) {});
-            }else{
+            } else {
               that.loginBeforeLogin = true;
-              that.reminder = '网络错误，请稍后重试!'
+              that.reminder = "网络错误，请稍后重试!";
             }
           })
           .catch(function(error) {});
