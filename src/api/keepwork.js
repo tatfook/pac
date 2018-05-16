@@ -35,7 +35,8 @@ export const websiteMember = {
     post('/website_member/getBySiteUsername', ...args)
 }
 export const websiteWorks = {
-  getByUsername: (...args) => post('/website_works/getByUsername', ...args)
+  getByUsername: (...args) => post('/website_works/getByUsername', ...args),
+  search: (...args) => post('/website_works/search', ...args)
 }
 export const keepwork = {
   user,
