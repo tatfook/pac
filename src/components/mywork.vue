@@ -17,7 +17,7 @@
               <div class="work-title">
                 <h3>{{work.worksName}}</h3>
                 <p class="time">{{formatDate(work.updateDate)}}</p>
-                <span class="id-label">{{work._id}}</span>
+                <span class="id-label" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
               </div>
               <div class="work-content">
                 <img class="profile" :src='work.worksLogo' alt="">
@@ -286,6 +286,9 @@ p {
   top: 12px;
   text-align: center;
   line-height: 26px;
+}
+.id-label.warning{
+  background-color: #e25555;
 }
 .work-content {
   display: flex;
