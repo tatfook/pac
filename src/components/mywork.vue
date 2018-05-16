@@ -17,7 +17,7 @@
               <div class="work-title">
                 <h3>{{work.worksName}}</h3>
                 <p class="time">{{formatDate(work.updateDate)}}</p>
-                <span class="id-label" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
+                <span class="id-label" :title="(work.worksState === 'normal') ? '作品编号': '正在审核中'" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
               </div>
               <div class="work-content">
                 <img class="profile" :src='work.worksLogo' alt="">
@@ -38,9 +38,12 @@
                   </div>
                   <div class="other-info clearfix">
                     <div class="pull-left">
-                      <span class="other-info-item"><img src="@/assets/pac/icon_browse.png" alt=""> {{work.visitCount || 0}}</span>
-                      <span class="other-info-item"><img src="@/assets/pac/icon_comment.png" alt=""> {{work.commentCount || 0}}</span>
-                      <span class="other-info-item"><img src="@/assets/pac/icon_vote.png" alt=""> {{work.starCount || 0}}</span>
+                      <span class="other-info-item">
+                        <i class="iconfont icon-visit"></i>{{work.visitCount || 0}}</span>
+                      <span class="other-info-item">
+                        <i class="iconfont icon-comment"></i>{{work.commentCount || 0}}</span>
+                      <span class="other-info-item">
+                        <i class="iconfont icon-star"></i>{{work.starCount || 0}}</span>
                     </div>
                     <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
                       <span class="share-trigger-btn" slot="reference">分享</span>
@@ -262,6 +265,11 @@ p {
 }
 .work-item {
   margin-bottom: 30px;
+  transition: all 0.5s;
+}
+.work-item:hover {
+  transition: all 0.5s;
+  box-shadow: 0px 8px 0px 0px #e5e5e5;
 }
 .work-title {
   padding: 6px 20px;
@@ -286,13 +294,26 @@ p {
   top: 12px;
   text-align: center;
   line-height: 26px;
+  z-index: 0;
 }
-.id-label.warning{
+.id-label::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #3b5bed;
+  z-index: -1;
+}
+.id-label.warning,
+.id-label.warning::before {
   background-color: #e25555;
 }
 .work-content {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   padding: 20px;
   border: 2px solid #e5e5e5;
   border-top: none;
@@ -306,6 +327,7 @@ p {
 }
 .info {
   flex: 1;
+  position: relative;
 }
 .info-item {
   display: flex;
@@ -322,7 +344,6 @@ p {
   }
 }
 .intro {
-  margin-top: 10px;
   .info-content {
     -webkit-line-clamp: 2;
     overflow: hidden;
@@ -331,14 +352,18 @@ p {
   }
 }
 .other-info {
-  margin-top: 40px;
   color: #b0b4bb;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
   .other-info-item {
     margin-right: 15px;
   }
-  img {
+  .iconfont {
+    font-size: 24px;
     vertical-align: middle;
-    margin-right: 2px;
+    margin-right: 5px;
   }
 }
 .share-trigger-btn {
@@ -348,7 +373,7 @@ p {
   cursor: pointer;
   color: #019fe8;
 }
-.empty{
+.empty {
   text-align: center;
 }
 </style>
