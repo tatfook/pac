@@ -12,12 +12,12 @@
           <h1 class="title">
             <img src="@/assets/pac/my_works_title.png" alt="">
           </h1>
-          <div class="works">
+          <div class="works" v-if="myworksArr.length > 0">
             <div class="work-item" v-for="(work, index) in myworksArr" :key="index">
               <div class="work-title">
                 <h3>{{work.worksName}}</h3>
-                <p class="time">{{work.updateDate}}</p>
-                <span class="id-label">{{(work.worksFlag === 4) ? `B ${work._id}` : `A ${work._id}`}}</span>
+                <p class="time">{{formatDate(work.updateDate)}}</p>
+                <span class="id-label">{{work._id}}</span>
               </div>
               <div class="work-content">
                 <img class="profile" :src='work.worksLogo' alt="">
@@ -42,14 +42,24 @@
                       <span class="other-info-item"><img src="@/assets/pac/icon_comment.png" alt=""> {{work.commentCount || 0}}</span>
                       <span class="other-info-item"><img src="@/assets/pac/icon_vote.png" alt=""> {{work.starCount || 0}}</span>
                     </div>
-                    <div class="pull-right">
-                      分享
-                    </div>
+                    <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
+                      <span class="share-trigger-btn" slot="reference">分享</span>
+                      <div :id="'work'+work._id" class="kp-social-share"></div>
+                    </el-popover>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="empty" v-if="myworksArr.length <= 0">
+            <p>还没有上传过作品
+              <span class="fake-btn" @click="toUpload">立马上传</span>
+            </p>
+          </div>
+          <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
+            <h1>上传作品</h1>
+            <p>上传作品功能开发中， 敬请期待</p>
+          </el-dialog>
         </div>
       </div>
     </main>
@@ -62,6 +72,8 @@ import Header from './common/header'
 import Banner from './common/banner'
 import Footer from './common/footer'
 import 'element-ui/lib/theme-chalk/display.css'
+import 'social-share.js/dist/js/social-share.min.js'
+import 'social-share.js/dist/css/share.min.css'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'register',
@@ -73,7 +85,9 @@ export default {
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem('userinfo')),
-      myworksArr: []
+      myworksArr: [],
+      uploadDialogVisible: false,
+      userinfo: JSON.parse(localStorage.getItem('userinfo'))
     }
   },
   mounted() {
@@ -93,7 +107,6 @@ export default {
           websiteId: iiccWebsiteId
         })
         .then(result => {
-          console.log(result)
           if (result.data) {
             this.myworksArr = result.data
           }
@@ -101,6 +114,24 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    showSocialShare(work) {
+      window.socialShare(`#work${work._id}`, {
+        mode: 'prepend',
+        description: `快来看我做的作品《${work.worksName}》`,
+        title: `${work.worksName}`,
+        sites: ['qq', 'qzone', 'weibo', 'wechat'],
+        wechatQrcodeTitle: '', // 微信二维码提示文字
+        wechatQrcodeHelper: '扫描二维码打开网页',
+        url: `${window.location.origin}${work.worksUrl}`
+      })
+    },
+    formatDate(date) {
+      let dateParams = date.split('-')
+      return `${dateParams[0]}年${dateParams[1]}月${dateParams[2]}日`
+    },
+    toUpload() {
+      this.uploadDialogVisible = true
     }
   }
 }
@@ -251,7 +282,7 @@ p {
   color: #fff;
   font-size: 12px;
   position: absolute;
-  right: 0;
+  right: -2px;
   top: 12px;
   text-align: center;
   line-height: 26px;
@@ -283,6 +314,9 @@ p {
   .info-content {
     color: #303133;
   }
+  .ward-item {
+    margin-right: 15px;
+  }
 }
 .intro {
   margin-top: 10px;
@@ -302,6 +336,44 @@ p {
   img {
     vertical-align: middle;
     margin-right: 2px;
+  }
+}
+.share-trigger-btn {
+  cursor: pointer;
+}
+.fake-btn {
+  cursor: pointer;
+  color: #019fe8;
+}
+.empty{
+  text-align: center;
+}
+</style>
+<style lang="scss">
+.kp-social-share.social-share {
+  text-align: center;
+
+  .icon-wechat {
+    visibility: hidden;
+    height: 150px;
+
+    .wechat-qrcode {
+      top: 0;
+      left: -40px;
+      width: 110px;
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      visibility: visible;
+      display: block;
+      height: 165px;
+    }
+    .wechat-qrcode::after {
+      content: none;
+    }
+    h4 {
+      display: none;
+    }
   }
 }
 </style>
