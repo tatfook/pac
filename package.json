@@ -14,7 +14,6 @@
     "axios": "^0.18.0",
     "element-ui": "^2.3.6",
     "eslint-plugin-html": "^4.0.3",
-    "node-gitlab-api": "^3.0.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "social-share.js": "^1.0.16",
