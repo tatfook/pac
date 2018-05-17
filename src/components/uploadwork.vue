@@ -60,14 +60,11 @@
                         </div>
                         <div class="img-wrap">预览区域
                           <img v-if="imgCover" class='img' :src="imgCover" alt='img' />
-                          <div class="img-mask">
-                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
-                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                          <div class="img-mask" v-if="imgCover">
+                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgCover')"></span>
+                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""  @click="deletePic('delWorksLogoFilePath','imgCover')"></span>
                           </div>
                         </div>
-                          <el-dialog :visible.sync="dialogVisible">
-                              <img width="100%" :src="imgLife" alt="">
-                          </el-dialog>
                       </div>
                     </td>
                   </tr>
@@ -116,22 +113,19 @@
                         <div class="idcard-front-and-back">
                           <div class="img-wrap idcard-img-wrap">预览区域
                             <img v-if="imgIdCard_1" class='img' :src="imgIdCard_1" alt='img' />
-                            <div class="img-mask">
-                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
-                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                            <div class="img-mask" v-if="imgIdCard_1">
+                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgIdCard_1')"></span>
+                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""  @click="deletePic('delimgIdCard_1FilePath','imgIdCard_1')"></span>
                             </div>
                           </div>
                           <div class="img-wrap">预览区域
                             <img v-if="imgIdCard_2" class='img' :src="imgIdCard_2" alt='img' />
-                            <div class="img-mask">
-                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
-                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                            <div class="img-mask" v-if="imgIdCard_2">
+                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgIdCard_2')"></span>
+                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgIdCard_2FilePath','imgIdCard_2')"></span>
                             </div>
                           </div>
                         </div>
-                          <el-dialog :visible.sync="dialogVisible">
-                              <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
                       </div>
                     </td>
                   </tr>
@@ -155,14 +149,12 @@
                         </div>
                         <div class="img-wrap">预览区域
                           <img v-if="imgLife" class='img' :src="imgLife" alt='img' />
-                          <div class="img-mask">
-                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
-                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                          <div class="img-mask" v-if="imgLife">
+                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""  @click="enlargePic('imgLife')"></span>
+                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgLifeFilePath','imgLife')"></span>
                           </div>
                         </div>
-                          <el-dialog :visible.sync="dialogVisible">
-                              <img width="100%" :src="imgLife" alt="">
-                          </el-dialog>
+                          
                       </div>
                     </td>
                   </tr>
@@ -175,6 +167,9 @@
       </div>  
       <el-dialog :visible.sync='uploadworkVisible' width='500px'>
         <p>提交作品出错了</p>
+      </el-dialog>
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="enlargeImg" alt="">
       </el-dialog>
     </main> 
     <Footer></Footer>    
@@ -225,7 +220,12 @@ export default {
       imgIdCard_2: "", //身份证反面
       identifyUrl: [], //省份证地址
       imgLife: "", //生活照
-      liveUrl: "" //生活照地址
+      liveUrl: "", //生活照地址
+      enlargeImg:'',
+      delWorksLogoFilePath:'',
+      delimgIdCard_1FilePath:'',
+      delimgIdCard_2FilePath:'',
+      delimgLifeFilePath:''
     };
   },
   computed: {
@@ -267,7 +267,6 @@ export default {
   },
   methods: {
     uploadLifePhoto(type, e) {
-      console.log(type);
       let files = e.target.files || e.dataTransfer.files;
       let {
         projectId,
@@ -276,11 +275,9 @@ export default {
         dataSourceUsername
       } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`;
-      console.log(filePath);
       let base64img;
-      console.log(projectId, dataSourceToken);
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
-      let imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${dataSourceUsername}/${type}/pic${+new Date()}`;
+      let imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${filePath}`;
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = e => {
@@ -288,29 +285,48 @@ export default {
         if (type == "workCover") {
           this.imgCover = e.target.result;
           this.worksLogo = imgURL;
+          this.delWorksLogoFilePath = filePath;
         } else if (type == "idcard") {
           if (this.imgIdCard_1 == "") {
             this.imgIdCard_1 = e.target.result;
             this.$set(this.identifyUrl, 0, imgURL);
+            this.delimgIdCard_1FilePath = filePath;
           } else {
             this.imgIdCard_2 = e.target.result;
             this.$set(this.identifyUrl, 1, imgURL);
+            this.delimgIdCard_2FilePath = filePath;
           }
         } else if (type == "lifePhoto") {
           this.imgLife = e.target.result;
           this.liveUrl = imgURL;
+          this.delimgLifeFilePath = filePath;
         }
-        console.log(base64img);
         api.projects.repository.files.create(projectId, filePath, "master", {
           branch: "master",
           commit_message: "keepwork commit:files/aaa1",
           content: base64img
         });
-        console.log(this.worksLogo);
-        console.log(this.identifyUrl[0]);
-        console.log(this.identifyUrl[1]);
-        console.log(this.liveUrl);
+        // console.log(this.worksLogo);
+        // console.log(this.identifyUrl[0]);
+        // console.log(this.identifyUrl[1]);
+        // console.log(this.liveUrl);
       };
+    },
+    enlargePic(whichPiC){
+      this.dialogVisible = true;
+      this.enlargeImg = this[whichPiC]
+    },
+    deletePic(delPicPath,delShowPreview){
+      let that = this;
+      let {
+        projectId,
+        dataSourceToken,
+        apiBaseUrl,
+        dataSourceUsername
+      } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
+      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
+      api.projects.repository.files.remove(projectId,that[delPicPath],'master')
+      this[delShowPreview] = '';
     },
     uploadwork() {
       console.log(this.awords);
