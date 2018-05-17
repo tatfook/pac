@@ -1,8 +1,8 @@
 <template>
   <div class="uploadwork-wrap">
-    <Header></Header>   
+    <Header  :userinfo='userinfo' @onLogOut='toLogout'></Header>   
     <main>
-      <Banner></Banner>
+      <Banner :userinfo='userinfo'></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
           <div class="top-square-uploadpage">
@@ -187,6 +187,7 @@ export default {
   name: "register",
   data() {
     return {
+      userinfo: JSON.parse(localStorage.getItem("userinfo")),
       myworks: [
         {
           value: "1",
@@ -266,6 +267,10 @@ export default {
     Footer
   },
   methods: {
+    toLogout() {
+      this.userinfo = undefined;
+      localStorage.removeItem("userinfo");
+    },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
       let {
