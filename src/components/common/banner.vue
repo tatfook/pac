@@ -48,7 +48,8 @@
       <div class="banner-content">
         <img src="@/assets/pac/banner-title.png" alt="">
         <div class="buttons">
-          <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="">
+          <img @click="toUploadWork" class="img-btn" src="@/assets/pac/button-upload.png" alt="" v-show="!isUploadWorkPage && isApplied">
+          <img @click="toApply" class="img-btn" src="@/assets/pac/button-join.png" alt="" v-show="!isApplyPage && !isApplied">
           <a href="http://www.paracraft.cn/download?lang=zh" target="_blank" class="img-btn">
             <img src="@/assets/pac/button-download.png" alt="">
           </a>
@@ -61,16 +62,18 @@
     <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
-    <el-dialog :visible.sync='applyDialogVisible' width='500px'>
-      <h1>报名</h1>
-      <p>报名功能开发中， 敬请期待</p>
+    <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
+      <h1>上传作品</h1>
+      <p>上传作品功能开发中， 敬请期待</p>
     </el-dialog>
   </div>
 </template>
 <script>
+import keepwork from '@/api/keepwork'
 import 'element-ui/lib/theme-chalk/display.css'
 import login from '../login'
 import join from '../join'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'CommonBanner',
   components: {
@@ -84,9 +87,15 @@ export default {
     return {
       loginDialogVisible: false,
       joinDialogVisible: false,
-      applyDialogVisible: false,
-      isLogined: this.userinfo ? true : false
+      uploadDialogVisible: false,
+      isLogined: this.userinfo ? true : false,
+      isApplyPage: this.$route.name === 'register',
+      isUploadWorkPage: this.$route.name === 'uploadwork',
+      isApplied: false
     }
+  },
+  mounted() {
+    this.initIsApplied()
   },
   methods: {
     setDialogVisible(key, value) {
@@ -94,21 +103,48 @@ export default {
     },
     toApply() {
       if (this.userinfo) {
-        this.applyDialogVisible = true
+        this.$router.push({ path: '/register' })
         return
       }
       this.loginDialogVisible = true
+    },
+    toUploadWork() {
+      this.uploadDialogVisible = true
     },
     onLogined() {
       this.loginDialogVisible = false
       this.joinDialogVisible = false
       this.$emit('onLogined')
+    },
+    initIsApplied() {
+      if (this.userinfo && this.userinfo.username) {
+        let username = this.userinfo.username
+        keepwork.websiteMember
+          .getBySiteUsername({
+            websiteId: iiccWebsiteId,
+            username: username
+          })
+          .then(result => {
+            if (result.data) {
+              this.isApplied = true
+              return
+            }
+          })
+      } else {
+        this.isApplied = false
+      }
+    }
+  },
+  watch: {
+    userinfo() {
+      this.initIsApplied()
     }
   }
 }
 </script>
 <style lang="scss">
-.login-dialog, .join-dialog{
+.login-dialog,
+.join-dialog {
   max-width: 90%;
 }
 .banner {
@@ -149,7 +185,7 @@ export default {
     left: 30%;
     bottom: -270px;
     animation: blockAnimate2 14s infinite;
-    animation-delay:6s;
+    animation-delay: 6s;
     animation-timing-function: linear;
     color: #e86800;
   }
@@ -157,7 +193,7 @@ export default {
     right: 5%;
     bottom: -200px;
     animation: blockAnimate3 14s infinite;
-    animation-delay:2s;
+    animation-delay: 2s;
     animation-timing-function: linear;
     color: #009fe8;
   }
@@ -217,7 +253,7 @@ export default {
     background-image: url('../../assets/pac/banner.jpg');
     background-size: auto 100%;
     background-position: 82%;
-    pre{
+    pre {
       font-size: 12px;
     }
     .banner-content {

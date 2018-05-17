@@ -57,7 +57,8 @@
         <li>
           <a href='http://www.paracraft.cn/download?lang=zh' target="_blank">相关下载</a>
         </li>
-        <li class="join-btn" @click="toApply"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
+        <li class="join-btn" @click="toApply" v-show="!isApplyPage && !isApplied"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
+        <li class="join-btn" @click="toUpload" v-show="!isUploadWorkPage && isApplied"><img src="@/assets/pac/upload_icon.png" alt="">上传作品</li>
         <li class="profile" v-if="userinfo && userinfo.portrait">
           <el-dropdown placement='bottom' trigger='click'>
             <span class="el-dropdown-link">
@@ -116,7 +117,7 @@
           <el-dropdown-item>
             <a href="http://www.paracraft.cn/download?lang=zh">相关下载</a>
           </el-dropdown-item>
-          <el-dropdown-item command='apply'>
+          <el-dropdown-item command='apply' v-show="!isApplyPage">
             我要报名
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -128,16 +129,18 @@
     <el-dialog :visible.sync="joinDialogVisible" width='500px' custom-class="join-dialog" :show-close=false :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
-    <el-dialog :visible.sync='applyDialogVisible' width='500px'>
-      <h1>报名</h1>
-      <p>报名功能开发中， 敬请期待</p>
+    <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
+      <h1>上传作品</h1>
+      <p>上传作品功能开发中， 敬请期待</p>
     </el-dialog>
   </header>
 </template>
 <script>
+import keepwork from '@/api/keepwork'
 import login from '../login'
 import join from '../join'
 import 'element-ui/lib/theme-chalk/display.css'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'CommonHeader',
   components: {
@@ -148,13 +151,19 @@ export default {
     return {
       loginDialogVisible: false,
       joinDialogVisible: false,
-      applyDialogVisible: false,
+      uploadDialogVisible: false,
       activeRoutePage: this.$route.name,
-      isLogined: this.userinfo ? true : false
+      isLogined: this.userinfo ? true : false,
+      isUploadWorkPage: this.$route.name === 'uploadwork',
+      isApplyPage: this.$route.name === 'register',
+      isApplied: false
     }
   },
   props: {
     userinfo: Object
+  },
+  mounted() {
+    this.initIsApplied()
   },
   methods: {
     setDialogVisible(key, value) {
@@ -163,10 +172,12 @@ export default {
     toApply() {
       if (this.userinfo) {
         this.$router.push({ path: '/register' })
-        // this.applyDialogVisible = true
         return
       }
       this.loginDialogVisible = true
+    },
+    toUpload(){
+      this.uploadDialogVisible = true
     },
     toLogout() {
       this.$emit('onLogOut')
@@ -184,6 +195,29 @@ export default {
         default:
           break
       }
+    },
+    initIsApplied() {
+      if (this.userinfo && this.userinfo.username) {
+        let username = this.userinfo.username
+        keepwork.websiteMember
+          .getBySiteUsername({
+            websiteId: iiccWebsiteId,
+            username: username
+          })
+          .then(result => {
+            if (result.data) {
+              this.isApplied = true
+              return
+            }
+          })
+      } else {
+        this.isApplied = false
+      }
+    }
+  },
+  watch: {
+    userinfo() {
+      this.initIsApplied()
     }
   }
 }

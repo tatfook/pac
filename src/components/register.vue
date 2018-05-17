@@ -1,6 +1,6 @@
 <template>
   <div class="register-wrap">
-    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>   
+    <Header :userinfo='userinfo' @onLogOut='toLogout' ref="header"></Header>   
     <main>
       <Banner :userinfo='userinfo'></Banner>
       <div class="register-container">
@@ -19,15 +19,15 @@
                 <table width="476px" cellspacing="0">
                   <tr>
                     <td width='850'>姓名</td>
-                    <td colspan="2"><input type="text" id="name" class="inputsty" v-model="user_name" placeholder="请输入您的姓名" /></td>
+                    <td colspan="2"><input maxlength="15" type="text" id="name" class="inputsty" v-model.trim="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr>
-                    <td><label for="qq">QQ号码</label></td>
-                    <td colspan="2"><input type="text" id="qq" class="inputsty" v-model="qq_no" placeholder="请输入您的QQ号"/></td>
+                    <td><label for="qq">邮箱</label></td>
+                    <td colspan="2"><input maxlength="20" type="text" id="qq" class="inputsty" v-model.trim="email" placeholder="请输入您的邮箱地址"/></td>
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
-                    <td width="80">
+                    <td width="151" class="tel-prefix-sty">
                      <el-select class="phone-suffix-select" v-model="value2">
                         <el-option
                           v-for="item in options"
@@ -38,11 +38,11 @@
                         </el-option>
                       </el-select>
                     </td>
-                    <td><input type="text" id="tel" class="inputtel" v-model="tel" placeholder="请输入您的手机号码"/></td>
+                    <td><input maxlength="11" type="text" id="tel" class="inputtel" v-model.trim="tel" placeholder="请输入您的手机号码"/></td>
                   </tr>
                   <tr>
-                    <td><label for="idcard">身份证件</label></td>
-                    <td colspan="2"><input type="text" id="idcard" class="inputsty" v-model="idcard_no" placeholder="请输入您的身份证号码"/></td>
+                    <td><label for="idcard">证件号码</label></td>
+                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="idcard_no" placeholder="请输入身份证、护照等有效证件号码"/></td>
                   </tr>
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
@@ -56,11 +56,17 @@
           </div>
         </div>
       </div>
+      <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
+        <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
+      </el-dialog>
+      <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
+      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
+      </el-dialog>
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
       </el-dialog>
       <el-dialog :visible.sync='loginBeforeLogin' width='500px'>
-        <p style="text-align: center;">您还没有登录，请先登录</p>
+        <p style="text-align: center;">{{reminder}}</p>
       </el-dialog>
       <el-dialog :visible.sync='show_agreement' width='500px' class="agreement-sty">
         <div>
@@ -163,51 +169,39 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import registerok from "./register-ok";
+import login from "./login";
+import join from "./join";
 import "element-ui/lib/theme-chalk/display.css";
-import axios from "axios";
-
+import keepwork from "@/api/keepwork";
+import areaCode from "@/assets/area_code.js";
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
   data() {
     return {
-      options: [
-        {
-          value: "+86",
-          label: "+86"
-        },
-        {
-          value: "+87",
-          label: "+87",
-          disabled: true
-        },
-        {
-          value: "+88",
-          label: "+88"
-        },
-        {
-          value: "+89",
-          label: "+89"
-        }
-      ],
+      options: areaCode,
       loginBeforeLogin: false,
-      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      userinfo: JSON.parse(localStorage.getItem("userinfo")),
       show_agreement: false,
       registerOkVisible: false,
+      loginDialogVisible: false,
+      joinDialogVisible: false,
       showerr: false,
       errmsg: "",
       value2: "+86",
       isdisabled: false,
-      user_name: "太阳",
-      qq_no: "2307898877",
-      tel: "15767899874",
-      idcard_no: "431189677545633454"
+      user_name: "",
+      email: "",
+      tel: "",
+      idcard_no: "",
+      reminder: ""
     };
   },
   computed: {
     _pass: function() {
       if (
         this.user_name &&
-        this.qq_no &&
+        this.email &&
         this.tel &&
         this.idcard_no &&
         this.isdisabled
@@ -221,6 +215,8 @@ export default {
     Header,
     Banner,
     Footer,
+    login,
+    join,
     registerok
   },
   methods: {
@@ -234,51 +230,91 @@ export default {
       this.userinfo = undefined;
       localStorage.removeItem("userinfo");
     },
+    showErr(err) {
+      this.showerr = true;
+      this.errmsg = err;
+    },
+    reGetUserinfo() {
+      this.loginDialogVisible = false;
+      this.joinDialogVisible = false;
+      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+    },
     register() {
-      if (!/^[1-9][0-9]{4,13}$/.test(this.qq_no)) {
-        this.showerr = true;
-        this.errmsg = "qq号错误";
-        return false;
-      } else if (!/^1\d{10}$/.test(this.tel)) {
-        this.showerr = true;
-        this.errmsg = "手机号码错误";
+      if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
+        this.showErr("姓名中不能包含特殊字符");
         return false;
       } else if (
-        !/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idcard_no)
+        !/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.email)
       ) {
-        this.showerr = true;
-        this.errmsg = "身份证不正确";
+        this.showErr("邮箱地址不正确");
+        return false;
+      } else if (this.value2 == "+86" && !/^1\d{10}$/.test(this.tel)) {
+        this.showErr("手机号码错误");
+        return false;
+      } else if (this.value2 != "+86" && !/\d{4,}$/.test(this.tel)) {
+        this.showErr("手机号码错误");
+        return false;
+      } else if (!/\d{5,}$/g.test(this.idcard_no)) {
+        this.showErr("证件号码不正确");
         return false;
       } else if (!localStorage.getItem("userinfo")) {
-        this.loginBeforeLogin = true;
+        this.loginDialogVisible = true;
       } else {
         let that = this;
-        let authorization =
-          "bearer " + JSON.parse(localStorage.getItem("token"));
-        axios
-          .create({
-            baseURL: "http://keepwork.com/api/wiki/models",
-            headers: { Authorization: authorization }
-          })
-          .post("website_member/submitMemberApply", {
-            websiteId: "5",
+        that.showerr = false;
+        keepwork.user
+          .submitMemberApply({
+            websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait: "",
             sex: "",
             realname: this.user_name,
-            email: "",
-            QQId: this.qq_no,
+            email: this.email,
+            QQId: "",
             cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
           })
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-            localStorage.setItem('realname', that.user_name);
-            that.showerr = false;
+            localStorage.setItem("realname", that.user_name);
+            console.log(result.error.id);
+            if (result.error.id == 0) {
+              keepwork.user
+                .agreeMemberApply({
+                  websiteId: iiccWebsiteId,
+                  username: JSON.parse(localStorage.getItem("userinfo"))
+                    .username,
+                  portrait: "",
+                  sex: "",
+                  realname: that.user_name,
+                  email: that.email,
+                  QQId: "",
+                  cellphoneId: that.value2 + that.tel,
+                  identifyCardId: that.idcard_no
+                })
+                .then(function(result) {
+                  console.log(result);
+                  console.log(
+                    JSON.parse(localStorage.getItem("userinfo")).username +
+                      "同意成员"
+                  );
+                  if (result.error.id == 0) {
+                    localStorage.setItem("realname", that.user_name);
+                    that.registerOkVisible = true;
+                  } else {
+                    that.loginBeforeLogin = true;
+                    that.reminder = "网络错误，请稍后重试!!";
+                  }
+                })
+                .catch(function(error) {});
+            } else {
+              that.loginBeforeLogin = true;
+              that.reminder = "网络错误，请稍后重试!";
+            }
           })
           .catch(function(error) {});
-        this.registerOkVisible = true;
+
         return true;
       }
     }
@@ -449,6 +485,7 @@ export default {
       width: 364px;
       height: 60px;
       font-size: 20px;
+      border-radius: 4px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(81, 85, 92);
     }
@@ -496,14 +533,43 @@ export default {
       outline: none;
     }
     .inputtel {
-      width: 278px;
-      margin-left: 8px;
+      // width: 278px;
+      width: 213px;
+      margin-left: 2px;
     }
   }
   .slash {
     height: 20px;
     border: 1px solid red;
   }
+  .tel-prefix-sty{
+    .el-input{
+      .el-input__inner{
+        padding:0 25px 0 16px;
+
+      }
+    }
+}
+
+.el-popper[x-placement^="bottom"] {
+  margin-top: 3px;
+}
+.el-scrollbar__view {
+  height: 260px;
+  overflow-y: scroll;
+}
+.el-dialog{
+  position: relative;
+  .el-dialog__header{
+    .el-dialog__headerbtn{
+      .el-icon-close{
+        position: absolute;
+        top: -14px;
+        right: -10px;
+      }
+    }
+  }
+}
 }
 </style>
 
