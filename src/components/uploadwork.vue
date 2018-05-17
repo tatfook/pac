@@ -680,7 +680,7 @@ export default {
         position: absolute;
         top: 0;
         left: -10px;
-        // opacity: 0;
+        opacity: 0;
       }
     }
     .clicktoup2 {
