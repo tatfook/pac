@@ -12,7 +12,6 @@ export const getToken = () => {
 
 export const post = (...args) => {
   args.push(getToken())
-  console.log(args)
   return keepworkEndpoint.post(...args).then(res => res.data)
 }
 
