@@ -1,6 +1,6 @@
 <template>
   <div class="uploadwork-wrap">
-    <Header @onLogOut='toLogout'></Header>   
+    <Header></Header>   
     <main>
       <Banner></Banner>
       <div class="intro-row-reg">
@@ -28,7 +28,6 @@
                     <td>作品名称</td>
                     <td><input type="text" v-model="work_title" placeholder="请输入您的作品名称"/></td>
                   </tr>
-                  
                     <tr class="select_items">
                       <td><div>作品简介</div></td>
                       <td>
@@ -53,20 +52,21 @@
                               </div>
                               点击上传
                             </div>
+                            <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
                           </div>
                         </div>
-                        <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            list-type="picture-card"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
+                        <div class="img-wrap">预览区域
+                          <img v-if="imgCover" class='img' :src="imgCover" alt='img' />
+                          <div class="img-mask">
+                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
+                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                          </div>
+                        </div>
                           <el-dialog :visible.sync="dialogVisible">
-                              <img width="100%" :src="dialogImageUrl" alt="">
+                              <img width="100%" :src="imgLife" alt="">
                           </el-dialog>
                       </div>
                     </td>
@@ -110,15 +110,25 @@
                               </div>
                               点击上传
                             </div>
+                              <input type="file" class="input_file" @change="uploadLifePhoto('idcard',$event)">                            
                           </div>
                         </div>
-                        <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            list-type="picture-card"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
+                        <div class="idcard-front-and-back">
+                          <div class="img-wrap idcard-img-wrap">预览区域
+                            <img v-if="imgIdCard_1" class='img' :src="imgIdCard_1" alt='img' />
+                            <div class="img-mask">
+                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
+                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                            </div>
+                          </div>
+                          <div class="img-wrap">预览区域
+                            <img v-if="imgIdCard_2" class='img' :src="imgIdCard_2" alt='img' />
+                            <div class="img-mask">
+                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
+                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                            </div>
+                          </div>
+                        </div>
                           <el-dialog :visible.sync="dialogVisible">
                               <img width="100%" :src="dialogImageUrl" alt="">
                           </el-dialog>
@@ -137,22 +147,21 @@
                               </div>
                               点击上传
                             </div>
+                            <input type="file" class="input_file" @change="uploadLifePhoto('lifePhoto',$event)">                            
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
                           </div>
                         </div>
-                        <el-upload
-                            :before-upload="beforeUpload"
-                            :http-request="httpRequest"
-                            action="https://jsonplaceholder.typicode.com/posts/"
-                            list-type="picture-card"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
+                        <div class="img-wrap">预览区域
+                          <img v-if="imgLife" class='img' :src="imgLife" alt='img' />
+                          <div class="img-mask">
+                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""></span>
+                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""></span>
+                          </div>
+                        </div>
                           <el-dialog :visible.sync="dialogVisible">
-                              <img width="100%" :src="dialogImageUrl" alt="">
+                              <img width="100%" :src="imgLife" alt="">
                           </el-dialog>
                       </div>
                     </td>
@@ -177,8 +186,8 @@ import Banner from "./common/banner";
 import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
-import gitLabAPIGenerator from "@/api/node-gitlab-api"
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID
+import gitLabAPIGenerator from "@/api/node-gitlab-api";
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
   data() {
@@ -210,7 +219,13 @@ export default {
       uploadworkVisible: false,
       dialogImageUrl: "",
       dialogVisible: false,
-      filePath: ''
+      imgCover: "", //封面
+      worksLogo: "", //作品封面地址
+      imgIdCard_1: "", //身份证正面
+      imgIdCard_2: "", //身份证反面
+      identifyUrl: [], //省份证地址
+      imgLife: "", //生活照
+      liveUrl: "" //生活照地址
     };
   },
   computed: {
@@ -251,20 +266,51 @@ export default {
     Footer
   },
   methods: {
-    beforeUpload(file,fileList){
-      console.log(file);
-      this.fileName = file.name
-      this.filePath = file
-    },
-    httpRequest(){
-      let {projectId, dataSourceToken, apiBaseUrl, dataSourceUsername} = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
-      console.log(projectId, dataSourceToken)
-      let api = gitLabAPIGenerator({apiBaseUrl, dataSourceToken})
-      api.projects.repository.files.create(projectId, filePath, branch = 'master', options)
-    },
-    toLogout() {
-      this.userinfo = undefined;
-      localStorage.removeItem("userinfo");
+    uploadLifePhoto(type, e) {
+      console.log(type);
+      let files = e.target.files || e.dataTransfer.files;
+      let {
+        projectId,
+        dataSourceToken,
+        apiBaseUrl,
+        dataSourceUsername
+      } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
+      let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`;
+      console.log(filePath);
+      let base64img;
+      console.log(projectId, dataSourceToken);
+      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
+      let imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${dataSourceUsername}/${type}/pic${+new Date()}`;
+      let reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = e => {
+        base64img = e.target.result; // 这个就是base64编码了
+        if (type == "workCover") {
+          this.imgCover = e.target.result;
+          this.worksLogo = imgURL;
+        } else if (type == "idcard") {
+          if (this.imgIdCard_1 == "") {
+            this.imgIdCard_1 = e.target.result;
+            this.$set(this.identifyUrl, 0, imgURL);
+          } else {
+            this.imgIdCard_2 = e.target.result;
+            this.$set(this.identifyUrl, 1, imgURL);
+          }
+        } else if (type == "lifePhoto") {
+          this.imgLife = e.target.result;
+          this.liveUrl = imgURL;
+        }
+        console.log(base64img);
+        api.projects.repository.files.create(projectId, filePath, "master", {
+          branch: "master",
+          commit_message: "keepwork commit:files/aaa1",
+          content: base64img
+        });
+        console.log(this.worksLogo);
+        console.log(this.identifyUrl[0]);
+        console.log(this.identifyUrl[1]);
+        console.log(this.liveUrl);
+      };
     },
     uploadwork() {
       console.log(this.awords);
@@ -273,19 +319,20 @@ export default {
         return false;
       } else {
         let that = this;
-        keepwork.user.submitWorksApply({
+        keepwork.user
+          .submitWorksApply({
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),
             worksName: this.work_title,
             worksDesc: this.work_brief,
-            worksLogo: "",
+            worksLogo: this.worksLogo,
             worksFlag: this.picked,
             worksUrl: "", //作品地址
             schoolName: this.school_name,
             awords: this.awords, //奖项
-            identifyUrl: "",
-            liveUrl: "",
+            identifyUrl: this.identifyUrl.join(),
+            liveUrl: this.liveUrl,
             visitCount: "",
             voteCount: "",
             todayVoteCount: "",
@@ -294,22 +341,14 @@ export default {
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-            console.log(that.dialogImageUrl);
+            console.log("图片地址：" + that.dialogImageUrl);
             that.showerr = false;
           })
           .catch(function(error) {
             console.log(err);
           });
-
         return true;
       }
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
     }
   }
 };
@@ -336,7 +375,6 @@ export default {
       }
     }
   }
-
   .reg_info .uploadwork_table .work_face {
     border-radius: 50px;
   }
@@ -380,13 +418,12 @@ export default {
       transition: transform 0.2s ease-out;
     }
   }
-
   // 奖项选择
   .uploadwork_table .select_items {
     .brief_wrap {
       margin-left: 8px;
       width: 391px;
-      .work_brief{
+      .work_brief {
         background-color: #efefef;
         border: none;
         padding: 8px;
@@ -598,7 +635,6 @@ export default {
       border: 0;
     }
   }
-
   .reg_info tr td input {
     background-color: #efefef;
     border: none;
@@ -623,10 +659,12 @@ export default {
       position: relative;
       border-radius: 24px;
       .input_file {
+        width: 100%;
+        height: 100%;
         position: absolute;
-        top: -15px;
+        top: 0;
         left: -10px;
-        opacity: 0;
+        // opacity: 0;
       }
     }
     .clicktoup2 {
@@ -659,13 +697,14 @@ export default {
     }
   }
   .add-center {
-    width: 78px;
+    width: 84px;
     height: 48px;
     line-height: 48px;
     text-align: right;
     margin: 0 auto;
     position: relative;
     font-size: 14px;
+
     .add-icon {
       position: absolute;
       top: 12px;
@@ -713,35 +752,48 @@ export default {
   }
   .up_pic {
     position: relative;
-    .el-upload {
-      position: absolute;
-      top: 0;
-      left: 90px;
-      width: 380px;
-      height: 48px;
-      opacity: 0;
-      i {
-        display: none;
+    .idcard-front-and-back {
+      // border:1px solid red;
+      display: flex;
+      .idcard-img-wrap {
+        margin-right: 14px;
       }
     }
-    div{
-      
-    }
-    .el-upload-list {
-      display: block;
-      // height: 130px;
-      .el-upload-list__item {
-        width: 227px;
-        height: 127px;
-        margin: 0 9px 0 0;
-        background: #cccccc;
-        border: 2px dashed rgba(0, 0, 0, 0.3);
-        label {
-          display: none;
+    .img-wrap {
+      width: 227px;
+      height: 127px;
+      text-align: center;
+      line-height: 127px;
+      color: #606266;
+      background-color: rgba(239, 239, 239, 0.3);
+      border: 2px dashed #ccc;
+      position: relative;
+      overflow: hidden;
+      .img-mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+        line-height: 127px;
+        background-color: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        span {
+          margin-right: 5px;
         }
-        .el-upload-list__item-thumbnail {
-          object-fit: cover;
-        }
+        z-index: 99;
+      }
+      .img-mask:hover {
+        opacity: 1;
+      }
+      .img {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        object-fit: cover;
       }
     }
   }
