@@ -12,7 +12,7 @@
         </div>
         <div class="input-group">
           <img class="input-addon" src="@/assets/pac/unlock.png" alt="">
-          <input v-model="password" class="input-content" type="text" name="password" placeholder="请输入密码">
+          <input v-model="password" class="input-content" type="password" name="password" placeholder="请输入密码">
         </div>
         <p class="error-msg" v-show="loginErrMsg">{{loginErrMsg}}</p>
         <div class="login-button" @click='toLogin'>

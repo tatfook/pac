@@ -266,7 +266,7 @@ export default {
           .submitMemberApply({
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
-            portrait: "",
+            portrait: "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
             sex: "",
             realname: this.user_name,
             email: this.email,

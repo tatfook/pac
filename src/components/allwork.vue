@@ -3,11 +3,11 @@
     <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
     <div class="main-container">
+      <div class="decoration hidden-xs-only">
+        <div class="white-bg"></div>
+        <div class="transparent-bg"></div>
+      </div>
       <div class="container">
-        <div class="decoration hidden-xs-only">
-          <div class="white-bg"></div>
-          <div class="transparent-bg"></div>
-        </div>
         <h1 class="title">
           <img src="@/assets/pac/all_works_title.png" alt="">
         </h1>
