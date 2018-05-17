@@ -37,14 +37,9 @@
 </template>
 <script>
 import axios from 'axios'
-import gitlabApiGenerator from 'node-gitlab-api'
 import contactContent from '@/../static/profile_datas/contact.md'
 import profileContent from '@/../static/profile_datas/profile.md'
 import siteContent from '@/../static/profile_datas/site.md'
-let GitlabApi = new gitlabApiGenerator({
-  url: 'http://git.keepwork.com',
-  token: ' '
-})
 let axiosInstance = axios.create({
   baseURL: 'http://keepwork.com/api/wiki/models'
 })
