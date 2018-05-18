@@ -46,9 +46,9 @@
                   </tr>
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
-                <div class="radio_1">
+                <!-- <div class="radio_1">
                   <input type="checkbox" id="isagree" name="agree" v-model="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;cursor:pointer;" @click="show_agree">《2018国际智能创意大奖赛比赛协议》</span><br>
-                </div>
+                </div> -->
                 <div style="margin:8px auto;text-align:center;color:red" v-show="showerr">{{errmsg}}</div>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
