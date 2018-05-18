@@ -20,8 +20,8 @@
                   <tr class="groups">
                     <td width='94'>参赛组别</td>
                     <td>
-                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4"/><label for="radio_1"></label><span :class="picked == 1 ? 'group_name_sel' : 'group_name'" >学生组</span>
-                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3"/><label for="radio_2"></label><span :class="picked == 2 ? 'group_name_sel' : 'group_name'" >公开组</span>
+                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4"/><label for="radio_1"></label><span :class="picked == 4 ? 'group_name_sel' : 'group_name'" >学生组</span>
+                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3"/><label for="radio_2"></label><span :class="picked == 3 ? 'group_name_sel' : 'group_name'" >公开组</span>
                     </td>
                   </tr>
                   <tr>
@@ -198,14 +198,14 @@ export default {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
       myworks: [
-        {
-          value: "1",
-          label: "1太阳"
-        },
-        {
-          value: "4",
-          label: "4云朵"
-        }
+        // {
+        //   value: "1",
+        //   label: "1太阳"
+        // },
+        // {
+        //   value: "4",
+        //   label: "4云朵"
+        // }
       ],
       picked: 4,
       checked_item_student: [false, false, false, false, false, false,false, false, false, false, false],
@@ -284,12 +284,21 @@ export default {
     },
     awords: function() {
       let tempArr = [];
-      for (let i = 0; i < this.checked_item.length; i++) {
-        if (this.checked_item[i]) {
-          tempArr.push(this.awards_item[i]);
+      if(this.picked == 4){
+        for (let i = 0; i < this.checked_item_student.length; i++) {
+          if (this.checked_item_student[i]) {
+            tempArr.push(this.awards_item_student[i]);
+          }
         }
+        return tempArr.join();
+      }else{
+        for (let i = 0; i < this.checked_item_public.length; i++) {
+          if (this.checked_item_public[i]) {
+            tempArr.push(this.awards_item_public[i]);
+          }
+        }
+        return tempArr.join();
       }
-      return tempArr.join();
     }
   },
   components: {
@@ -314,11 +323,21 @@ export default {
         `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
       )
       .then(function(result) {
+        // debugger
         console.log(result);
+        console.log(result.data);
+        for(let i = 0 ;i < result.data.length;i++){
+          let obj = {};
+          obj.value = result.data[i].path.split(".")[0];
+          console.log(obj.value)
+          obj.label = result.data[i].path.split(".")[0];
+          that.$set(that.myworks, i, obj);
+        }
+        console.log(that.myworks);
         console.log(JSON.parse(localStorage.getItem("userinfo")).username);
       })
       .catch(function(error) {
-        console.log(error)
+        // console.log(error)
       });
   },
   methods: {
@@ -408,7 +427,7 @@ export default {
             worksDesc: this.work_brief,
             worksLogo: this.worksLogo,
             worksFlag: this.picked,
-            worksUrl: "", //作品地址
+            worksUrl: this.value2, //作品地址
             schoolName: this.school_name,
             awords: this.awords, //奖项
             identifyUrl: this.identifyUrl.join(),
