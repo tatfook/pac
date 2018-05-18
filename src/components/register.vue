@@ -17,13 +17,27 @@
            <div class="reg_info">
               <form @submit.prevent="register">
                 <table width="476px" cellspacing="0">
+                  
                   <tr>
                     <td width='850'>姓名</td>
                     <td colspan="2"><input maxlength="15" type="text" id="name" class="inputsty" v-model.trim="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
+                  <tr class="gender">
+                    <td width='850'>性别</td>
+                    <td colspan="2">
+                      <div>
+                        <input type="radio" name='gender' v-model="gender" id="boy" value="男"><label for="boy">男</label>
+                        <input type="radio" name='gender' v-model="gender" id="girl" value="女"><label for="girl">女</label>
+                      </div>
+                    </td>
+                  </tr>
                   <tr>
-                    <td><label for="qq">邮箱</label></td>
-                    <td colspan="2"><input maxlength="20" type="text" id="qq" class="inputsty" v-model.trim="email" placeholder="请输入您的邮箱地址"/></td>
+                    <td><label for="idcard">出生年月</label></td>
+                    <td colspan="2"><input maxlength="24" type="date" id="idcard" class="inputsty" v-model.trim="birth" placeholder="请输入身份证、护照等有效证件号码"/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="idcard">证件号码</label></td>
+                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="idcard_no" placeholder="请输入身份证、护照等有效证件号码"/></td>
                   </tr>
                   <tr>
                     <td><label for="tel">手机号码</label></td>
@@ -41,9 +55,21 @@
                     <td><input maxlength="11" type="text" id="tel" class="inputtel" v-model.trim="tel" placeholder="请输入您的手机号码"/></td>
                   </tr>
                   <tr>
-                    <td><label for="idcard">证件号码</label></td>
-                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="idcard_no" placeholder="请输入身份证、护照等有效证件号码"/></td>
+                    <td><label for="email">邮箱</label></td>
+                    <td colspan="2"><input maxlength="20" type="text" id="email" class="inputsty" v-model.trim="email" placeholder="请输入您的邮箱地址"/></td>
                   </tr>
+                  <tr>
+                    <td><label for="qq">QQ</label></td>
+                    <td colspan="2"><input maxlength="15" type="text" id="qq" class="inputsty" v-model.trim="QQId" placeholder="请输入您的QQ号码"/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="idcard">所在地</label></td>
+                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="location" placeholder="请精确到市级城市"/></td>
+                  </tr>
+                  
+                  
+                  
+                  
                 </table>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
                 <!-- <div class="radio_1">
@@ -190,10 +216,14 @@ export default {
       errmsg: "",
       value2: "+86",
       isdisabled: true,
+      gender: '',
       user_name: "",
       email: "",
+      QQId:'',
+      location:'',
       tel: "",
       idcard_no: "",
+      birth:'',
       reminder: ""
     };
   },
@@ -267,7 +297,7 @@ export default {
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait: "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
-            sex: "",
+            sex: this.gender,
             realname: this.user_name,
             email: this.email,
             QQId: "",
@@ -286,7 +316,7 @@ export default {
                   username: JSON.parse(localStorage.getItem("userinfo"))
                     .username,
                   portrait: "",
-                  sex: "",
+                  sex: this.gender,
                   realname: that.user_name,
                   email: that.email,
                   QQId: "",
@@ -472,6 +502,18 @@ export default {
   .reg_info {
     width: 476px;
     margin: 0 auto;
+    .gender{
+      height: 66px;
+      label{
+      color: #606266;
+      margin-right: 40px;
+      }
+      input{
+        width: 20px;
+        height: 16px;
+        // margin-right: 40px;
+      }
+    }
     .hint {
       color: #ec2828;
       font-size: 14px;

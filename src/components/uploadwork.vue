@@ -20,8 +20,8 @@
                   <tr class="groups">
                     <td width='94'>参赛组别</td>
                     <td>
-                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="3"/><label for="radio_1"></label><span :class="picked == 1 ? 'group_name_sel' : 'group_name'" >学生组</span>
-                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="4"/><label for="radio_2"></label><span :class="picked == 2 ? 'group_name_sel' : 'group_name'" >公开组</span>
+                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4"/><label for="radio_1"></label><span :class="picked == 1 ? 'group_name_sel' : 'group_name'" >学生组</span>
+                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3"/><label for="radio_2"></label><span :class="picked == 2 ? 'group_name_sel' : 'group_name'" >公开组</span>
                     </td>
                   </tr>
                   <tr>
@@ -83,14 +83,22 @@
                     </td>
                   </tr>
                   <tr class="select_items">
-                    <td><div>报名奖项</div></td>
+                    <td class="item_wrap"><div style="padding-left:0;">报名奖项</div></td>
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p v-for="(item,index) in awards_item" :key="index" v-if="index < 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                         <div>
-                          <p v-for="(item,index) in awards_item" :key="index" v-if="index >= 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                        </div>
+                      </div>
+                      <div class="item_wrap">
+                        <div>
+                          <p v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                        </div>
+                        <div>
+                          <p v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                       </div>
                     </td>
@@ -199,15 +207,28 @@ export default {
           label: "4云朵"
         }
       ],
-      picked: 0,
-      checked_item: [false, false, false, false, false, false],
-      awards_item: [
+      picked: 4,
+      checked_item_student: [false, false, false, false, false, false,false, false, false, false, false],
+      checked_item_public: [false, false, false, false, false, false,false, false, false, false, false],
+      awards_item_public: [
         "NPL 大奖",
         "NPL 最佳编辑奖",
         "NPL 最佳教程奖",
-        "NPL 最佳场景设置奖",
-        "NPL 3D角色制作奖",
-        "NPL 最佳开源贡献奖"
+        "NPL 最佳场景设计奖",
+        "NPL 最佳3D角色制作奖",
+        "NPL 最佳开源贡献奖",
+        "NPL 老顽童奖",
+        "NPL 小小梦想家",
+        "NPL 人气十佳"
+      ],
+      awards_item_student: [
+        "NPL 最佳故事短片奖",
+        "NPL 优秀游戏作品奖",
+        "NPL 优秀材质奖",
+        "NPL 优秀视觉特效奖",
+        "NPL 优秀原创音效奖",
+        "NPL 优秀剧本创意奖",
+        "NPL 人气十佳"
       ],
       work_title: "太阳花",
       work_brief: "一朵有能量的花",
@@ -232,12 +253,21 @@ export default {
   },
   computed: {
     already_checked_item: function() {
-      for (let i = 0; i < this.checked_item.length; i++) {
-        if (this.checked_item[i]) {
-          return true;
+      if(this.picked == 4){
+        for (let i = 0; i < this.checked_item_student.length; i++) {
+          if (this.checked_item_student[i]) {
+            return true;
+          }
         }
-      }
       return false;
+      }else{
+        for (let i = 0; i < this.checked_item_public.length; i++) {
+          if (this.checked_item_public[i]) {
+            return true;
+          }
+        }
+        return false;
+      }
     },
     _pass: function() {
       if (
@@ -483,13 +513,14 @@ export default {
       display: flex;
       div {
         flex: 1;
-        height: 120px;
+        // height: 120px;
         padding-left: 6px;
       }
     }
     div {
       flex: 1;
-      height: 120px;
+      // height: 120px;
+      text-align: top;
     }
 
     p {
