@@ -189,7 +189,7 @@ export default {
       showerr: false,
       errmsg: "",
       value2: "+86",
-      isdisabled: false,
+      isdisabled: true,
       user_name: "",
       email: "",
       tel: "",
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     show_agree() {
-      this.show_agreement = true;
+      // this.show_agreement = true;
     },
     setDialogVisible(key, value) {
       this[key] = value;

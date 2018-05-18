@@ -182,6 +182,7 @@ import Footer from "./common/footer";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import gitLabAPIGenerator from "@/api/node-gitlab-api";
+import axios from "axios";
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
@@ -222,11 +223,11 @@ export default {
       identifyUrl: [], //省份证地址
       imgLife: "", //生活照
       liveUrl: "", //生活照地址
-      enlargeImg:'',
-      delWorksLogoFilePath:'',
-      delimgIdCard_1FilePath:'',
-      delimgIdCard_2FilePath:'',
-      delimgLifeFilePath:''
+      enlargeImg: "",
+      delWorksLogoFilePath: "",
+      delimgIdCard_1FilePath: "",
+      delimgIdCard_2FilePath: "",
+      delimgLifeFilePath: ""
     };
   },
   computed: {
@@ -265,6 +266,30 @@ export default {
     Header,
     Banner,
     Footer
+  },
+  created: function() {
+    let that = this;
+    let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
+    let { projectId, username } = JSON.parse(
+      localStorage.getItem("userinfo")
+    ).defaultSiteDataSource;
+    projectId = 367
+    username = "xiaoyao"
+    axios
+      .create({
+        baseURL: "http://git.keepwork.com/api/v4",
+        headers: { Authorization: authorization }
+      })
+      .get(
+        `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
+      )
+      .then(function(result) {
+        console.log(result);
+        console.log(JSON.parse(localStorage.getItem("userinfo")).username);
+      })
+      .catch(function(error) {
+        console.log(error)
+      });
   },
   methods: {
     toLogout() {
@@ -317,11 +342,11 @@ export default {
         // console.log(this.liveUrl);
       };
     },
-    enlargePic(whichPiC){
+    enlargePic(whichPiC) {
       this.dialogVisible = true;
-      this.enlargeImg = this[whichPiC]
+      this.enlargeImg = this[whichPiC];
     },
-    deletePic(delPicPath,delShowPreview){
+    deletePic(delPicPath, delShowPreview) {
       let that = this;
       let {
         projectId,
@@ -330,8 +355,12 @@ export default {
         dataSourceUsername
       } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
-      api.projects.repository.files.remove(projectId,that[delPicPath],'master')
-      this[delShowPreview] = '';
+      api.projects.repository.files.remove(
+        projectId,
+        that[delPicPath],
+        "master"
+      );
+      this[delShowPreview] = "";
     },
     uploadwork() {
       console.log(this.awords);
