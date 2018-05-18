@@ -29,10 +29,10 @@
                     <td><input type="text" v-model="work_title" placeholder="请输入您的作品名称"/></td>
                   </tr>
                     <tr class="select_items">
-                      <td><div>作品简介</div></td>
+                      <td>作品简介</td>
                       <td>
                         <div class="brief_wrap">
-                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="7" placeholder="请输入您的作品简介..."></textarea>
+                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
                         </div>
                       </td>                
                   </tr>
@@ -230,9 +230,9 @@ export default {
         "NPL 优秀剧本创意奖",
         "NPL 人气十佳"
       ],
-      work_title: "太阳花",
-      work_brief: "一朵有能量的花",
-      school_name: "xxx大学",
+      work_title: "",
+      work_brief: "",
+      school_name: "",
       value2: "选择您要比赛的作品",
       uploadworkVisible: false,
       dialogImageUrl: "",
@@ -324,16 +324,16 @@ export default {
       )
       .then(function(result) {
         // debugger
-        console.log(result);
-        console.log(result.data);
+        // console.log(result);
+        // console.log(result.data);
         for(let i = 0 ;i < result.data.length;i++){
           let obj = {};
           obj.value = result.data[i].path.split(".")[0];
-          console.log(obj.value)
+          // console.log(obj.value)
           obj.label = result.data[i].path.split(".")[0];
           that.$set(that.myworks, i, obj);
         }
-        console.log(that.myworks);
+        // console.log(that.myworks);
         console.log(JSON.parse(localStorage.getItem("userinfo")).username);
       })
       .catch(function(error) {
@@ -412,7 +412,7 @@ export default {
       this[delShowPreview] = "";
     },
     uploadwork() {
-      console.log(this.awords);
+      // console.log(this.awords);
       if (!this.work_title) {
         this.uploadworkVisible = true;
         return false;
@@ -440,7 +440,7 @@ export default {
           .then(function(result) {
             console.log(result);
             console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-            console.log("图片地址：" + that.dialogImageUrl);
+            // console.log("图片地址：" + that.dialogImageUrl);
             that.showerr = false;
           })
           .catch(function(error) {
@@ -520,8 +520,9 @@ export default {
   // 奖项选择
   .uploadwork_table .select_items {
     .brief_wrap {
-      margin-left: 8px;
+      margin-left: 9px;
       width: 391px;
+      height: 93px;
       .work_brief {
         background-color: #efefef;
         border: none;
