@@ -297,6 +297,7 @@ export default {
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             portrait:
+              JSON.parse(localStorage.getItem("userinfo")).portrait ||
               "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
             sex: this.gender,
             realname: this.user_name,
@@ -316,7 +317,8 @@ export default {
                   websiteId: iiccWebsiteId,
                   username: JSON.parse(localStorage.getItem("userinfo"))
                     .username,
-                  portrait: "",
+                  portrait: JSON.parse(localStorage.getItem("userinfo")).portrait ||
+              "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
                   sex: that.gender,
                   realname: that.user_name,
                   email: that.email,
