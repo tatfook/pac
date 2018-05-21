@@ -31,7 +31,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
+                  <tr class="birth">
                     <td><label for="birth">出生年月</label></td>
                     <td colspan="2"><input maxlength="24" type="date" id="birth" class="inputsty birth-input" v-model.trim="birth"/></td>
                   </tr>
@@ -216,14 +216,14 @@ export default {
       errmsg: "",
       value2: "+86",
       isdisabled: true,
-      gender: '',
+      gender: "",
       user_name: "",
       email: "",
-      QQId:'',
-      location:'',
+      QQId: "",
+      location: "",
       tel: "",
       idcard_no: "",
-      birth:'',
+      birth: "",
       reminder: ""
     };
   },
@@ -296,11 +296,12 @@ export default {
           .submitMemberApply({
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
-            portrait: "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
+            portrait:
+              "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
             sex: this.gender,
             realname: this.user_name,
             email: this.email,
-            QQId: "",
+            QQId: this.QQId,
             cellphoneId: this.value2 + this.tel,
             identifyCardId: this.idcard_no
           })
@@ -316,10 +317,10 @@ export default {
                   username: JSON.parse(localStorage.getItem("userinfo"))
                     .username,
                   portrait: "",
-                  sex: this.gender,
+                  sex: that.gender,
                   realname: that.user_name,
                   email: that.email,
-                  QQId: "",
+                  QQId: that.QQId,
                   cellphoneId: that.value2 + that.tel,
                   identifyCardId: that.idcard_no
                 })
@@ -502,16 +503,22 @@ export default {
   .reg_info {
     width: 476px;
     margin: 0 auto;
-    .gender{
-      height: 66px;
-      label{
-      color: #606266;
-      margin-right: 40px;
+    .birth {
+      .birth-input {
+        padding: 12px 5px 12px 18px !important;
+        height: 24px !important;
+        color: #757575;
       }
-      input{
+    }
+    .gender {
+      height: 66px;
+      label {
+        color: #606266;
+        margin-right: 40px;
+      }
+      input {
         width: 20px;
         height: 16px;
-        // margin-right: 40px;
       }
     }
     .hint {
@@ -547,10 +554,6 @@ export default {
   .reg_info tr {
     height: 48px;
     line-height: 48px;
-  }
-  .birth-input{
-    padding: 12px 5px 12px 18px !important;
-    height: 24px !important;
   }
   .inputsty {
     width: 368px;
@@ -588,34 +591,32 @@ export default {
     height: 20px;
     border: 1px solid red;
   }
-  .tel-prefix-sty{
-    .el-input{
-      .el-input__inner{
-        padding:0 25px 0 16px;
-
-      }
-    }
-}
-
-.el-popper[x-placement^="bottom"] {
-  margin-top: 3px;
-}
-.el-scrollbar__view {
-  height: 260px;
-  overflow-y: scroll;
-}
-.el-dialog{
-  position: relative;
-  .el-dialog__header{
-    .el-dialog__headerbtn{
-      .el-icon-close{
-        position: absolute;
-        top: -14px;
-        right: -10px;
+  .tel-prefix-sty {
+    .el-input {
+      .el-input__inner {
+        padding: 0 25px 0 16px;
       }
     }
   }
-}
+  .el-popper[x-placement^="bottom"] {
+    margin-top: 3px;
+  }
+  .el-scrollbar__view {
+    height: 260px;
+    overflow-y: scroll;
+  }
+  .el-dialog {
+    position: relative;
+    .el-dialog__header {
+      .el-dialog__headerbtn {
+        .el-icon-close {
+          position: absolute;
+          top: -14px;
+          right: -10px;
+        }
+      }
+    }
+  }
 }
 </style>
 
