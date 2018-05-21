@@ -33,7 +33,7 @@
                   </tr>
                   <tr>
                     <td><label for="idcard">出生年月</label></td>
-                    <td colspan="2"><input maxlength="24" type="date" id="idcard" class="inputsty" v-model.trim="birth" placeholder="请输入身份证、护照等有效证件号码"/></td>
+                    <td colspan="2"><input maxlength="24" type="date" id="idcard" class="inputsty birth-input" v-model.trim="birth" placeholder="请输入身份证、护照等有效证件号码"/></td>
                   </tr>
                   <tr>
                     <td><label for="idcard">证件号码</label></td>
@@ -547,6 +547,10 @@ export default {
   .reg_info tr {
     height: 48px;
     line-height: 48px;
+  }
+  .birth-input{
+    padding: 12px 5px 12px 18px !important;
+    height: 24px !important;
   }
   .inputsty {
     width: 368px;

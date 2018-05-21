@@ -527,6 +527,8 @@ export default {
         background-color: #efefef;
         border: none;
         padding: 8px;
+        resize: none;
+        width: 375px;
       }
     }
     .item_wrap {
