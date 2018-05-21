@@ -782,6 +782,7 @@ export default {
         padding: 8px 90px;
         color: #606266;
         line-height: 12px;
+        width: 385px;
       }
       .preview {
         text-align: center;
