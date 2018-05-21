@@ -77,7 +77,7 @@
             <div class="bottom clearfix">
               <div class="pull-left">
                 <img class="profile" src="http://stage.keepwork.com/wiki/assets/imgs/default_portrait.png?bust=1526455131" alt="">
-                <span>abcd</span>
+                <span>{{work.username}}</span>
               </div>
               <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
                 <span class="share-trigger-btn" slot="reference">分享</span>
