@@ -33,7 +33,15 @@
                   </tr>
                   <tr class="birth">
                     <td><label for="birth">出生年月</label></td>
-                    <td colspan="2"><input maxlength="24" type="date" id="birth" class="inputsty birth-input" v-model.trim="birth"/></td>
+                    <td colspan="2">
+                      <div class="block">
+                        <el-date-picker
+                          v-model="value1"
+                          type="date"
+                          placeholder="选择日期">
+                        </el-date-picker>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td><label for="idcard">证件号码</label></td>
@@ -205,6 +213,7 @@ export default {
   name: "register",
   data() {
     return {
+      value1: "",
       options: areaCode,
       loginBeforeLogin: false,
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
@@ -317,8 +326,9 @@ export default {
                   websiteId: iiccWebsiteId,
                   username: JSON.parse(localStorage.getItem("userinfo"))
                     .username,
-                  portrait: JSON.parse(localStorage.getItem("userinfo")).portrait ||
-              "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
+                  portrait:
+                    JSON.parse(localStorage.getItem("userinfo")).portrait ||
+                    "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
                   sex: that.gender,
                   realname: that.user_name,
                   email: that.email,
@@ -506,10 +516,15 @@ export default {
     width: 476px;
     margin: 0 auto;
     .birth {
-      .birth-input {
-        padding: 12px 5px 12px 18px !important;
-        height: 24px !important;
-        color: #757575;
+      .block {
+        .el-date-editor {
+          width: 391px;
+            .el-input__inner {
+              width: 391px;
+              padding-left: 38px;
+              color: #303133;
+            }
+        }
       }
     }
     .gender {

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Icon, Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading, Select, Option, Upload } from 'element-ui'
+import { Icon, Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading, Select, Option, DatePicker } from 'element-ui'
 
 Vue.config.productionTip = false
 Vue.use(Icon)
@@ -18,7 +18,7 @@ Vue.use(Dialog)
 Vue.use(Loading)
 Vue.use(Select)
 Vue.use(Option)
-Vue.use(Upload)
+Vue.use(DatePicker)
 
 /* eslint-disable no-new */
 new Vue({
