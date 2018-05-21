@@ -26,7 +26,9 @@
               </div>
               <div class="more">
                 <a href="http://www.paracraft.cn/?lang=zh" target="_blank"><img src="@/assets/pac/know.png" alt=""></a>
-                <p><a href="http://www.paracraft.cn/?lang=zh" target="_blank">了解更多</a></p>
+                <p>
+                  <a href="http://www.paracraft.cn/?lang=zh" target="_blank">了解更多</a>
+                </p>
               </div>
             </div>
             <p class="paracraft-info"><img src="@/assets/pac/little_dot.png" alt="">Paracraft创意空间是官方指定唯一的比赛创作软件。<img class="transform-img cla
@@ -436,9 +438,9 @@
               </div>
             </div>
           </div>
-          <div class="read-more-box">
+          <!-- <div class="read-more-box">
             <a class="read-more-btn" href="http://keepwork.com/official/pac2017/index" target="_blank">查看全部</a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="orgs-row">
@@ -463,10 +465,10 @@
             <div class="org-item cooperator">
               <h2>合作单位</h2>
               <ul>
-                <li>北京拓维研究院</li>
+                <li>北京拓维智库生态科学研究院</li>
                 <li>国际先进动态影像协会</li>
                 <li>香港动漫电玩节组委会</li>
-                <li>深圳市方块动漫文化发展有限公司</li>
+                <li>深圳市方块动漫画文化发展有限公司</li>
                 <!-- <li>前海拉瓦动漫（深圳）有限公司</li> -->
                 <li>深圳市时代科腾文化传媒有限公司</li>
                 <li>深圳市噢深商贸有限公司</li>
@@ -955,10 +957,10 @@ body {
       height: 3px;
       left: 62px;
       display: inline-block;
-      right: 72px;
+      right: 75px;
       background-image: linear-gradient(90deg, #b10cfe, #2e0cfe);
       position: absolute;
-      top: 53px;
+      top: 49px;
     }
     .shaft-item {
       width: 140px;
@@ -984,6 +986,9 @@ body {
     }
     .dot-box {
       padding: 16px 0 28px;
+      font-size: 0;
+      height: 24px;
+      line-height: 30px;
     }
     .dot {
       display: inline-block;
@@ -1278,7 +1283,7 @@ body {
       padding-bottom: 11px;
     }
     .cooperator {
-      padding: 32px 14px 7px;
+      padding: 32px 13px 7px;
       h2::before {
         left: 44px;
         right: 44px;
