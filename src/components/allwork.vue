@@ -79,7 +79,10 @@
                 <img class="profile" src="http://stage.keepwork.com/wiki/assets/imgs/default_portrait.png?bust=1526455131" alt="">
                 <span>abcd</span>
               </div>
-              <div class="pull-right">分享</div>
+              <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
+                <span class="share-trigger-btn" slot="reference">分享</span>
+                <div :id="'work'+work.worksId" class="iicc-social-share"></div>
+              </el-popover>
             </div>
           </div>
         </div>
@@ -213,6 +216,18 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    showSocialShare(work) {
+      let worksName = work.worksName || '未知标题'
+      window.socialShare(`#work${work.worksId}`, {
+        mode: 'prepend',
+        description: `快来看${work.username}做的作品《${worksName}》`,
+        title: `${worksName}`,
+        sites: ['qq', 'qzone', 'weibo', 'wechat'],
+        wechatQrcodeTitle: '', // 微信二维码提示文字
+        wechatQrcodeHelper: '扫描二维码打开网页',
+        url: `${window.location.origin}${work.worksUrl}`
+      })
     }
   },
   computed: {
@@ -477,7 +492,7 @@ h2 {
   position: relative;
   box-sizing: border-box;
 }
-.work-item:nth-child(3n+0){
+.work-item:nth-child(3n + 0) {
   margin-right: 0;
 }
 .id-label {
@@ -512,5 +527,36 @@ h2 {
   height: 50px;
   line-height: 50px;
   padding: 0 23px 0 15px;
+}
+.share-trigger-btn{
+  cursor: pointer;
+}
+</style>
+<style lang="scss">
+.iicc-social-share.social-share {
+  text-align: center;
+
+  .icon-wechat {
+    visibility: hidden;
+    height: 150px;
+
+    .wechat-qrcode {
+      top: 0;
+      left: -40px;
+      width: 110px;
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      visibility: visible;
+      display: block;
+      height: 165px;
+    }
+    .wechat-qrcode::after {
+      content: none;
+    }
+    h4 {
+      display: none;
+    }
+  }
 }
 </style>

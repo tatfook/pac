@@ -560,32 +560,6 @@ body {
     top: -7px;
   }
 }
-.el-dropdown-menu {
-  margin-top: 0;
-  border: none;
-  border-radius: 0;
-  padding: 5px 0;
-  background-color: #303133;
-  a {
-    color: #fff;
-    text-decoration: none;
-  }
-  .popper__arrow::after {
-    border-bottom-color: #303133;
-  }
-  .el-dropdown-menu__item {
-    padding: 0 27px;
-    color: #fff;
-  }
-  .el-dropdown-menu__item:not(.is-disabled):hover {
-    background-color: #181619;
-    color: #fff;
-  }
-}
-.el-dropdown {
-  font-size: 16px;
-  cursor: pointer;
-}
 .pac {
   color: #606266;
   font-size: 16px;
