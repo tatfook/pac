@@ -32,8 +32,8 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><label for="idcard">出生年月</label></td>
-                    <td colspan="2"><input maxlength="24" type="date" id="idcard" class="inputsty birth-input" v-model.trim="birth" placeholder="请输入身份证、护照等有效证件号码"/></td>
+                    <td><label for="birth">出生年月</label></td>
+                    <td colspan="2"><input maxlength="24" type="date" id="birth" class="inputsty birth-input" v-model.trim="birth"/></td>
                   </tr>
                   <tr>
                     <td><label for="idcard">证件号码</label></td>
