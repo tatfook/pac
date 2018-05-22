@@ -200,6 +200,7 @@ import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import gitLabAPIGenerator from "@/api/node-gitlab-api";
 import axios from "axios";
+import sensitiveWord from '@/api/sensitiveWord'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
@@ -284,6 +285,7 @@ export default {
       delimgLifeFilePath: "",
       uploadworkSuccessVisible: false,
       uploadworkErr:'',
+      isSensitive: false
     };
   },
   computed: {
@@ -464,12 +466,35 @@ export default {
       );
       this[delShowPreview] = "";
     },
-    uploadwork() {
+    async checkSensitive(){
+      let checkedWords = [
+        this.work_title,
+        this.work_brief,
+        this.school_name
+      ]
+      await sensitiveWord.checkSensitiveWords(checkedWords).then((result)=>{
+        if (result && result.length > 0) {
+          this.isSensitive = true
+        }else{
+          this.isSensitive = false
+        }
+      }).catch((error)=>{
+        console.log(error)
+        this.isSensitive = false
+      })
+    },
+    async uploadwork() {
       // console.log(this.awords);
       if (!this.work_title) {
         this.uploadworkVisible = true;
         return false;
       } else {
+        await this.checkSensitive()
+        if (this.isSensitive) {
+          this.uploadworkErr = "所填信息中包含敏感词！"
+          this.uploadworkSuccessVisible = true;
+          return;
+        }
         let that = this;
         keepwork.user
           .submitWorksApply({
