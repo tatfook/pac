@@ -37,11 +37,15 @@ export const websiteWorks = {
   getByUsername: (...args) => post('/website_works/getByUsername', ...args),
   search: (...args) => post('/website_works/search', ...args)
 }
+export const sensitiveWords = {
+  query: (...args) => post('/sensitive_words/query', ...args)
+}
 export const keepwork = {
   user,
   pages,
   websiteMember,
-  websiteWorks
+  websiteWorks,
+  sensitiveWords
 }
 
 export default keepwork
