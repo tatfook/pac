@@ -55,7 +55,7 @@
                             <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
                           </div>
                           <div class="preview-location">
-                            <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
+                            <div class="tip">(一张JPG格式,推荐分辨率280*157,推荐比例16:9)</div> 
                           </div>
                         </div>
                         <div class="img-wrap">预览区域
@@ -106,7 +106,7 @@
                   <tr>
                     <td colspan="2" style="padding-bottom:0">
                       <div class="up_pic">
-                        <div class="idcard" style="margin-bottom:13px;">
+                        <div class="idcard">
                           <div class="idcard-type">身份证复印件/扫描件</div>
                           <div class="clicktoup">
                             <div class="add-center">
@@ -116,6 +116,9 @@
                               点击上传
                             </div>
                               <input type="file" class="input_file" @change="uploadLifePhoto('idcard',$event)">                            
+                          </div>
+                          <div class="preview-location">
+                            <div class="tip">(大小不超过5M)</div> 
                           </div>
                         </div>
                         <div class="idcard-front-and-back">
@@ -430,6 +433,7 @@ export default {
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),
+            userid: JSON.parse(localStorage.getItem("userinfo")).dataSource[0].dataSourceUserId,
             worksName: this.work_title,
             worksDesc: this.work_brief,
             worksLogo: this.worksLogo,
@@ -786,7 +790,7 @@ export default {
       width: 389px;
       .tip {
         font-size: 12px;
-        padding: 8px 90px;
+        padding: 8px 105px;
         color: #606266;
         line-height: 12px;
         width: 385px;
