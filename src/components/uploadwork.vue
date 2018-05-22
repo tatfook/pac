@@ -137,7 +137,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td colspan="2">
                       <div class="up_pic">
                         <div class="idcard">
@@ -165,7 +165,7 @@
                           
                       </div>
                     </td>
-                  </tr>
+                  </tr> -->
                 </table>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
@@ -347,6 +347,7 @@ export default {
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
+      console.log(files)
       let {
         projectId,
         dataSourceToken,
@@ -356,11 +357,13 @@ export default {
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`;
       let base64img;
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
-      let imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${filePath}`;
+      let imgURL;
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = e => {
         base64img = e.target.result; // 这个就是base64编码了
+        filePath = filePath +'.'+ base64img.split(',')[0].split(';')[0].split(':')[1].split('/')[1];
+        imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${filePath}`;
         if (type == "workCover") {
           this.imgCover = e.target.result;
           this.worksLogo = imgURL;
@@ -383,7 +386,8 @@ export default {
         api.projects.repository.files.create(projectId, filePath, "master", {
           branch: "master",
           commit_message: "keepwork commit:files/aaa1",
-          content: base64img
+          content: base64img.split(',')[1],
+          encoding: 'base64'
         });
         // console.log(this.worksLogo);
         // console.log(this.identifyUrl[0]);
