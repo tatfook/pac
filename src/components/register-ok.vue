@@ -2,7 +2,8 @@
   <div class="login-form">
     <img @click="closeDialog" class="close-btn" src="@/assets/pac/close.png" alt="">
     <h1 class="title">
-      恭喜你，报名成功！
+      <slot name="registerok"></slot>
+      <slot name="uploadWorkSucceed"></slot>
     </h1>
     <div class="form">
       <!-- <img src="@/assets/pac/flag.png" alt=""> -->  

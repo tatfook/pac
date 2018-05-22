@@ -182,6 +182,11 @@
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="enlargeImg" alt="">
       </el-dialog>
+      <el-dialog :visible.sync="uploadworkSuccessVisible" width='500px' :show-close=false>
+        <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)'>
+          <span slot="uploadWorkSucceed">恭喜你，成功上传作品！</span>
+        </registerok>
+      </el-dialog>
     </main> 
     <Footer></Footer>    
   </div>
@@ -190,6 +195,7 @@
 import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
+import registerok from "./register-ok";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import gitLabAPIGenerator from "@/api/node-gitlab-api";
@@ -211,8 +217,32 @@ export default {
         // }
       ],
       picked: 4,
-      checked_item_student: [false, false, false, false, false, false,false, false, false, false, false],
-      checked_item_public: [false, false, false, false, false, false,false, false, false, false, false],
+      checked_item_student: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      checked_item_public: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
       awards_item_public: [
         "NPL 大奖",
         "NPL 最佳编辑奖",
@@ -251,19 +281,20 @@ export default {
       delWorksLogoFilePath: "",
       delimgIdCard_1FilePath: "",
       delimgIdCard_2FilePath: "",
-      delimgLifeFilePath: ""
+      delimgLifeFilePath: "",
+      uploadworkSuccessVisible: false
     };
   },
   computed: {
     already_checked_item: function() {
-      if(this.picked == 4){
+      if (this.picked == 4) {
         for (let i = 0; i < this.checked_item_student.length; i++) {
           if (this.checked_item_student[i]) {
             return true;
           }
         }
-      return false;
-      }else{
+        return false;
+      } else {
         for (let i = 0; i < this.checked_item_public.length; i++) {
           if (this.checked_item_public[i]) {
             return true;
@@ -290,14 +321,14 @@ export default {
     },
     awords: function() {
       let tempArr = [];
-      if(this.picked == 4){
+      if (this.picked == 4) {
         for (let i = 0; i < this.checked_item_student.length; i++) {
           if (this.checked_item_student[i]) {
             tempArr.push(this.awards_item_student[i]);
           }
         }
         return tempArr.join();
-      }else{
+      } else {
         for (let i = 0; i < this.checked_item_public.length; i++) {
           if (this.checked_item_public[i]) {
             tempArr.push(this.awards_item_public[i]);
@@ -310,7 +341,8 @@ export default {
   components: {
     Header,
     Banner,
-    Footer
+    Footer,
+    registerok
   },
   created: function() {
     let that = this;
@@ -318,8 +350,8 @@ export default {
     let { projectId, username } = JSON.parse(
       localStorage.getItem("userinfo")
     ).defaultSiteDataSource;
-    projectId = 367
-    username = "xiaoyao"
+    projectId = 367;
+    username = "xiaoyao";
     axios
       .create({
         baseURL: "http://git.keepwork.com/api/v4",
@@ -332,7 +364,7 @@ export default {
         // debugger
         // console.log(result);
         // console.log(result.data);
-        for(let i = 0 ;i < result.data.length;i++){
+        for (let i = 0; i < result.data.length; i++) {
           let obj = {};
           obj.value = result.data[i].path.split(".")[0];
           // console.log(obj.value)
@@ -347,13 +379,16 @@ export default {
       });
   },
   methods: {
+    setDialogVisible(key, value) {
+      this[key] = value;
+    },
     toLogout() {
       this.userinfo = undefined;
       localStorage.removeItem("userinfo");
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
-      console.log(files)
+      console.log(files);
       let {
         projectId,
         dataSourceToken,
@@ -368,7 +403,14 @@ export default {
       reader.readAsDataURL(files[0]);
       reader.onload = e => {
         base64img = e.target.result; // 这个就是base64编码了
-        filePath = filePath +'.'+ base64img.split(',')[0].split(';')[0].split(':')[1].split('/')[1];
+        filePath =
+          filePath +
+          "." +
+          base64img
+            .split(",")[0]
+            .split(";")[0]
+            .split(":")[1]
+            .split("/")[1];
         imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${filePath}`;
         if (type == "workCover") {
           this.imgCover = e.target.result;
@@ -392,8 +434,8 @@ export default {
         api.projects.repository.files.create(projectId, filePath, "master", {
           branch: "master",
           commit_message: "keepwork commit:files/aaa1",
-          content: base64img.split(',')[1],
-          encoding: 'base64'
+          content: base64img.split(",")[1],
+          encoding: "base64"
         });
         // console.log(this.worksLogo);
         // console.log(this.identifyUrl[0]);
@@ -433,7 +475,8 @@ export default {
             websiteId: iiccWebsiteId,
             username: JSON.parse(localStorage.getItem("userinfo")).username,
             realname: localStorage.getItem("realname"),
-            userid: JSON.parse(localStorage.getItem("userinfo")).dataSource[0].dataSourceUserId,
+            userid: JSON.parse(localStorage.getItem("userinfo")).dataSource[0]
+              .dataSourceUserId,
             worksName: this.work_title,
             worksDesc: this.work_brief,
             worksLogo: this.worksLogo,
@@ -449,10 +492,13 @@ export default {
             commentCount: ""
           })
           .then(function(result) {
-            console.log(result);
-            console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-            // console.log("图片地址：" + that.dialogImageUrl);
-            that.showerr = false;
+            if (result.error.id == 0) {
+              that.uploadworkSuccessVisible = true;
+              console.log(result);
+              console.log(
+                JSON.parse(localStorage.getItem("userinfo")).username
+              );
+            }
           })
           .catch(function(error) {
             console.log(err);

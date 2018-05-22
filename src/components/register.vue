@@ -97,7 +97,9 @@
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
       </el-dialog>
       <el-dialog :visible.sync="registerOkVisible" width='500px' :show-close=false>
-        <registerok @close='setDialogVisible("registerOkVisible", false)'></registerok>
+        <registerok @close='setDialogVisible("registerOkVisible", false)'>
+          <span slot="registerok">恭喜你，报名成功！</span>
+        </registerok>
       </el-dialog>
       <el-dialog :visible.sync='loginBeforeLogin' width='500px'>
         <p style="text-align: center;">{{reminder}}</p>
