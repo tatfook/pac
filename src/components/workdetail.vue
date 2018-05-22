@@ -113,6 +113,7 @@
                 </p>
               </div>
             </div>
+            <div class="viewMore">查看更多></div>
           </div>
         </div>
       </div>
@@ -369,6 +370,23 @@ textarea:focus{
 }
 .comment-item{
   position: relative;
+  padding: 31px 0;
+  border-bottom: 1px solid #dddddd;
+}
+.comment-item::after{
+  content: '';
+  height: 1px;
+  width: 100px;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: -1px;
+}
+.viewMore{
+  height: 100px;
+  text-align: center;
+  line-height: 120px;
+  text-decoration: underline;
+  color: #303133;
 }
 .profile {
   width: 76px;
@@ -377,6 +395,7 @@ textarea:focus{
   border-radius: 50%;
   margin-right: 20px;
   position: absolute;
+  padding: 31px 0;
   left: 0;
   top: 0;
 }
