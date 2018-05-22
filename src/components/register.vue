@@ -210,6 +210,7 @@ import join from "./join";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import areaCode from "@/assets/area_code.js";
+import sensitiveWord from '@/api/sensitiveWord'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
@@ -234,7 +235,8 @@ export default {
       tel: "",
       idcard_no: "",
       birth: "",
-      reminder: ""
+      reminder: "",
+      isSensitive: false
     };
   },
   computed: {
@@ -279,7 +281,28 @@ export default {
       this.joinDialogVisible = false;
       this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
     },
-    register() {
+    async checkSensitive(){
+      let checkedWords = [
+        this.user_name,
+        this.location
+      ]
+      await sensitiveWord.checkSensitiveWords(checkedWords).then((result)=>{
+        if (result && result.length > 0) {
+          this.isSensitive = true
+        }else{
+          this.isSensitive = false
+        }
+      }).catch((error)=>{
+        console.log(error)
+        this.isSensitive = false
+      })
+    },
+    async register() {
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.showErr("所填信息中包含敏感词！");
+        return;
+      }
       if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
         this.showErr("姓名中不能包含特殊字符");
         return false;
