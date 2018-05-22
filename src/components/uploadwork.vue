@@ -241,7 +241,7 @@ export default {
       worksLogo: "", //作品封面地址
       imgIdCard_1: "", //身份证正面
       imgIdCard_2: "", //身份证反面
-      identifyUrl: [], //省份证地址
+      identifyUrl: [], //身份证地址
       imgLife: "", //生活照
       liveUrl: "", //生活照地址
       enlargeImg: "",
@@ -276,7 +276,10 @@ export default {
         this.work_brief &&
         this.school_name &&
         this.value2 != "选择您要比赛的作品" &&
-        this.already_checked_item
+        this.already_checked_item &&
+        this.imgCover &&
+        this.imgIdCard_1 &&
+        this.imgIdCard_2
       ) {
         return true;
       }
