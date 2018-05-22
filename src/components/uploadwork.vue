@@ -55,7 +55,7 @@
                             <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
                           </div>
                           <div class="preview-location">
-                            <div class="tip">(一张JPG格式,推荐分辨率280*157,推荐比例16:9)</div> 
+                            <div class="tip">(一张JPG格式,推荐比例16:9)</div> 
                           </div>
                         </div>
                         <div class="img-wrap">预览区域
@@ -184,7 +184,7 @@
       </el-dialog>
       <el-dialog :visible.sync="uploadworkSuccessVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)'>
-          <span slot="uploadWorkSucceed">恭喜你，成功上传作品！</span>
+          <span slot="uploadWorkSucceed">{{uploadworkErr}}</span>
         </registerok>
       </el-dialog>
     </main> 
@@ -282,7 +282,8 @@ export default {
       delimgIdCard_1FilePath: "",
       delimgIdCard_2FilePath: "",
       delimgLifeFilePath: "",
-      uploadworkSuccessVisible: false
+      uploadworkSuccessVisible: false,
+      uploadworkErr:'',
     };
   },
   computed: {
@@ -493,11 +494,15 @@ export default {
           })
           .then(function(result) {
             if (result.error.id == 0) {
+              that.uploadworkErr = '恭喜你，成功上传作品！'
               that.uploadworkSuccessVisible = true;
               console.log(result);
               console.log(
                 JSON.parse(localStorage.getItem("userinfo")).username
               );
+            }else{
+              that.uploadworkErr = '提交失败，请稍后再试！'
+              that.uploadworkSuccessVisible = true;
             }
           })
           .catch(function(error) {
