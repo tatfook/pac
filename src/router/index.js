@@ -5,6 +5,7 @@ import register from '@/components/register'
 import uploadwork from '@/components/uploadwork'
 import mywork from '@/components/mywork'
 import allwork from '@/components/allwork'
+import workDetail from '@/components/workdetail'
 // import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -36,6 +37,11 @@ export default new Router({
       path: '/all',
       name: 'allwork',
       component: allwork
+    },
+    {
+      path: '/detail',
+      name: 'workdetail',
+      component: workDetail
     }
   ]
 })
