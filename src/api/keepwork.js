@@ -40,12 +40,16 @@ export const websiteWorks = {
 export const sensitiveWords = {
   query: (...args) => post('/sensitive_words/query', ...args)
 }
+export const getByWorksUrl = {
+  worksUrl: (...args) => post('website_works/getByWorksUrl', ...args)
+}
 export const keepwork = {
   user,
   pages,
   websiteMember,
   websiteWorks,
-  sensitiveWords
+  sensitiveWords,
+  getByWorksUrl
 }
 
 export default keepwork

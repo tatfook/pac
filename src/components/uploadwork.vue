@@ -438,7 +438,9 @@ export default {
         projectId,
         dataSourceToken,
         apiBaseUrl,
-        dataSourceUsername
+        dataSourceUsername,
+        projectName,
+        rawBaseUrl
       } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`;
       let base64img;
@@ -456,7 +458,7 @@ export default {
             .split(";")[0]
             .split(":")[1]
             .split("/")[1];
-        imgURL = `${apiBaseUrl}/projects/${projectId}/repository/files/${filePath}`;
+        imgURL = `${rawBaseUrl}/${dataSourceUsername}/${projectName}/raw/master/${filePath}`;
         if (type == "workCover") {
           this.imgCover = e.target.result;
           this.worksLogo = imgURL;

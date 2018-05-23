@@ -11,20 +11,20 @@
           <h2>Heart And Hands
             <span class="info">作品编号：123456</span>
           </h2>
-          <p class="time">2017年12月23日</p>
+          <p class="time">{{createYear}}年{{createMonth}}月{{createDay}}日</p>
         </div>
         <div class="content">
-          <img src="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" class="work-cover" alt="">
+          <img :src="worksLogo" class="work-cover" alt="">
           <div class="detail">
             <div class="upload-work-info">
               <p>作品作者：
-                <span>奇仔</span>
+                <span>{{username}}</span>
               </p>
               <p>参赛组别：
-                <span>公开组</span>
+                <span>{{worksFlag}}</span>
               </p>
               <p>参赛奖项：
-                <span class="award-item">NPL老顽童奖</span>
+                <span class="award-item">{{awords}}</span>
               </p>
             </div>
             <div class="paracraft-info">
@@ -37,10 +37,10 @@
             </div>
             <div class="other-info">
               <span class="info-item">
-                <i class="iconfont icon-visit"></i>5222
+                <i class="iconfont icon-visit"></i>{{visitCount}}
               </span>
               <span class="info-item">
-                <i class="iconfont icon-comment"></i>7832
+                <i class="iconfont icon-comment"></i>{{commentCount}}
               </span>
             </div>
           </div>
@@ -63,7 +63,7 @@
           <img src="@/assets/pac/work_intro_title.png" alt="">
         </h1>
         <p class="intro">
-          简介简介简介简介
+          {{worksDesc}}
         </p>
         <div class="vote-area">
           <p class="vote-info">
@@ -122,32 +122,68 @@
   </div>
 </template>
 <script>
-import keepwork from '@/api/keepwork'
-import Header from './common/header'
-import Footer from './common/footer'
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID
+import keepwork from "@/api/keepwork";
+import Header from "./common/header";
+import Footer from "./common/footer";
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
-  name: 'workdetail',
+  name: "workdetail",
   components: {
     Header,
     Footer
   },
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem('userinfo'))
-    }
+      userinfo: JSON.parse(localStorage.getItem("userinfo")),
+      username: '',//作品作者
+      worksFlag: '',//组别
+      awords: '',//参赛奖项
+      visitCount: '',//浏览数
+      commentCount: '',//评论数
+      createYear: '',
+      createMonth: '',
+      createDay: '',
+      worksLogo: '',//作品封面
+      worksDesc: '',//作品简介
+    };
+  },
+  created: function() {
+    let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
+    let that = this
+    keepwork.getByWorksUrl
+      .worksUrl({
+        websiteId: iiccWebsiteId,
+        worksUrl: "xiaoyao/paracraft/index"
+      })
+      .then(function(result) {
+        console.log(result);
+        let data = result.data
+        that.username = data.username;
+        that.worksFlag = data.worksFlag == 3 ? '公开组' : '学生组'
+        that.awords = data.awords
+        that.visitCount = data.visitCount
+        that.commentCount = data.commentCount
+        that.createYear = data.createDate.split(' ')[0].split('-')[0]
+        that.createMonth = data.createDate.split(' ')[0].split('-')[1]
+        that.createDay = data.createDate.split(' ')[0].split('-')[2]
+        that.worksLogo = data.worksLogo
+        that.worksDesc = data.worksDesc
+      })
+      .catch(function(error) {
+        // console.log(error)
+      });
   },
   methods: {
     reGetUserinfo() {
-      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
     },
     toLogout() {
-      this.userinfo = undefined
-      localStorage.removeItem('token')
-      localStorage.removeItem('userinfo')
+      this.userinfo = undefined;
+      localStorage.removeItem("token");
+      localStorage.removeItem("userinfo");
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .main-container {
@@ -168,7 +204,7 @@ export default {
   color: #b0b4bb;
 }
 .clearfix::after {
-  content: '';
+  content: "";
   clear: both;
   display: table;
 }
@@ -193,18 +229,18 @@ h2 {
     margin-left: 10px;
   }
 }
-h3{
+h3 {
   margin: 0;
   font-size: 18px;
   color: #303133;
   border-bottom: 1px solid #ddd;
   padding-bottom: 18px;
-  .iconfont{
+  .iconfont {
     font-size: 22px;
     vertical-align: middle;
     margin-right: 5px;
   }
-  .info{
+  .info {
     font-size: 12px;
     color: #909399;
   }
@@ -318,7 +354,7 @@ p {
   }
 }
 .vote-info::after {
-  content: '';
+  content: "";
   display: inline-block;
   left: 0;
   right: 0;
@@ -340,7 +376,7 @@ p {
   font-weight: bold;
   margin: 30px 0;
 }
-textarea{
+textarea {
   width: 100%;
   height: 113px;
   resize: none;
@@ -352,10 +388,10 @@ textarea{
   box-sizing: border-box;
   font-family: inherit;
 }
-textarea:focus{
+textarea:focus {
   outline: none;
 }
-.comment-btn{
+.comment-btn {
   width: 94px;
   height: 39px;
   line-height: 39px;
@@ -369,20 +405,20 @@ textarea:focus{
 .comment-row {
   padding: 35px 30px 20px;
 }
-.comment-item{
+.comment-item {
   position: relative;
   padding: 31px 0;
   border-bottom: 1px solid #dddddd;
 }
-.comment-item::after{
-  content: '';
+.comment-item::after {
+  content: "";
   height: 1px;
   width: 100px;
   background-color: #ffffff;
   position: absolute;
   bottom: -1px;
 }
-.viewMore{
+.viewMore {
   height: 100px;
   text-align: center;
   line-height: 120px;
@@ -400,7 +436,7 @@ textarea:focus{
   left: 0;
   top: 0;
 }
-.comment-detail{
+.comment-detail {
   padding-left: 96px;
 }
 .comment-content {
