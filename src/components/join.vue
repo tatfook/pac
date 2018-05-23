@@ -32,6 +32,9 @@
       <div class="register-button" :class="{'active': isAgreeService}" @click='toRegister'>
         立即注册
       </div>
+      <p>已有账号，
+        <span class="fake-link" @click="showLoginDialog">直接登录</span>
+      </p>
     </div>
   </div>
 </template>
@@ -40,6 +43,7 @@ import axios from 'axios'
 import contactContent from '@/../static/profile_datas/contact.md'
 import profileContent from '@/../static/profile_datas/profile.md'
 import siteContent from '@/../static/profile_datas/site.md'
+import sensitiveWord from '@/api/sensitiveWord'
 let axiosInstance = axios.create({
   baseURL: 'http://keepwork.com/api/wiki/models'
 })
@@ -61,10 +65,15 @@ export default {
       joinErrMsg: '',
       reSendCodeTime: 0,
       reSendCodeInteval: undefined,
-      isAgreeService: true
+      isAgreeService: true,
+      isSensitive: false
     }
   },
   methods: {
+    showLoginDialog() {
+      this.$emit('showLoginDialog')
+      this.closeDialog()
+    },
     _encodeURIComponent(url) {
       return encodeURIComponent(url).replace(/\./g, '%2E')
     },
@@ -175,7 +184,23 @@ export default {
           console.log(error)
         })
     },
-    toRegister() {
+    async checkSensitive() {
+      let checkedWords = [this.username]
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true
+          } else {
+            this.isSensitive = false
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.isSensitive = false
+        })
+    },
+    async toRegister() {
       this.joinErrMsg = ''
       if (!this.isAgreeService) {
         this.joinErrMsg = '同意协议后才能注册哦'
@@ -189,6 +214,27 @@ export default {
       })
       if (!this.username) {
         this.joinErrMsg = '请输入账号'
+        loading.close()
+        return
+      }
+      if (this.username.length > 30) {
+        this.joinErrMsg = '*账户名需小于30位'
+        loading.close()
+        return
+      }
+      if (/^\d+$/.test(this.username)) {
+        this.joinErrMsg = '*账户名不可为纯数字'
+        loading.close()
+        return
+      }
+      if (!/^[a-z0-9]+$/.test(this.username)) {
+        this.joinErrMsg = '*账户名只能包含小写字母、数字'
+        loading.close()
+        return
+      }
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.joinErrMsg = '所填信息中包含敏感词！'
         loading.close()
         return
       }
@@ -273,7 +319,7 @@ export default {
   .rotate-180-deg {
     transform: rotate(180deg);
   }
-  input:focus{
+  input:focus {
     outline: none;
   }
   .form {
@@ -404,6 +450,10 @@ export default {
     position: absolute;
     left: 3px;
     top: 3px;
+  }
+  .fake-link {
+    color: #237efa;
+    cursor: pointer;
   }
 }
 </style>
