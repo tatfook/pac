@@ -87,18 +87,18 @@
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                         <div>
-                          <p v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                       </div>
                       <div class="item_wrap">
                         <div>
-                          <p v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                         <div>
-                          <p v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
                         </div>
                       </div>
                     </td>
@@ -389,6 +389,12 @@ export default {
       });
   },
   methods: {
+    selItem_stu(index){
+      this.$set(this.checked_item_student, index, !this.checked_item_student[index])
+    },
+    selItem_pub(index){
+      this.$set(this.checked_item_public, index, !this.checked_item_public[index])
+    },
     setDialogVisible(key, value) {
       this[key] = value;
     },
@@ -555,6 +561,7 @@ export default {
       font-size: 14px;
     }
     .group_name_sel {
+      cursor: pointer;
       color: #303133;
       font-size: 14px;
     }
@@ -628,6 +635,9 @@ export default {
     }
     .item_wrap {
       display: flex;
+      .item-content{
+        cursor: pointer;
+      }
       div {
         flex: 1;
         // height: 120px;
