@@ -176,8 +176,8 @@ export default {
     },
     toLogout() {
       this.userinfo = undefined
-      this.token = undefined
       localStorage.removeItem('userinfo')
+      localStorage.removeItem('token')
     },
     setSelectWorksFlag(value) {
       if (value === this.searchParams.worksFlag) {

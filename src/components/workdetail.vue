@@ -143,7 +143,7 @@ export default {
     },
     toLogout() {
       this.userinfo = undefined
-      this.token = undefined
+      localStorage.removeItem('token')
       localStorage.removeItem('userinfo')
     }
   }

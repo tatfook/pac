@@ -423,9 +423,9 @@ export default {
       this[key] = value;
     },
     toLogout() {
-      this.userinfo = undefined;
-      this.token = undefined
-      localStorage.removeItem("userinfo");
+      this.userinfo = undefined
+      localStorage.removeItem("userinfo")
+      localStorage.removeItem('token')
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
