@@ -553,7 +553,6 @@ export default {
             if (result.error.id == 0) {
               that.uploadworkMsg = "恭喜你，成功上传作品！";
               that.uploadworkSuccessVisible = true;
-              console.log(result);
               return true;
             } else {
               that.uploadworkMsg = "提交失败，请稍后再试！";
