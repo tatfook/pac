@@ -107,8 +107,13 @@
                     <td colspan="2" style="padding-bottom:0">
                       <div class="up_pic">
                         <div class="idcard">
-                          <div class="idcard-type">身份证复印件/扫描件</div>
-                          <div class="clicktoup">
+                          <div class="idcard-type">
+                            有效证件
+                            <el-tooltip class="item" effect="dark" content="•身份证上传正反两面 •其他证件上传有效信息的一面" placement="top">
+                              <el-button><i class="el-icon-question"></i></el-button>
+                            </el-tooltip>
+                          </div>
+                          <div class="clicktoup clicktoup2">
                             <div class="add-center">
                               <div class="add-icon">
                                 <div class="add"></div>
@@ -332,8 +337,7 @@ export default {
         this.value2 != "选择您要比赛的作品" &&
         this.already_checked_item &&
         this.imgCover &&
-        this.imgIdCard_1 &&
-        this.imgIdCard_2
+        this.imgIdCard_1
       ) {
         return true;
       }
@@ -551,6 +555,7 @@ export default {
           })
           .then(function(result) {
             if (result.error.id == 0) {
+              // console.log(result);
               that.uploadworkMsg = "恭喜你，成功上传作品！";
               that.uploadworkSuccessVisible = true;
               return true;
@@ -871,6 +876,13 @@ export default {
     margin-bottom: 30px;
     // height: 200px;
     .idcard-type {
+      .el-tooltip{
+        height: 20px;
+        width: 16px;
+        padding: 0;
+        border: none;
+        font-size: 18px
+      }
       flex: 1;
     }
     .clicktoup {
@@ -962,6 +974,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.el-tooltip__popper{
+  width: 120px !important;
+}
 .uploadwork-wrap {
   .uploadwork_table .compete_works .el-input {
     margin-left: 10px;
