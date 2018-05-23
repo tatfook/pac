@@ -52,7 +52,7 @@
                               </div>
                               点击上传
                             </div>
-                            <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
+                            <input type="file" :disabled="!!imgCover" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式,推荐比例16:9)</div> 
@@ -115,7 +115,7 @@
                               </div>
                               点击上传
                             </div>
-                              <input type="file" class="input_file" @change="uploadLifePhoto('idcard',$event)">                            
+                              <input type="file" :disabled="!!imgIdCard_1 && !!imgIdCard_2" class="input_file" @change="uploadLifePhoto('idcard',$event)">                            
                           </div>
                           <div class="preview-location">
                             <div class="tip">(大小不超过5M)</div> 
