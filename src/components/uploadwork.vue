@@ -26,19 +26,19 @@
                   </tr>
                   <tr>
                     <td>作品名称</td>
-                    <td><input type="text" v-model="work_title" placeholder="请输入您的作品名称"/></td>
+                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称"/></td>
                   </tr>
                     <tr class="select_items">
                       <td>作品简介</td>
                       <td>
                         <div class="brief_wrap">
-                          <textarea v-model="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
+                          <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
                         </div>
                       </td>                
                   </tr>
                   <tr>
                     <td>学校名称</td>
-                    <td><input type="text" v-model="school_name" placeholder="请输入您的学校全名"/></td>
+                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名"/></td>
                   </tr>
                   <tr>
                     <td colspan="2">
@@ -176,15 +176,21 @@
           </div>
         </div>
       </div>  
-      <el-dialog :visible.sync='uploadworkVisible' width='500px'>
-        <p>提交作品出错了</p>
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisibleErr"
+        width="30%">
+        <span>{{uploadworkMsg}}</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisibleErr = false">确 定</el-button>
+        </span>
       </el-dialog>
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="enlargeImg" alt="">
       </el-dialog>
       <el-dialog :visible.sync="uploadworkSuccessVisible" width='500px' :show-close=false>
         <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)'>
-          <span slot="uploadWorkSucceed">{{uploadworkErr}}</span>
+          <span slot="uploadWorkSucceed">{{uploadworkMsg}}</span>
         </registerok>
       </el-dialog>
     </main> 
@@ -200,7 +206,7 @@ import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import gitLabAPIGenerator from "@/api/node-gitlab-api";
 import axios from "axios";
-import sensitiveWord from '@/api/sensitiveWord'
+import sensitiveWord from "@/api/sensitiveWord";
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "register",
@@ -269,6 +275,7 @@ export default {
       school_name: "",
       value2: "选择您要比赛的作品",
       uploadworkVisible: false,
+      dialogVisibleErr: false,
       dialogImageUrl: "",
       dialogVisible: false,
       imgCover: "", //封面
@@ -284,7 +291,7 @@ export default {
       delimgIdCard_2FilePath: "",
       delimgLifeFilePath: "",
       uploadworkSuccessVisible: false,
-      uploadworkErr:'',
+      uploadworkMsg: "",
       isSensitive: false
     };
   },
@@ -391,7 +398,7 @@ export default {
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
-      console.log(files);
+      // console.log(files);
       let {
         projectId,
         dataSourceToken,
@@ -466,33 +473,33 @@ export default {
       );
       this[delShowPreview] = "";
     },
-    async checkSensitive(){
-      let checkedWords = [
-        this.work_title,
-        this.work_brief,
-        this.school_name
-      ]
-      await sensitiveWord.checkSensitiveWords(checkedWords).then((result)=>{
-        if (result && result.length > 0) {
-          this.isSensitive = true
-        }else{
-          this.isSensitive = false
-        }
-      }).catch((error)=>{
-        console.log(error)
-        this.isSensitive = false
-      })
+    async checkSensitive() {
+      let checkedWords = [this.work_title, this.work_brief, this.school_name];
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true;
+          } else {
+            this.isSensitive = false;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.isSensitive = false;
+        });
     },
     async uploadwork() {
       // console.log(this.awords);
       if (!this.work_title) {
-        this.uploadworkVisible = true;
+        this.uploadworkMsg = "提交作品出错";
+        this.dialogVisibleErr = true;
         return false;
       } else {
-        await this.checkSensitive()
+        await this.checkSensitive();
         if (this.isSensitive) {
-          this.uploadworkErr = "所填信息中包含敏感词！"
-          this.uploadworkSuccessVisible = true;
+          this.uploadworkMsg = "所填信息中包含敏感词！";
+          this.dialogVisibleErr = true;
           return;
         }
         let that = this;
@@ -519,21 +526,22 @@ export default {
           })
           .then(function(result) {
             if (result.error.id == 0) {
-              that.uploadworkErr = '恭喜你，成功上传作品！'
+              that.uploadworkMsg = "恭喜你，成功上传作品！";
               that.uploadworkSuccessVisible = true;
-              console.log(result);
-              console.log(
-                JSON.parse(localStorage.getItem("userinfo")).username
-              );
-            }else{
-              that.uploadworkErr = '提交失败，请稍后再试！'
+              // console.log(result);
+              // console.log(
+              //   JSON.parse(localStorage.getItem("userinfo")).username
+              // );
+              return true;
+            } else {
+              that.uploadworkMsg = "提交失败，请稍后再试！";
               that.uploadworkSuccessVisible = true;
+              return false;
             }
           })
           .catch(function(error) {
             console.log(err);
           });
-        return true;
       }
     }
   }
