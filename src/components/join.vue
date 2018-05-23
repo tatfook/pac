@@ -40,6 +40,7 @@ import axios from 'axios'
 import contactContent from '@/../static/profile_datas/contact.md'
 import profileContent from '@/../static/profile_datas/profile.md'
 import siteContent from '@/../static/profile_datas/site.md'
+import sensitiveWord from '@/api/sensitiveWord'
 let axiosInstance = axios.create({
   baseURL: 'http://keepwork.com/api/wiki/models'
 })
@@ -61,7 +62,8 @@ export default {
       joinErrMsg: '',
       reSendCodeTime: 0,
       reSendCodeInteval: undefined,
-      isAgreeService: true
+      isAgreeService: true,
+      isSensitive: false
     }
   },
   methods: {
@@ -175,7 +177,23 @@ export default {
           console.log(error)
         })
     },
-    toRegister() {
+    async checkSensitive() {
+      let checkedWords = [this.username]
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true
+          } else {
+            this.isSensitive = false
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.isSensitive = false
+        })
+    },
+    async toRegister() {
       this.joinErrMsg = ''
       if (!this.isAgreeService) {
         this.joinErrMsg = '同意协议后才能注册哦'
@@ -187,6 +205,12 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.joinErrMsg = '所填信息中包含敏感词！'
+        loading.close()
+        return
+      }
       if (!this.username) {
         this.joinErrMsg = '请输入账号'
         loading.close()
@@ -273,7 +297,7 @@ export default {
   .rotate-180-deg {
     transform: rotate(180deg);
   }
-  input:focus{
+  input:focus {
     outline: none;
   }
   .form {
