@@ -32,6 +32,9 @@
       <div class="register-button" :class="{'active': isAgreeService}" @click='toRegister'>
         立即注册
       </div>
+      <p>已有账号，
+        <span class="fake-link" @click="showLoginDialog">直接登录</span>
+      </p>
     </div>
   </div>
 </template>
@@ -67,6 +70,10 @@ export default {
     }
   },
   methods: {
+    showLoginDialog() {
+      this.$emit('showLoginDialog')
+      this.closeDialog()
+    },
     _encodeURIComponent(url) {
       return encodeURIComponent(url).replace(/\./g, '%2E')
     },
@@ -205,14 +212,29 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      await this.checkSensitive()
-      if (this.isSensitive) {
-        this.joinErrMsg = '所填信息中包含敏感词！'
+      if (!this.username) {
+        this.joinErrMsg = '请输入账号'
         loading.close()
         return
       }
-      if (!this.username) {
-        this.joinErrMsg = '请输入账号'
+      if (this.username.length > 30) {
+        this.joinErrMsg = '*账户名需小于30位'
+        loading.close()
+        return
+      }
+      if (/^\d+$/.test(this.username)) {
+        this.joinErrMsg = '*账户名不可为纯数字'
+        loading.close()
+        return
+      }
+      if (!/^[a-z0-9]+$/.test(this.username)) {
+        this.joinErrMsg = '*账户名只能包含小写字母、数字'
+        loading.close()
+        return
+      }
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.joinErrMsg = '所填信息中包含敏感词！'
         loading.close()
         return
       }
@@ -428,6 +450,10 @@ export default {
     position: absolute;
     left: 3px;
     top: 3px;
+  }
+  .fake-link {
+    color: #237efa;
+    cursor: pointer;
   }
 }
 </style>
