@@ -424,6 +424,7 @@ export default {
     },
     toLogout() {
       this.userinfo = undefined;
+      this.token = undefined
       localStorage.removeItem("userinfo");
     },
     uploadLifePhoto(type, e) {

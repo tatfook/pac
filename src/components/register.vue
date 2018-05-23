@@ -270,6 +270,7 @@ export default {
     },
     toLogout() {
       this.userinfo = undefined;
+      this.token = undefined
       localStorage.removeItem("userinfo");
     },
     showErr(err) {
