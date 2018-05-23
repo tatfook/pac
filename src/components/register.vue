@@ -328,9 +328,9 @@ export default {
         keepwork.user
           .submitMemberApply({
             websiteId: iiccWebsiteId,
-            username: JSON.parse(localStorage.getItem("userinfo")).username,
+            username: this.userinfo.username,
             portrait:
-              JSON.parse(localStorage.getItem("userinfo")).portrait ||
+              this.userinfo.portrait ||
               "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
             sex: this.gender,
             realname: this.user_name,
@@ -340,18 +340,18 @@ export default {
             identifyCardId: this.idcard_no
           })
           .then(function(result) {
-            console.log(result);
-            console.log(JSON.parse(localStorage.getItem("userinfo")).username);
+            // console.log(result);
+            // console.log(this.userinfo.username);
             localStorage.setItem("realname", that.user_name);
-            console.log(result.error.id);
+            // console.log(result.error.id);
             if (result.error.id == 0) {
               keepwork.user
                 .agreeMemberApply({
                   websiteId: iiccWebsiteId,
-                  username: JSON.parse(localStorage.getItem("userinfo"))
+                  username: that.userinfo
                     .username,
                   portrait:
-                    JSON.parse(localStorage.getItem("userinfo")).portrait ||
+                    that.userinfo.portrait ||
                     "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
                   sex: that.gender,
                   realname: that.user_name,
@@ -361,28 +361,29 @@ export default {
                   identifyCardId: that.idcard_no
                 })
                 .then(function(result) {
-                  console.log(result);
-                  console.log(
-                    JSON.parse(localStorage.getItem("userinfo")).username +
-                      "同意成员"
-                  );
+                  // console.log(result);
+                  // console.log(
+                  //   that.userinfo.username +
+                  //     "同意成员"
+                  // );
                   if (result.error.id == 0) {
                     localStorage.setItem("realname", that.user_name);
                     that.registerOkVisible = true;
+                    return true;
                   } else {
                     that.loginBeforeLogin = true;
                     that.reminder = "网络错误，请稍后重试!!";
+                    return false;
                   }
                 })
                 .catch(function(error) {});
             } else {
               that.loginBeforeLogin = true;
               that.reminder = "网络错误，请稍后重试!";
+              return false;
             }
           })
           .catch(function(error) {});
-
-        return true;
       }
     }
   }
