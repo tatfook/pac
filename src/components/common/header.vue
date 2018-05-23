@@ -59,10 +59,10 @@
         </li>
         <li class="join-btn" @click="toApply" v-show="!isApplyPage && !isApplied"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="join-btn" @click="toUpload" v-show="!isUploadWorkPage && isApplied"><img src="@/assets/pac/upload_icon.png" alt="">上传作品</li>
-        <li class="profile" v-if="userinfo && userinfo.portrait">
+        <li class="profile" v-if="userinfo && userinfo.username">
           <el-dropdown placement='bottom' trigger='click'>
             <span class="el-dropdown-link">
-              <img class="profile-img" :src='userinfo.portrait' alt="">
+              <img class="profile-img" :src='getUserPortrait(userinfo)' alt="">
               <img src="@/assets/pac/bottom-dot.png" alt="">
             </span>
             <el-dropdown-menu class="header-dropdown" slot='dropdown'>
@@ -166,6 +166,14 @@ export default {
     this.initIsApplied()
   },
   methods: {
+    getUserPortrait(){
+      let portrait = this.userinfo.portrait
+      let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
+      if (!portrait || KPOldDefaultPortrait.test(portrait)) {
+        return "http://keepwork.com/wiki/assets/imgs/default_portrait.png"
+      }
+      return this.userinfo.portrait
+    },
     setDialogVisible(key, value) {
       this[key] = value
     },

@@ -102,6 +102,7 @@ export default {
     toLogout() {
       this.userinfo = undefined
       localStorage.removeItem('userinfo')
+      localStorage.removeItem('token')
     },
     getAllWorks() {
       keepwork.websiteWorks

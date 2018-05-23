@@ -8,11 +8,11 @@
       <div class="form">
         <div class="input-group">
           <img class="input-addon" src="@/assets/pac/user.png" alt="">
-          <input v-model="username" class="input-content" type="text" name="username" placeholder="请输入账号">
+          <input @keyup.prevent="inputKeyupHandler" v-model="username" class="input-content" type="text" name="username" placeholder="请输入账号">
         </div>
         <div class="input-group">
           <img class="input-addon" src="@/assets/pac/unlock.png" alt="">
-          <input v-model="password" class="input-content" type="password" name="password" placeholder="请输入密码">
+          <input @keyup.prevent="inputKeyupHandler" v-model="password" class="input-content" type="password" name="password" placeholder="请输入密码">
         </div>
         <p class="error-msg" v-show="loginErrMsg">{{loginErrMsg}}</p>
         <div class="login-button" @click='toLogin'>
@@ -39,6 +39,11 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('close')
+    },
+    inputKeyupHandler(event) {
+      if (event.keyCode === 13) {
+        this.toLogin()
+      }
     },
     showJoinDialog() {
       this.$emit('showJoinDialog')
@@ -68,7 +73,7 @@ export default {
           username: this.username,
           password: this.password
         })
-        .then((result) => {
+        .then(result => {
           if (result.data) {
             let resultData = result.data
             let userinfo = JSON.stringify(resultData.userinfo)
@@ -81,7 +86,8 @@ export default {
           }
           that.loginErrMsg = result.error.message
           loading.close()
-        }).catch((error)=>{
+        })
+        .catch(error => {
           that.loginErrMsg = '出错了，请检查网络后重试'
           loading.close()
           console.log(error)

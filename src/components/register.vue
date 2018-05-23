@@ -269,8 +269,9 @@ export default {
       this[key] = value;
     },
     toLogout() {
-      this.userinfo = undefined;
-      localStorage.removeItem("userinfo");
+      this.userinfo = undefined
+      localStorage.removeItem("userinfo")
+      localStorage.removeItem('token')
     },
     showErr(err) {
       this.showerr = true;
