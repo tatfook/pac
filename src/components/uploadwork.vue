@@ -71,7 +71,7 @@
                   <tr>
                     <td>选择作品</td>
                     <td class="compete_works">
-                      <el-select id="my-compete-works" v-model="value2">
+                      <el-select id="my-compete-works" v-model="value2" @visible-change='getWorkUrlDatas'>
                         <el-option
                           v-for="item in myworks"
                           :key="item.value"
@@ -193,6 +193,12 @@
           <span slot="uploadWorkSucceed">{{uploadworkMsg}}</span>
         </registerok>
       </el-dialog>
+       <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
+        <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
+      </el-dialog>
+      <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
+      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
+      </el-dialog>
     </main> 
     <Footer></Footer>    
   </div>
@@ -202,6 +208,8 @@ import Header from "./common/header";
 import Banner from "./common/banner";
 import Footer from "./common/footer";
 import registerok from "./register-ok";
+import login from "./login";
+import join from "./join";
 import "element-ui/lib/theme-chalk/display.css";
 import keepwork from "@/api/keepwork";
 import gitLabAPIGenerator from "@/api/node-gitlab-api";
@@ -213,6 +221,8 @@ export default {
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
+      loginDialogVisible: false,
+      joinDialogVisible: false,
       myworks: [
         // {
         //   value: "1",
@@ -352,48 +362,62 @@ export default {
     Header,
     Banner,
     Footer,
-    registerok
+    registerok,
+    login,
+    join
   },
-  created: function() {
-    let that = this;
-    let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-    let { projectId, username } = JSON.parse(
-      localStorage.getItem("userinfo")
-    ).defaultSiteDataSource;
-    projectId = 367;
-    username = "xiaoyao";
-    axios
-      .create({
-        baseURL: "http://git.keepwork.com/api/v4",
-        headers: { Authorization: authorization }
-      })
-      .get(
-        `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
-      )
-      .then(function(result) {
-        // debugger
-        // console.log(result);
-        // console.log(result.data);
-        for (let i = 0; i < result.data.length; i++) {
-          let obj = {};
-          obj.value = result.data[i].path.split(".")[0];
-          // console.log(obj.value)
-          obj.label = result.data[i].path.split(".")[0];
-          that.$set(that.myworks, i, obj);
-        }
-        // console.log(that.myworks);
-        console.log(JSON.parse(localStorage.getItem("userinfo")).username);
-      })
-      .catch(function(error) {
-        // console.log(error)
-      });
+  mounted: function() {
+    if (!localStorage.getItem("userinfo")) {
+      this.loginDialogVisible = true;
+    }
   },
   methods: {
-    selItem_stu(index){
-      this.$set(this.checked_item_student, index, !this.checked_item_student[index])
+    getWorkUrlDatas() {
+      let that = this;
+      let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
+      let { projectId, username } = JSON.parse(
+        localStorage.getItem("userinfo")
+      ).defaultSiteDataSource;
+      projectId = 367;
+      username = "xiaoyao";
+      axios
+        .create({
+          baseURL: "http://git.keepwork.com/api/v4",
+          headers: { Authorization: authorization }
+        })
+        .get(
+          `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
+        )
+        .then(function(result) {
+          for (let i = 0; i < result.data.length; i++) {
+            let obj = {};
+            obj.value = result.data[i].path.split(".")[0];
+            obj.label = result.data[i].path.split(".")[0];
+            that.$set(that.myworks, i, obj);
+          }
+        })
+        .catch(function(error) {
+          // console.log(error)
+        });
     },
-    selItem_pub(index){
-      this.$set(this.checked_item_public, index, !this.checked_item_public[index])
+    reGetUserinfo() {
+      this.loginDialogVisible = false;
+      this.joinDialogVisible = false;
+      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+    },
+    selItem_stu(index) {
+      this.$set(
+        this.checked_item_student,
+        index,
+        !this.checked_item_student[index]
+      );
+    },
+    selItem_pub(index) {
+      this.$set(
+        this.checked_item_public,
+        index,
+        !this.checked_item_public[index]
+      );
     },
     setDialogVisible(key, value) {
       this[key] = value;
@@ -418,7 +442,7 @@ export default {
       let reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = e => {
-        base64img = e.target.result; // 这个就是base64编码了
+        base64img = e.target.result;
         filePath =
           filePath +
           "." +
@@ -453,10 +477,6 @@ export default {
           content: base64img.split(",")[1],
           encoding: "base64"
         });
-        // console.log(this.worksLogo);
-        // console.log(this.identifyUrl[0]);
-        // console.log(this.identifyUrl[1]);
-        // console.log(this.liveUrl);
       };
     },
     enlargePic(whichPiC) {
@@ -496,7 +516,6 @@ export default {
         });
     },
     async uploadwork() {
-      // console.log(this.awords);
       if (!this.work_title) {
         this.uploadworkMsg = "提交作品出错";
         this.dialogVisibleErr = true;
@@ -534,10 +553,7 @@ export default {
             if (result.error.id == 0) {
               that.uploadworkMsg = "恭喜你，成功上传作品！";
               that.uploadworkSuccessVisible = true;
-              // console.log(result);
-              // console.log(
-              //   JSON.parse(localStorage.getItem("userinfo")).username
-              // );
+              console.log(result);
               return true;
             } else {
               that.uploadworkMsg = "提交失败，请稍后再试！";
@@ -635,7 +651,7 @@ export default {
     }
     .item_wrap {
       display: flex;
-      .item-content{
+      .item-content {
         cursor: pointer;
       }
       div {

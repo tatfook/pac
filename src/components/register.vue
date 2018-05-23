@@ -71,8 +71,8 @@
                     <td colspan="2"><input maxlength="15" type="text" id="qq" class="inputsty" v-model.trim="QQId" placeholder="请输入您的QQ号码"/></td>
                   </tr>
                   <tr>
-                    <td><label for="idcard">所在地</label></td>
-                    <td colspan="2"><input maxlength="24" type="text" id="idcard" class="inputsty" v-model.trim="location" placeholder="请精确到市级城市"/></td>
+                    <td><label for="location">所在地</label></td>
+                    <td colspan="2"><input maxlength="24" type="text" id="location" class="inputsty" v-model.trim="location" placeholder="请精确到市级城市"/></td>
                   </tr>
                   
                   
