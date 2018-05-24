@@ -84,7 +84,9 @@
             <span>喜欢他的作品，就为他投上宝贵的一票吧</span>
           </p>
           <span v-show="!showLike" @click="toVote" class="iconfont icon-star vote-btn"></span>
+          <transition name="fade">
           <span v-show="showLike" @click="toVote" class="iconfont icon-star vote-btn vote-btn2"></span>
+          </transition>
         </div>
       </div>
       <div class="container row comment-row">
@@ -221,7 +223,8 @@ export default {
       });
     },
     toVote() {
-      alert("去投票");
+      // alert("去投票");
+      this.showLike = true;
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
@@ -243,6 +246,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .main-container {
   background-color: #f5f5f5;
   color: #909399;
@@ -450,9 +459,11 @@ p {
       background-color: #fc721f;
       color: #fff;
       font-weight: bold;
-      margin: 30px 0;
+      margin: 30px auto;
       position: absolute;
       bottom: 0;
+      left: 50%;
+      transform: translateX(-50%)
     }
     .vote-btn2 {
       width: 100px;
