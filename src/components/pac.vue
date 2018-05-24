@@ -545,10 +545,13 @@ export default {
 <style lang="scss">
 html,
 body {
-  font-family: '微软雅黑', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
   /* height: 100%; */
   margin: 0;
   padding: 0;
+}
+input {
+  font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
 }
 
 .shaft-popper.el-popper {
