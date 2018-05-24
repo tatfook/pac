@@ -338,7 +338,9 @@ export default {
             email: this.email,
             QQId: this.QQId,
             cellphoneId: this.value2 + this.tel,
-            identifyCardId: this.idcard_no
+            identifyCardId: this.idcard_no,
+            birthdate: this.birth,
+            location: this.location
           })
           .then(function(result) {
             // console.log(result);
@@ -359,7 +361,9 @@ export default {
                   email: that.email,
                   QQId: that.QQId,
                   cellphoneId: that.value2 + that.tel,
-                  identifyCardId: that.idcard_no
+                  identifyCardId: that.idcard_no,
+                  birthdate: that.birth,
+                  location: that.location
                 })
                 .then(function(result) {
                   // console.log(result);
