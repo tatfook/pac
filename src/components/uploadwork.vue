@@ -384,7 +384,6 @@ export default {
       // projectId = 367;
       // username = "xiaoyao";
       let dataSourceArr = JSON.parse(localStorage.getItem("userinfo")).dataSource;
-      console.log(dataSourceArr);
       for(let i = 0; i < dataSourceArr.length;i++){
         if(dataSourceArr[i].sitename == "paracraft"){
           projectId = dataSourceArr[i].projectId;
