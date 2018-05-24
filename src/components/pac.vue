@@ -1173,6 +1173,8 @@ input {
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 45px;
+      z-index: 2;
+      position: relative;
     }
     .work-item {
       width: 300px;
