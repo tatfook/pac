@@ -379,11 +379,16 @@ export default {
     getWorkUrlDatas() {
       let that = this;
       let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-      let { projectId, username } = JSON.parse(
-        localStorage.getItem("userinfo")
-      ).defaultSiteDataSource;
-      projectId = 367;
-      username = "xiaoyao";
+      let projectId = 367;
+      let username = "xiaoyao";
+      let dataSourceArr = JSON.parse(localStorage.getItem("userinfo")).dataSource;
+      console.log(dataSourceArr);
+      for(let i = 0; i < dataSourceArr.length;i++){
+        if(dataSourceArr[i].sitename == "paracraft"){
+          projectId = dataSourceArr[i].projectId;
+          username = dataSourceArr[i].username;
+        }
+      }
       axios
         .create({
           baseURL: "http://git.keepwork.com/api/v4",
@@ -427,9 +432,9 @@ export default {
       this[key] = value;
     },
     toLogout() {
-      this.userinfo = undefined
-      localStorage.removeItem("userinfo")
-      localStorage.removeItem('token')
+      this.userinfo = undefined;
+      localStorage.removeItem("userinfo");
+      localStorage.removeItem("token");
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files;
@@ -879,12 +884,12 @@ export default {
     margin-bottom: 30px;
     // height: 200px;
     .idcard-type {
-      .el-tooltip{
+      .el-tooltip {
         height: 20px;
         width: 16px;
         padding: 0;
         border: none;
-        font-size: 18px
+        font-size: 18px;
       }
       flex: 1;
     }
@@ -977,7 +982,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.el-tooltip__popper{
+.el-tooltip__popper {
   width: 120px !important;
 }
 .uploadwork-wrap {

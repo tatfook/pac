@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="operates">
-          <div @click="vistWork" class="fake-btn visit-btn">
+          <div @click="visitWork" class="fake-btn visit-btn">
             <span>参观</span>
             <span class="fake-btn share-btn">
               <i class="iconfont icon-share"></i>
@@ -188,7 +188,7 @@ export default {
       });
   },
   methods: {
-    vistWork() {
+    visitWork() {
       alert("正在参观");
     },
     toVote() {
