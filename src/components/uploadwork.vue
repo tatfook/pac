@@ -379,17 +379,9 @@ export default {
     getWorkUrlDatas() {
       let that = this;
       let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-      let projectId;
-      let username;
+      let {projectId,username} = JSON.parse(localStorage.getItem("userinfo")).defaultSiteDataSource;
       // projectId = 367;
       // username = "xiaoyao";
-      let dataSourceArr = JSON.parse(localStorage.getItem("userinfo")).dataSource;
-      for(let i = 0; i < dataSourceArr.length;i++){
-        if(dataSourceArr[i].sitename == "paracraft"){
-          projectId = dataSourceArr[i].projectId;
-          username = dataSourceArr[i].username;
-        }
-      }
       axios
         .create({
           baseURL: "http://git.keepwork.com/api/v4",

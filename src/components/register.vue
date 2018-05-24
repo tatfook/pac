@@ -326,30 +326,7 @@ export default {
       } else {
         let that = this;
         that.showerr = false;
-        keepwork.user
-          .submitMemberApply({
-            websiteId: iiccWebsiteId,
-            username: this.userinfo.username,
-            portrait:
-              this.userinfo.portrait ||
-              "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
-            sex: this.gender,
-            realname: this.user_name,
-            email: this.email,
-            QQId: this.QQId,
-            cellphoneId: this.value2 + this.tel,
-            identifyCardId: this.idcard_no,
-            birthdate: this.birth,
-            location: this.location
-          })
-          .then(function(result) {
-            // console.log(result);
-            // console.log(this.userinfo.username);
-            localStorage.setItem("realname", that.user_name);
-            // console.log(result.error.id);
-            if (result.error.id == 0) {
-              keepwork.user
-                .agreeMemberApply({
+        let parameterList = {
                   websiteId: iiccWebsiteId,
                   username: that.userinfo
                     .username,
@@ -362,15 +339,19 @@ export default {
                   QQId: that.QQId,
                   cellphoneId: that.value2 + that.tel,
                   identifyCardId: that.idcard_no,
-                  birthdate: that.birth,
+                  birthdate: that.birth.getFullYear()+'-'+(that.birth.getMonth()+1)+'-'+that.birth.getDate(),
                   location: that.location
-                })
+                }
+        keepwork.user
+          .submitMemberApply(parameterList)
+          .then(function(result) {
+            // console.log(result);
+            localStorage.setItem("realname", that.user_name);
+            if (result.error.id == 0) {
+              keepwork.user
+                .agreeMemberApply(parameterList)
                 .then(function(result) {
                   // console.log(result);
-                  // console.log(
-                  //   that.userinfo.username +
-                  //     "同意成员"
-                  // );
                   if (result.error.id == 0) {
                     localStorage.setItem("realname", that.user_name);
                     that.registerOkVisible = true;
