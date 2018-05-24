@@ -60,7 +60,7 @@
         <li class="join-btn" @click="toApply" v-show="!isApplyPage && !isApplied"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="join-btn" @click="toUpload" v-show="!isUploadWorkPage && isApplied"><img src="@/assets/pac/upload_icon.png" alt="">上传作品</li>
         <li class="login-btn" v-if="!userinfo || !userinfo.username" @click='setDialogVisible("loginDialogVisible", true)'>
-          <i class="iconfont icon-user"></i>, 尚未登录
+          尚未登录
         </li>
         <li class="profile" v-if="userinfo && userinfo.username">
           <el-dropdown placement='bottom' trigger='click'>
