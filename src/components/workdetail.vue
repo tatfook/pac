@@ -6,13 +6,20 @@
         <div class="white-bg"></div>
         <div class="transparent-bg"></div>
       </div>
-      <div class="container row">
-        <div class="detail-header">
-          <h2>Heart And Hands
+      <div class="detail-header">
+        <div class="top-square">
+        </div>
+        <div style="padding:8px 30px 0;background:#fff;width:88%">
+            <h2 style="margin-bottom:0;height:30px">Heart And Hands
             <span class="info">作品编号：{{workId}}</span>
           </h2>
+        </div>
+        <div style="background:#fff;padding:8px 30px;height:28px;">
           <p class="time">{{createYear}}年{{createMonth}}月{{createDay}}日</p>
         </div>
+      </div>
+      <div class="container row">
+        
         <div class="content">
           <img :src="worksLogo" class="work-cover" alt="">
           <div class="detail">
@@ -46,11 +53,18 @@
           </div>
         </div>
         <div class="operates">
-          <div @click="visitWork" class="fake-btn visit-btn">
-            <span>参观</span>
-            <span class="fake-btn share-btn">
+          <div class="fake-btn visit-btn">
+            <span class="visit-inner-btn" @click="visitWork">参观</span>
+            <span @click="showSocialShare(work)" class="fake-btn share-btn">
               <i class="iconfont icon-share"></i>
             </span>
+            <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
+                <!-- <span class="share-trigger-btn" slot="reference">分享</span> -->
+                <span class="share-trigger-btn fake-btn share-btn" slot="reference">
+                  <i class="iconfont icon-share"></i>
+                </span>
+                <div :id="'work'+work.worksId" class="iicc-social-share"></div>
+              </el-popover>
           </div>
         </div>
       </div>
@@ -69,6 +83,7 @@
           <p class="vote-info">
             <span>喜欢他的作品，就为他投上宝贵的一票吧</span>
           </p>
+          <span @click="toVote" class="iconfont icon-star vote-btn"></span>
           <span @click="toVote" class="iconfont icon-star vote-btn"></span>
         </div>
       </div>
@@ -144,8 +159,9 @@ export default {
       createMonth: "",
       createDay: "",
       worksLogo: "", //作品封面
-      worksDesc: "",//作品简介
-      workId:""//作品编号
+      worksDesc: "", //作品简介
+      workId: "", //作品编号
+      work: "" //当前作品
     };
   },
   created: function() {
@@ -191,6 +207,18 @@ export default {
     visitWork() {
       alert("正在参观");
     },
+    showSocialShare(work) {
+      let worksName = work.worksName || "未知标题";
+      window.socialShare(`#work${work.worksId}`, {
+        mode: "prepend",
+        description: `快来看${work.username}做的作品《${worksName}》`,
+        title: `${worksName}`,
+        sites: ["qq", "qzone", "weibo", "wechat"],
+        wechatQrcodeTitle: "", // 微信二维码提示文字
+        wechatQrcodeHelper: "扫描二维码打开网页",
+        url: `${window.location.origin}${work.worksUrl}`
+      });
+    },
     toVote() {
       alert("去投票");
       keepwork.websiteWorks
@@ -217,6 +245,7 @@ export default {
 .main-container {
   background-color: #f5f5f5;
   color: #909399;
+  padding-top: 26px;
 }
 .container {
   width: 90%;
@@ -282,8 +311,46 @@ p {
   margin: 0;
 }
 .detail-header {
-  padding: 8px 30px;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 850px;
+  font-size: 14px;
+  height: 84px;
+  position: relative;
+  // background-color: #fff;
+  box-sizing: border-box;
+  // border:1px solid red;
+  // padding: 8px 30px;
   border-bottom: 2px solid #f5f5f5;
+  .top-square {
+    width: 15%;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .top-square:after {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 27px;
+    background-color: #fff;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    box-shadow: 0px 10px 0px 0px #afafaf;
+  }
+  .top-square:before {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 27px;
+    background-color: #fff;
+    position: absolute;
+    right: -50px;
+    top: 18px;
+    box-shadow: 0px 10px 0px 0px #afafaf;
+  }
 }
 .time {
   font-size: 14px;
@@ -338,13 +405,17 @@ p {
   border-radius: 4px;
 }
 .visit-btn {
-  width: 160px;
-  font-size: 18px;
-  background-color: #3b5bed;
-  box-shadow: 0 8px 0 0 #3047b0;
-  font-weight: bold;
   position: relative;
-  line-height: 36px;
+  .visit-inner-btn {
+    display: inline-block;
+    width: 160px;
+    font-size: 18px;
+    background-color: #3b5bed;
+    box-shadow: 0 8px 0 0 #3047b0;
+    line-height: 36px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 .share-btn {
   width: 50px;
@@ -352,6 +423,7 @@ p {
   box-shadow: 0 8px 0 0 #1a2b7c;
   position: absolute;
   right: -70px;
+  top: 31px;
   line-height: 40px;
   .iconfont {
     font-size: 30px;
@@ -473,3 +545,32 @@ textarea:focus {
   color: #606266;
 }
 </style>
+<style lang="scss">
+.iicc-social-share.social-share {
+  text-align: center;
+
+  .icon-wechat {
+    visibility: hidden;
+    height: 150px;
+
+    .wechat-qrcode {
+      top: 0;
+      left: -40px;
+      width: 110px;
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      visibility: visible;
+      display: block;
+      height: 165px;
+    }
+    .wechat-qrcode::after {
+      content: none;
+    }
+    h4 {
+      display: none;
+    }
+  }
+}
+</style>
+

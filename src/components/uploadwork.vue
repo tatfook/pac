@@ -380,22 +380,20 @@ export default {
       let that = this;
       let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
       let {projectId,username} = JSON.parse(localStorage.getItem("userinfo")).defaultSiteDataSource;
-      // projectId = 367;
-      // username = "xiaoyao";
       axios
         .create({
-          baseURL: "http://git.keepwork.com/api/v4",
+          baseURL: process.env.GITLAB_API_PREFIX + "/api/v4",
           headers: { Authorization: authorization }
         })
         .get(
           `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
         )
         .then(function(result) {
-          for (let i = 0; i < result.data.length; i++) {
+          for (let i = 1; i < result.data.length; i++) {
             let obj = {};
             obj.value = result.data[i].path.split(".")[0];
             obj.label = result.data[i].path.split(".")[0];
-            that.$set(that.myworks, i, obj);
+            that.$set(that.myworks, i-1, obj);
           }
         })
         .catch(function(error) {
