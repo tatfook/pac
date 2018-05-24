@@ -653,7 +653,7 @@ export default {
     .brief_wrap {
       margin-left: 9px;
       width: 391px;
-      height: 93px;
+      height: 99px;
       .work_brief {
         background-color: #efefef;
         border: none;
