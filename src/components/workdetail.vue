@@ -9,7 +9,7 @@
       <div class="container row">
         <div class="detail-header">
           <h2>Heart And Hands
-            <span class="info">作品编号：123456</span>
+            <span class="info">作品编号：{{workId}}</span>
           </h2>
           <p class="time">{{createYear}}年{{createMonth}}月{{createDay}}日</p>
         </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="operates">
-          <div class="fake-btn visit-btn">
+          <div @click="vistWork" class="fake-btn visit-btn">
             <span>参观</span>
             <span class="fake-btn share-btn">
               <i class="iconfont icon-share"></i>
@@ -69,7 +69,7 @@
           <p class="vote-info">
             <span>喜欢他的作品，就为他投上宝贵的一票吧</span>
           </p>
-          <span class="iconfont icon-star vote-btn"></span>
+          <span @click="toVote" class="iconfont icon-star vote-btn"></span>
         </div>
       </div>
       <div class="container row comment-row">
@@ -135,45 +135,73 @@ export default {
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
-      username: '',//作品作者
-      worksFlag: '',//组别
-      awords: '',//参赛奖项
-      visitCount: '',//浏览数
-      commentCount: '',//评论数
-      createYear: '',
-      createMonth: '',
-      createDay: '',
-      worksLogo: '',//作品封面
-      worksDesc: '',//作品简介
+      username: "", //作品作者
+      worksFlag: "", //组别
+      awords: "", //参赛奖项
+      visitCount: "", //浏览数
+      commentCount: "", //评论数
+      createYear: "",
+      createMonth: "",
+      createDay: "",
+      worksLogo: "", //作品封面
+      worksDesc: "",//作品简介
+      workId:""//作品编号
     };
   },
   created: function() {
     let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-    let that = this
-    keepwork.getByWorksUrl
-      .worksUrl({
+    let that = this;
+    keepwork.websiteWorks
+      .getByWorksUrl({
         websiteId: iiccWebsiteId,
         worksUrl: "xiaoyao/paracraft/index"
       })
       .then(function(result) {
         console.log(result);
-        let data = result.data
+        let data = result.data;
         that.username = data.username;
-        that.worksFlag = data.worksFlag == 3 ? '公开组' : '学生组'
-        that.awords = data.awords
-        that.visitCount = data.visitCount
-        that.commentCount = data.commentCount
-        that.createYear = data.createDate.split(' ')[0].split('-')[0]
-        that.createMonth = data.createDate.split(' ')[0].split('-')[1]
-        that.createDay = data.createDate.split(' ')[0].split('-')[2]
-        that.worksLogo = data.worksLogo
-        that.worksDesc = data.worksDesc
+        that.worksFlag = data.worksFlag == 3 ? "公开组" : "学生组";
+        that.awords = data.awords;
+        that.visitCount = data.visitCount;
+        that.commentCount = data.commentCount;
+        that.createYear = data.createDate.split(" ")[0].split("-")[0];
+        that.createMonth = data.createDate.split(" ")[0].split("-")[1];
+        that.createDay = data.createDate.split(" ")[0].split("-")[2];
+        that.worksLogo = data.worksLogo;
+        that.worksDesc = data.worksDesc;
+        that.workId = data._id;
       })
       .catch(function(error) {
         // console.log(error)
       });
+    //增加浏览量
+    keepwork.websiteWorks
+      .updateVisitCount({
+        websiteId: iiccWebsiteId,
+        worksUrl: "xiaoyao/paracraft/index"
+      })
+      .then(function(result) {
+        console.log(result);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   },
   methods: {
+    vistWork() {
+      alert("正在参观");
+    },
+    toVote() {
+      alert("去投票");
+      keepwork.websiteWorks
+        .toVote({
+          websiteId: iiccWebsiteId,
+          worksUrl: "xiaoyao/paracraft/index"
+        })
+        .then(function(result) {
+          console.log(result);
+        });
+    },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
     },

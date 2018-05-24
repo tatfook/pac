@@ -35,21 +35,19 @@ export const websiteMember = {
 }
 export const websiteWorks = {
   getByUsername: (...args) => post('/website_works/getByUsername', ...args),
-  search: (...args) => post('/website_works/search', ...args)
+  search: (...args) => post('/website_works/search', ...args),
+  getByWorksUrl: (...args) => post('website_works/getByWorksUrl', ...args),
+  toVote: (...args) => post('website_works/vote', ...args),
+  updateVisitCount: (...args) => post('website_works/updateVisitCount', ...args)
 }
 export const sensitiveWords = {
   query: (...args) => post('/sensitive_words/query', ...args)
-}
-export const getByWorksUrl = {
-  worksUrl: (...args) => post('website_works/getByWorksUrl', ...args)
 }
 export const keepwork = {
   user,
   pages,
   websiteMember,
   websiteWorks,
-  sensitiveWords,
-  getByWorksUrl
+  sensitiveWords
 }
-
 export default keepwork
