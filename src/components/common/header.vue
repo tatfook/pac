@@ -59,6 +59,9 @@
         </li>
         <li class="join-btn" @click="toApply" v-show="!isApplyPage && !isApplied"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="join-btn" @click="toUpload" v-show="!isUploadWorkPage && isApplied"><img src="@/assets/pac/upload_icon.png" alt="">上传作品</li>
+        <li class="login-btn" v-if="!userinfo || !userinfo.username" @click='setDialogVisible("loginDialogVisible", true)'>
+          <i class="iconfont icon-user"></i>,尚未登录
+        </li>
         <li class="profile" v-if="userinfo && userinfo.username">
           <el-dropdown placement='bottom' trigger='click'>
             <span class="el-dropdown-link">
@@ -133,6 +136,16 @@
       <h1>上传作品</h1>
       <p>上传作品功能开发中， 敬请期待</p>
     </el-dialog>
+    <el-dialog class="applied-info-dialog" width='500px' title="" :visible.sync="appliedInfoDialogVisible">
+      <p class="title">你已经报名过了!</p>
+      <img src="@/assets/pac/flag.png" alt="">
+      <p>
+        <span class="fake-btn" @click="toUpload">去上传作品</span>
+      </p>
+      <p>
+        <span class="cancel-btn" @click='setDialogVisible("appliedInfoDialogVisible", false)'>暂时不去</span>
+      </p>
+    </el-dialog>
   </header>
 </template>
 <script>
@@ -156,7 +169,9 @@ export default {
       isLogined: this.userinfo ? true : false,
       isUploadWorkPage: this.$route.name === 'uploadwork',
       isApplyPage: this.$route.name === 'register',
-      isApplied: false
+      isApplied: false,
+      loginBeforFn: undefined,
+      appliedInfoDialogVisible: false
     }
   },
   props: {
@@ -166,11 +181,11 @@ export default {
     this.initIsApplied()
   },
   methods: {
-    getUserPortrait(){
+    getUserPortrait() {
       let portrait = this.userinfo.portrait
       let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
       if (!portrait || KPOldDefaultPortrait.test(portrait)) {
-        return "http://keepwork.com/wiki/assets/imgs/default_portrait.png"
+        return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
       }
       return this.userinfo.portrait
     },
@@ -178,13 +193,19 @@ export default {
       this[key] = value
     },
     toApply() {
+      this.loginBeforFn = undefined
       if (this.userinfo) {
+        if (this.isApplied) {
+          this.appliedInfoDialogVisible = true
+          return
+        }
         this.$router.push({ path: '/register' })
         return
       }
+      this.loginBeforFn = 'toApply'
       this.loginDialogVisible = true
     },
-    toUpload(){
+    toUpload() {
       this.uploadDialogVisible = true
     },
     toLogout() {
@@ -204,10 +225,10 @@ export default {
           break
       }
     },
-    initIsApplied() {
+    async initIsApplied() {
       if (this.userinfo && this.userinfo.username) {
         let username = this.userinfo.username
-        keepwork.websiteMember
+        await keepwork.websiteMember
           .getBySiteUsername({
             websiteId: iiccWebsiteId,
             username: username
@@ -224,8 +245,11 @@ export default {
     }
   },
   watch: {
-    userinfo() {
-      this.initIsApplied()
+    async userinfo() {
+      await this.initIsApplied()
+      if (this.loginBeforFn) {
+        this[this.loginBeforFn].apply(this)
+      }
     }
   }
 }
@@ -234,6 +258,46 @@ export default {
 .login-dialog,
 .join-dialog {
   max-width: 90%;
+}
+.applied-info-dialog {
+  .el-dialog__body {
+    text-align: center;
+    padding: 20px 0 25px;
+    box-shadow: 0 12px 0 0 #d0d0d0;
+  }
+  .el-dialog__close {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  .title {
+    font-size: 28px;
+    color: #353535;
+    font-weight: bold;
+    margin: 0 0 45px;
+  }
+  .fake-btn {
+    display: inline-block;
+    border-radius: 4px;
+    max-width: 90%;
+    width: 360px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #0ca6fe;
+    box-shadow: 0 15px 0 0 #0e75af;
+    margin: 30px 0;
+    max-width: 90%;
+    cursor: pointer;
+  }
+  .cancel-btn {
+    cursor: pointer;
+    color: #606266;
+  }
+  .cancel-btn:hover {
+    color: #0e75af;
+  }
 }
 .header-dropdown.el-popper {
   margin-top: 0;
@@ -312,6 +376,14 @@ export default {
       vertical-align: middle;
       top: -2px;
       position: relative;
+    }
+  }
+  .login-btn {
+    color: #606266;
+    cursor: pointer;
+    .iconfont {
+      font-size: 24px;
+      vertical-align: sub;
     }
   }
   .profile {
