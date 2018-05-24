@@ -660,6 +660,7 @@ export default {
         padding: 8px;
         resize: none;
         width: 375px;
+        font-size: 14px;
       }
     }
     .item_wrap {
