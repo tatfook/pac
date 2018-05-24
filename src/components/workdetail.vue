@@ -83,8 +83,8 @@
           <p class="vote-info">
             <span>喜欢他的作品，就为他投上宝贵的一票吧</span>
           </p>
-          <span @click="toVote" class="iconfont icon-star vote-btn"></span>
-          <span @click="toVote" class="iconfont icon-star vote-btn"></span>
+          <span v-show="!showLike" @click="toVote" class="iconfont icon-star vote-btn"></span>
+          <span v-show="showLike" @click="toVote" class="iconfont icon-star vote-btn vote-btn2"></span>
         </div>
       </div>
       <div class="container row comment-row">
@@ -161,7 +161,8 @@ export default {
       worksLogo: "", //作品封面
       worksDesc: "", //作品简介
       workId: "", //作品编号
-      work: "" //当前作品
+      work: "", //当前作品
+      showLike: false
     };
   },
   created: function() {
@@ -433,6 +434,33 @@ p {
 .intro-row {
   padding: 0 30px;
   text-align: center;
+  // padding-bottom: 200px;
+  // position: relative;
+  .vote-area {
+    position: relative;
+    padding-bottom: 150px;
+    .vote-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: inline-block;
+      text-align: center;
+      line-height: 72px;
+      font-size: 42px;
+      background-color: #fc721f;
+      color: #fff;
+      font-weight: bold;
+      margin: 30px 0;
+      position: absolute;
+      bottom: 0;
+    }
+    .vote-btn2 {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+    }
+  }
 }
 .work-video {
   width: 100%;
@@ -462,19 +490,6 @@ p {
   background-color: #ddd;
   position: absolute;
   top: 10px;
-}
-.vote-btn {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-  line-height: 72px;
-  font-size: 42px;
-  background-color: #fc721f;
-  color: #fff;
-  font-weight: bold;
-  margin: 30px 0;
 }
 textarea {
   width: 100%;

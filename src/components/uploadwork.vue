@@ -36,7 +36,7 @@
                         </div>
                       </td>                
                   </tr>
-                  <tr>
+                  <tr v-if="picked == 4 ? true:false">
                     <td>学校名称</td>
                     <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名"/></td>
                   </tr>
@@ -651,6 +651,7 @@ export default {
         resize: none;
         width: 375px;
         font-size: 14px;
+        font-family: "Microsoft YaHei"
       }
     }
     .item_wrap {
@@ -900,6 +901,7 @@ export default {
         top: 0;
         left: -10px;
         opacity: 0;
+        cursor: pointer;
       }
     }
     .clicktoup2 {
@@ -999,6 +1001,7 @@ export default {
       }
     }
     .img-wrap {
+      cursor: pointer;
       width: 227px;
       height: 127px;
       text-align: center;
