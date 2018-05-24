@@ -644,6 +644,7 @@ export default {
       margin-left: 9px;
       width: 391px;
       height: 99px;
+      margin-bottom: 16px;
       .work_brief {
         background-color: #efefef;
         border: none;
@@ -651,7 +652,7 @@ export default {
         resize: none;
         width: 375px;
         font-size: 14px;
-        font-family: "Microsoft YaHei"
+        font-family: "Microsoft YaHei";
       }
     }
     .item_wrap {
