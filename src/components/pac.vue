@@ -5,12 +5,58 @@
       <div class="row">
         <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       </div>
-      <div class="row intro-row">
+      <div class="row news-row">
         <div class="container">
           <div class="decoration hidden-xs-only">
+            <div class="first-block transparent-bg"></div>
             <div class="white-bg"></div>
-            <div class="transparent-bg"></div>
+            <div class="second-block transparent-bg"></div>
           </div>
+          <h1 class="title">
+            <img src="@/assets/pac/news_title.png" alt="">
+          </h1>
+          <p class="clearfix more-row">
+            <a href="https://keepwork.com/official/iicc2018/news/index" target="_blank">&gt;&gt;查看更多</a>
+          </p>
+          <div class="news-content">
+            <ul class="first-col">
+              <li title="中国动漫离“国际化”还有多远？">
+                <a href="https://keepwork.com/official/iicc2018/news/2" target="_blank">中国动漫离“国际化”还有多远？</a>
+                <span class="time">2018/05/12</span>
+              </li>
+              <li title="国际智能创意大奖赛”昨日正式启动">
+                <a href="https://keepwork.com/official/iicc2018/news/1" target="_blank">国际智能创意大奖赛”昨日正式启动</a>
+                <span class="time">2018/05/11</span>
+              </li>
+              <li title="深港啟動國際智能創意大獎賽">
+                <a href="https://keepwork.com/official/iicc2018/news/5" target="_blank">深港啟動國際智能創意大獎賽</a>
+                <span class="time">2018/05/11</span>
+              </li>
+            </ul>
+            <ul class="second-col">
+              <li title="为创意而战！2018年国际智能创意大奖赛等你来">
+                <a href="https://keepwork.com/official/iicc2018/news/4" target="_blank">为创意而战！2018年国际智能创意大奖赛等你来</a>
+                <span class="time">2018/05/10</span>
+              </li>
+              <li title="国际智能创意大奖赛落户深圳福田">
+                <a href="https://keepwork.com/official/iicc2018/news/3" target="_blank">国际智能创意大奖赛落户深圳福田</a>
+                <span class="time">2018/05/10</span>
+              </li>
+              <li title="国际智能创意大赛成功启动 大富科技创新助力“中国智造”">
+                <a href="https://keepwork.com/official/iicc2018/news/6" target="_blank">国际智能创意大赛成功启动 大富科技创新助力“中国智造”</a>
+                <!-- <span class="time">2018/05/10</span> -->
+              </li>
+            </ul>
+          </div>
+          <div class="bottom-decoration decoration hidden-xs-only">
+            <div class="first-block transparent-bg"></div>
+            <div class="white-bg"></div>
+            <div class="second-block transparent-bg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row intro-row">
+        <div class="container">
           <div class="content">
             <h1 class="title">
               <img src="@/assets/pac/game_info_title.png" alt="">
@@ -667,44 +713,135 @@ input {
   .tooltip-no-radius {
     border-radius: 0;
   }
-  .intro-row {
-    background-color: #f5f5f5;
-    .content {
-      background-color: #fff;
-      padding: 0 105px 40px;
+  .news-row {
+    margin-bottom: -20px;
+    a {
+      color: #303133;
+    }
+    background-color: #e9e8e9;
+    .container {
+      font-size: 14px;
       position: relative;
       top: -90px;
     }
-    .content::after {
+    .title,
+    .more-row {
+      background-color: #fff;
+    }
+    .more-row {
+      padding-right: 80px;
+      a {
+        float: right;
+        color: #2c61ca;
+        font-weight: bold;
+      }
+    }
+    .news-content {
+      background-color: #fff;
+      padding: 20px 80px;
+      display: flex;
+    }
+    ul {
+      flex: 1;
+      max-width: 50%;
+      // flex-shrink: 0;
+    }
+    li {
+      position: relative;
+      padding: 8px 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .first-col {
+      position: relative;
+      li {
+        padding-right: 140px;
+      }
+    }
+    .second-col {
+      li {
+        padding-right: 95px;
+        padding-left: 45px;
+      }
+      .time {
+        right: 0;
+      }
+    }
+    .first-col::after {
       content: '';
       position: absolute;
-      left: 0;
-      bottom: -20px;
-      width: 100%;
-      height: 20px;
-      background-color: transparent;
-      background-size: 20px 20px;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        white,
-        white 5.6px,
-        #d8d8d8 5.6px,
-        #d8d8d8 6.1px,
-        #3b3b3b 6.1px,
-        #3b3b3b 6.6px,
-        #d8d8d8 7.1px
-      );
+      right: 0;
+      top: 15px;
+      bottom: 15px;
+      width: 3px;
+      background-color: #eee;
+    }
+    .time {
+      position: absolute;
+      right: 50px;
+      color: #909399;
+    }
+    .decoration {
+      display: flex;
+      position: relative;
+      height: 40px;
+      .white-bg {
+        background-color: #fff;
+        flex: 1;
+      }
+      .transparent-bg {
+        width: 40px;
+        background-color: transparent;
+        position: relative;
+      }
+      .transparent-bg::before {
+        content: '';
+        display: inline-block;
+        width: 40px;
+        height: 27px;
+        background-color: #fff;
+        position: absolute;
+        left: -15px;
+        bottom: 18px;
+        box-shadow: 0px 8px 0px 0px #afafaf;
+      }
+      .second-block::before {
+        right: -15px;
+        left: auto;
+      }
+    }
+    .bottom-decoration {
+      height: 25px;
+      .white-bg {
+        box-shadow: 0 10px 0 0 #cfcfcf;
+      }
+      .transparent-bg {
+        box-shadow: inset 0 10px 0 0 #cfcfcf;
+      }
+      .transparent-bg::before {
+        display: none;
+      }
+    }
+  }
+  .intro-row {
+    background-color: #fff;
+    .content {
+      padding: 60px 105px 40px;
+      position: relative;
     }
     .title {
       padding-bottom: 30px;
     }
     .intro {
       line-height: 37px;
-      padding: 50px 0;
+      margin: 50px 0;
       position: relative;
       color: #606266;
       position: relative;
       font-size: 14px;
+      height: 180px;
+      overflow-y: auto;
     }
     .title::before {
       content: '';
@@ -763,43 +900,6 @@ input {
       }
       .transform-img {
         transform: rotate(180deg);
-      }
-    }
-    .decoration {
-      display: flex;
-      position: relative;
-      top: -90px;
-      height: 40px;
-      .white-bg {
-        background-color: #fff;
-        flex: 1;
-      }
-      .transparent-bg {
-        width: 40px;
-        background-color: transparent;
-        position: relative;
-      }
-      .transparent-bg::before {
-        content: '';
-        display: inline-block;
-        width: 40px;
-        height: 27px;
-        background-color: #fff;
-        position: absolute;
-        left: 15px;
-        bottom: 25px;
-        box-shadow: 0px 10px 0px 0px #afafaf;
-      }
-      .transparent-bg::after {
-        content: '';
-        display: inline-block;
-        width: 40px;
-        height: 27px;
-        background-color: #fff;
-        position: absolute;
-        left: 55px;
-        bottom: -12px;
-        box-shadow: 0px 10px 0px 0px #afafaf;
       }
     }
   }
