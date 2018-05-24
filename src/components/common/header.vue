@@ -60,7 +60,7 @@
         <li class="join-btn" @click="toApply" v-show="!isApplyPage && !isApplied"><img src="@/assets/pac/camera.png" alt="">我要报名</li>
         <li class="join-btn" @click="toUpload" v-show="!isUploadWorkPage && isApplied"><img src="@/assets/pac/upload_icon.png" alt="">上传作品</li>
         <li class="login-btn" v-if="!userinfo || !userinfo.username" @click='setDialogVisible("loginDialogVisible", true)'>
-          <i class="iconfont icon-user"></i>,尚未登录
+          <i class="iconfont icon-user"></i>, 尚未登录
         </li>
         <li class="profile" v-if="userinfo && userinfo.username">
           <el-dropdown placement='bottom' trigger='click'>
@@ -73,7 +73,7 @@
                 <a href="#">我的资料</a>
               </el-dropdown-item>
               <el-dropdown-item>
-                <a href="#">我的作品</a>
+                <a href="/#/mywork">我的作品</a>
               </el-dropdown-item>
               <el-dropdown-item @click.native='toLogout'>
                 退出登录
@@ -132,10 +132,6 @@
     <el-dialog :visible.sync="joinDialogVisible" width='500px' custom-class="join-dialog" :show-close=false :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
-    <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
-      <h1>上传作品</h1>
-      <p>上传作品功能开发中， 敬请期待</p>
-    </el-dialog>
     <el-dialog class="applied-info-dialog" width='500px' title="" :visible.sync="appliedInfoDialogVisible">
       <p class="title">你已经报名过了!</p>
       <img src="@/assets/pac/flag.png" alt="">
@@ -164,7 +160,6 @@ export default {
     return {
       loginDialogVisible: false,
       joinDialogVisible: false,
-      uploadDialogVisible: false,
       activeRoutePage: this.$route.name,
       isLogined: this.userinfo ? true : false,
       isUploadWorkPage: this.$route.name === 'uploadwork',
@@ -206,10 +201,11 @@ export default {
       this.loginDialogVisible = true
     },
     toUpload() {
-      this.uploadDialogVisible = true
+      this.$router.push({ path: '/uploadwork' })
     },
     toLogout() {
       this.$emit('onLogOut')
+      this.$router.push({ path: '/' })
     },
     onLogined() {
       this.loginDialogVisible = false

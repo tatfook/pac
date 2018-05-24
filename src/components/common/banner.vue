@@ -62,10 +62,6 @@
     <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
       <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='onLogined'></join>
     </el-dialog>
-    <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
-      <h1>上传作品</h1>
-      <p>上传作品功能开发中， 敬请期待</p>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -87,7 +83,6 @@ export default {
     return {
       loginDialogVisible: false,
       joinDialogVisible: false,
-      uploadDialogVisible: false,
       isLogined: this.userinfo ? true : false,
       isApplyPage: this.$route.name === 'register',
       isUploadWorkPage: this.$route.name === 'uploadwork',
@@ -109,7 +104,7 @@ export default {
       this.loginDialogVisible = true
     },
     toUploadWork() {
-      this.uploadDialogVisible = true
+      this.$router.push({ path: '/uploadwork' })
     },
     onLogined() {
       this.loginDialogVisible = false
