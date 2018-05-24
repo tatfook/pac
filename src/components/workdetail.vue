@@ -72,7 +72,16 @@
         <h1 class="title">
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
-        <img src="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" class="work-video" alt="">
+
+        <!-- <img src="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" class="work-video" alt=""> -->
+        <div class="work_video">
+          <video id="video_1" class="" controls preload="none" width="700" height="440" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup="{}">
+              <source src="./49H888piCvYn.mp4" type='video/mp4' />
+              <!-- <source src="http://视频地址格式2.webm" type='video/webm' /> -->
+              <!-- <source src="http://视频地址格式3.ogv" type='video/ogg' /> -->
+          </video>
+        </div>
+        
         <h1 class="title">
           <img src="@/assets/pac/work_intro_title.png" alt="">
         </h1>
@@ -90,9 +99,9 @@
         </div>
       </div>
       <div class="container row comment-row">
-        <textarea placeholder="谈谈你的感受"></textarea>
+        <textarea v-model.trim="work_comments" placeholder="谈谈你的感受"></textarea>
         <div class="clearfix">
-          <span class="comment-btn pull-right">评论</span>
+          <span class="comment-btn pull-right" @click="toComment">评论</span>
         </div>
         <div class="comments">
           <h3>
@@ -164,7 +173,8 @@ export default {
       worksDesc: "", //作品简介
       workId: "", //作品编号
       work: "", //当前作品
-      showLike: false
+      showLike: false,
+      work_comments: ""
     };
   },
   created: function() {
@@ -234,6 +244,12 @@ export default {
           console.log(result);
         });
     },
+    toComment() {
+      // alert('去评论')
+      keepwork.websiteComment.create({}).then(function(result) {
+        console.log();
+      });
+    },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
     },
@@ -246,10 +262,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 .main-container {
@@ -463,13 +481,10 @@ p {
       position: absolute;
       bottom: 0;
       left: 50%;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
     }
     .vote-btn2 {
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-      text-align: center;
+      background-color: #ccc;
     }
   }
 }
@@ -482,6 +497,10 @@ p {
   color: #606266;
   text-align: left;
   margin-bottom: 35px;
+}
+.work_video{
+  height: 440px;
+  // border: 1px solid black;
 }
 .vote-info {
   position: relative;
