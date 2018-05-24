@@ -379,8 +379,10 @@ export default {
     getWorkUrlDatas() {
       let that = this;
       let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-      let projectId = 367;
-      let username = "xiaoyao";
+      let projectId;
+      let username;
+      // projectId = 367;
+      // username = "xiaoyao";
       let dataSourceArr = JSON.parse(localStorage.getItem("userinfo")).dataSource;
       console.log(dataSourceArr);
       for(let i = 0; i < dataSourceArr.length;i++){
