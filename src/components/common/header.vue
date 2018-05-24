@@ -73,7 +73,7 @@
                 <a href="#">我的资料</a>
               </el-dropdown-item>
               <el-dropdown-item>
-                <a href="/#/mywork">我的作品</a>
+                <router-link :to="{name:'mywork'}">我的作品</router-link>
               </el-dropdown-item>
               <el-dropdown-item @click.native='toLogout'>
                 退出登录
