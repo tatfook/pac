@@ -10,8 +10,8 @@
         <div class="top-square">
         </div>
         <div style="padding:8px 30px 0;background:#fff;width:88%">
-            <h2 style="margin-bottom:0;height:30px">Heart And Hands
-            <span class="info">作品编号：{{workId}}</span>
+            <h2 style="margin-bottom:0;height:30px">{{work.worksName}}
+            <span class="info">作品编号：{{work._id}}</span>
           </h2>
         </div>
         <div style="background:#fff;padding:8px 30px;height:28px;">
@@ -21,17 +21,17 @@
       <div class="container row">
         
         <div class="content">
-          <img :src="worksLogo" class="work-cover" alt="">
+          <img :src="work.worksLogo" class="work-cover" alt="">
           <div class="detail">
             <div class="upload-work-info">
               <p>作品作者：
-                <span>{{username}}</span>
+                <span>{{work.username}}</span>
               </p>
               <p>参赛组别：
                 <span>{{worksFlag}}</span>
               </p>
               <p>参赛奖项：
-                <span class="award-item">{{awords}}</span>
+                <span class="award-item">{{work.awords}}</span>
               </p>
             </div>
             <div class="paracraft-info">
@@ -44,10 +44,10 @@
             </div>
             <div class="other-info">
               <span class="info-item">
-                <i class="iconfont icon-visit"></i>{{visitCount}}
+                <i class="iconfont icon-visit"></i>{{work.visitCount}}
               </span>
               <span class="info-item">
-                <i class="iconfont icon-comment"></i>{{commentCount}}
+                <i class="iconfont icon-comment"></i>{{work.commentCount}}
               </span>
             </div>
           </div>
@@ -86,7 +86,7 @@
           <img src="@/assets/pac/work_intro_title.png" alt="">
         </h1>
         <p class="intro">
-          {{worksDesc}}
+          {{work.worksDesc}}
         </p>
         <div class="vote-area">
           <p class="vote-info">
@@ -108,8 +108,18 @@
             <i class="iconfont icon-comment"></i>作品评论
             <span class="info">1234条评论</span>
           </h3>
-          <div class="comments-box">
+          <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box">
             <div class="comment-item clearfix">
+              <img :src="`http://keepwork.com/${userinfo.portrait}`" alt="" class="profile pull-left">
+              <div class="comment-detail pull-left">
+                <h4>{{userinfo.username}}</h4>
+                <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
+                <p class="comment-content">
+                  {{commet.content}}
+                </p>
+              </div>
+            </div>
+            <!-- <div class="comment-item clearfix">
               <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
                 <h4>A smooth traveler</h4>
@@ -118,8 +128,8 @@
                   评论内容评论内容评论内容评论内容评论内容
                 </p>
               </div>
-            </div>
-            <div class="comment-item clearfix">
+            </div> -->
+            <!-- <div class="comment-item clearfix">
               <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
                 <h4>A smooth traveler</h4>
@@ -128,19 +138,9 @@
                   评论内容评论内容评论内容评论内容评论内容
                 </p>
               </div>
-            </div>
-            <div class="comment-item clearfix">
-              <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
-              <div class="comment-detail pull-left">
-                <h4>A smooth traveler</h4>
-                <p class="time">2017年4月28日 16:44</p>
-                <p class="comment-content">
-                  评论内容评论内容评论内容评论内容评论内容
-                </p>
-              </div>
-            </div>
-            <div class="viewMore">查看更多></div>
+            </div> -->
           </div>
+            <div v-if="commentDataArr.length > 3" class="viewMore">查看更多></div>
         </div>
       </div>
     </div>
@@ -161,20 +161,14 @@ export default {
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
-      username: "", //作品作者
+      work:'',//当前作品
       worksFlag: "", //组别
-      awords: "", //参赛奖项
-      visitCount: "", //浏览数
-      commentCount: "", //评论数
       createYear: "",
       createMonth: "",
       createDay: "",
-      worksLogo: "", //作品封面
-      worksDesc: "", //作品简介
-      workId: "", //作品编号
-      work: "", //当前作品
       showLike: false,
-      work_comments: ""
+      work_comments: "",
+      commentDataArr:[]
     };
   },
   created: function() {
@@ -187,18 +181,12 @@ export default {
       })
       .then(function(result) {
         console.log(result);
-        let data = result.data;
-        that.username = data.username;
-        that.worksFlag = data.worksFlag == 3 ? "公开组" : "学生组";
-        that.awords = data.awords;
-        that.visitCount = data.visitCount;
-        that.commentCount = data.commentCount;
-        that.createYear = data.createDate.split(" ")[0].split("-")[0];
-        that.createMonth = data.createDate.split(" ")[0].split("-")[1];
-        that.createDay = data.createDate.split(" ")[0].split("-")[2];
-        that.worksLogo = data.worksLogo;
-        that.worksDesc = data.worksDesc;
-        that.workId = data._id;
+        let work = result.data;
+        that.work = work;
+        that.worksFlag = work.worksFlag == 3 ? "公开组" : "学生组";
+        that.createYear = work.createDate.split(" ")[0].split("-")[0];
+        that.createMonth = work.createDate.split(" ")[0].split("-")[1];
+        that.createDay = work.createDate.split(" ")[0].split("-")[2];
       })
       .catch(function(error) {
         // console.log(error)
@@ -246,6 +234,7 @@ export default {
     },
     toComment() {
       // alert('去评论')
+      let that = this;
       keepwork.websiteComment.create({
         websiteId:iiccWebsiteId,
         userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
@@ -253,6 +242,9 @@ export default {
         content:this.work_comments
       }).then(function(result) {
         console.log(result);
+        let commentData = result.data;
+        that.commentDataArr.push(commentData);
+        console.log(that.commentDataArr)
       });
     },
     reGetUserinfo() {
