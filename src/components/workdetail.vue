@@ -106,9 +106,9 @@
         <div class="comments">
           <h3>
             <i class="iconfont icon-comment"></i>作品评论
-            <span class="info">1234条评论</span>
+            <span class="info">{{commentDataArr.length}}条评论</span>
           </h3>
-          <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box">
+          <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
               <img :src="`http://keepwork.com/${userinfo.portrait}`" alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
@@ -140,7 +140,7 @@
               </div>
             </div> -->
           </div>
-            <div v-if="commentDataArr.length > 3" class="viewMore">查看更多></div>
+            <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
         </div>
       </div>
     </div>
@@ -161,14 +161,16 @@ export default {
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
-      work:'',//当前作品
+      work: "", //当前作品
       worksFlag: "", //组别
       createYear: "",
       createMonth: "",
       createDay: "",
       showLike: false,
       work_comments: "",
-      commentDataArr:[]
+      commentDataArr: [],
+      showCommentCount: 3,
+      commentBottom: '查看更多>'
     };
   },
   created: function() {
@@ -234,18 +236,33 @@ export default {
     },
     toComment() {
       // alert('去评论')
+      if (this.work_comments == "") return;
+      if (this.commentDataArr.length >= this.showCommentCount){
+        this.commentBottom = "查看更多>"
+      }
       let that = this;
-      keepwork.websiteComment.create({
-        websiteId:iiccWebsiteId,
-        userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
-        url: 'xiaoyao/paracraft/index.md',
-        content:this.work_comments
-      }).then(function(result) {
-        console.log(result);
-        let commentData = result.data;
-        that.commentDataArr.push(commentData);
-        console.log(that.commentDataArr)
-      });
+      keepwork.websiteComment
+        .create({
+          websiteId: iiccWebsiteId,
+          userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
+          url: "xiaoyao/paracraft/index.md",
+          content: this.work_comments
+        })
+        .then(function(result) {
+          console.log(result);
+          let commentData = result.data;
+          that.commentDataArr.push(commentData);
+          console.log(that.commentDataArr);
+        });
+    },
+    viewMore() {
+      if (this.commentDataArr.length <= this.showCommentCount) {
+        this.showCommentCount = this.commentDataArr.length;
+        this.commentBottom = '到底了，没有更多评论了'
+      } else {
+        this.showCommentCount += 4;
+      }
+      console.log(this.showCommentCount);
     },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -495,7 +512,7 @@ p {
   text-align: left;
   margin-bottom: 35px;
 }
-.work_video{
+.work_video {
   height: 440px;
   // border: 1px solid black;
 }
