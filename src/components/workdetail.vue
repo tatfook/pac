@@ -72,8 +72,6 @@
         <h1 class="title">
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
-
-        <!-- <img src="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" class="work-video" alt=""> -->
         <div class="work_video">
           <video id="video_1" class="" controls preload="none" width="700" height="440" poster="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" data-setup="{}">
               <source src="@/assets/pac/defaultVideo.mp4" type='video/mp4' />
@@ -81,7 +79,6 @@
               <!-- <source src="http://视频地址格式3.ogv" type='video/ogg' /> -->
           </video>
         </div>
-        
         <h1 class="title">
           <img src="@/assets/pac/work_intro_title.png" alt="">
         </h1>
@@ -129,16 +126,6 @@
                 </p>
               </div>
             </div> -->
-            <!-- <div class="comment-item clearfix">
-              <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
-              <div class="comment-detail pull-left">
-                <h4>A smooth traveler</h4>
-                <p class="time">2017年4月28日 16:44</p>
-                <p class="comment-content">
-                  评论内容评论内容评论内容评论内容评论内容
-                </p>
-              </div>
-            </div> -->
           </div>
             <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
         </div>
@@ -170,7 +157,7 @@ export default {
       work_comments: "",
       commentDataArr: [],
       showCommentCount: 3,
-      commentBottom: '查看更多>'
+      commentBottom: "查看更多>"
     };
   },
   created: function() {
@@ -205,6 +192,18 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    //获取全部评论
+    keepwork.websiteComment
+      .getByPageUrl({
+        url: "xiaoyao/paracraft/index.md",
+        pageSize: 10000000
+      })
+      .then(function(result) {
+        console.log("全部评论")
+        console.log(result)
+        that.commentDataArr = result.data.commentList
+      })
+      .catch(function(result) {});
   },
   methods: {
     visitWork() {
@@ -237,8 +236,8 @@ export default {
     toComment() {
       // alert('去评论')
       if (this.work_comments == "") return;
-      if (this.commentDataArr.length >= this.showCommentCount){
-        this.commentBottom = "查看更多>"
+      if (this.commentDataArr.length >= this.showCommentCount) {
+        this.commentBottom = "查看更多>";
       }
       let that = this;
       keepwork.websiteComment
@@ -250,16 +249,18 @@ export default {
         })
         .then(function(result) {
           console.log(result);
+
+          keepwork.websit;
           let commentData = result.data;
-          that.commentDataArr.push(commentData);
+          that.commentDataArr.unshift(commentData);
           console.log(that.commentDataArr);
         });
-      this.work_comments = ''
+      this.work_comments = "";
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
         this.showCommentCount = this.commentDataArr.length;
-        this.commentBottom = '到底了，没有更多评论了'
+        this.commentBottom = "到底了，没有更多评论了";
       } else {
         this.showCommentCount += 4;
       }
