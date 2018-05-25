@@ -333,7 +333,6 @@ export default {
         this.work_title &&
         this.picked &&
         this.work_brief &&
-        this.school_name &&
         this.value2 != "选择您要比赛的作品" &&
         this.already_checked_item &&
         this.imgCover &&
