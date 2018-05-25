@@ -15,7 +15,7 @@
           <h1 class="title">
             <img src="@/assets/pac/news_title.png" alt="">
           </h1>
-          <p class="clearfix more-row">
+          <p class="clearfix more-row hidden-xs-only">
             <a href="https://keepwork.com/official/iicc2018/news/index" target="_blank">&gt;&gt;查看更多</a>
           </p>
           <div class="news-content">
@@ -44,10 +44,13 @@
               </li>
               <li title="国际智能创意大赛成功启动 大富科技创新助力“中国智造”">
                 <a href="https://keepwork.com/official/iicc2018/news/6" target="_blank">国际智能创意大赛成功启动 大富科技创新助力“中国智造”</a>
-                <!-- <span class="time">2018/05/10</span> -->
+                <span class="time">2018/05/10</span>
               </li>
             </ul>
           </div>
+          <p class="clearfix more-row bottom hidden-sm-and-up">
+            <a href="https://keepwork.com/official/iicc2018/news/index" target="_blank">&gt;&gt;查看更多</a>
+          </p>
           <div class="bottom-decoration decoration hidden-xs-only">
             <div class="first-block transparent-bg"></div>
             <div class="white-bg"></div>
@@ -829,9 +832,28 @@ input {
     .content {
       padding: 60px 105px 40px;
       position: relative;
+      border: 2px solid #f6f6f6;
+      border-width: 0 2px;
     }
-    .title {
-      padding-bottom: 30px;
+    .content::before {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: 0;
+      bottom: 0;
+      border: 2px solid #f6f6f6;
+      border-width: 0 2px;
+      z-index: 1;
+    }
+    .content::after {
+      content: '';
+      width: 2px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      background-color: #f6f6f6;
     }
     .intro {
       line-height: 37px;
@@ -842,48 +864,41 @@ input {
       font-size: 14px;
       height: 180px;
       overflow-y: auto;
-    }
-    .title::before {
-      content: '';
-      display: inline-block;
-      width: 100%;
-      height: 8px;
-      position: absolute;
-      left: 0;
-      bottom: -8px;
-      background-color: #cfcfcf;
-    }
-    .title::after {
-      content: '';
-      display: inline-block;
-      height: 8px;
-      position: absolute;
-      left: 20px;
-      right: 20px;
-      border: 15px solid #fff;
-      border-width: 0 15px;
-      bottom: -8px;
-      background-color: #cfcfcf;
+      z-index: 2;
     }
     .paracraft {
       display: flex;
       align-items: center;
-      background-color: #dcecff;
-      border: 4px dashed #5583ba;
+      background-color: #3b5bed;
+      box-shadow: 0 8px 0 0 #2c42a6;
+      border-radius: 4px;
       padding: 10px 30px;
+      position: relative;
+      z-index: 2;
       p {
         line-height: 28px;
         font-size: 14px;
-        color: #282828;
+        color: #fff;
       }
     }
     .paracraft-intro {
       flex: 1;
       padding: 0 24px;
-      border-right: 3px solid #e5ecf4;
+      position: relative;
+    }
+    .paracraft-intro::after {
+      content: '';
+      border-right: 3px dashed #fff;
+      position: absolute;
+      right: 0;
+      top: 20px;
+      bottom: 20px;
     }
     .more {
       padding-left: 26px;
+      a {
+        color: #fff;
+      }
     }
     .stress {
       font-weight: bold;
@@ -1433,11 +1448,49 @@ input {
         width: 110px;
       }
     }
-    .intro-row {
+    .news-row {
       padding: 15px;
+      margin-bottom: -30px;
+      .container {
+        top: -40px;
+      }
+      .title {
+        padding: 15px 0;
+        border-radius: 4px;
+      }
+      .title img {
+        width: 160px;
+      }
+      .more-row {
+        padding-right: 15px;
+      }
+      .bottom {
+        padding: 15px;
+        border-radius: 4px;
+      }
+      .news-content {
+        padding: 0 15px;
+        flex-direction: column;
+      }
+      ul {
+        max-width: 100%;
+      }
+      .first-col li {
+        padding-right: 95px;
+      }
+      .first-col::after {
+        display: none;
+      }
+      .second-col li {
+        padding-left: 0;
+      }
+      .time {
+        right: 0;
+      }
+    }
+    .intro-row {
       .content {
         padding: 15px;
-        top: -40px;
       }
       .intro {
         line-height: 30px;
@@ -1448,6 +1501,10 @@ input {
         max-height: 200px;
         overflow-y: auto;
       }
+      .content::before,
+      .content::after {
+        display: none;
+      }
       .paracraft {
         flex-direction: column;
         padding: 10px 15px;
@@ -1456,6 +1513,9 @@ input {
       .paracraft-intro {
         padding: 0;
         border: none;
+      }
+      .paracraft-intro::after {
+        display: none;
       }
       .more {
         align-self: center;
