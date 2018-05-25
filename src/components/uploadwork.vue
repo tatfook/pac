@@ -1,6 +1,6 @@
 <template>
   <div class="uploadwork-wrap">
-    <Header  :userinfo='userinfo' @onLogOut='toLogout'></Header>   
+    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>
     <main>
       <Banner :userinfo='userinfo'></Banner>
       <div class="intro-row-reg">
@@ -14,31 +14,35 @@
               <span><img src="@/assets/pac/upload_work.png" alt=""></span>
             </h1>
             <div class="line"></div>
-           <div class="reg_info">
+            <div class="reg_info">
               <form @submit.prevent="uploadwork">
                 <table class="uploadwork_table">
                   <tr class="groups">
                     <td width='94'>参赛组别</td>
                     <td>
-                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4"/><label for="radio_1"></label><span :class="picked == 4 ? 'group_name_sel' : 'group_name'" >学生组</span>
-                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3"/><label for="radio_2"></label><span :class="picked == 3 ? 'group_name_sel' : 'group_name'" >公开组</span>
+                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4" />
+                      <label for="radio_1"></label>
+                      <span :class="picked == 4 ? 'group_name_sel' : 'group_name'">学生组</span>
+                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3" />
+                      <label for="radio_2"></label>
+                      <span :class="picked == 3 ? 'group_name_sel' : 'group_name'">公开组</span>
                     </td>
                   </tr>
                   <tr>
                     <td>作品名称</td>
-                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称"/></td>
+                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称" /></td>
                   </tr>
-                    <tr class="select_items">
-                      <td>作品简介</td>
-                      <td>
-                        <div class="brief_wrap">
-                          <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
-                        </div>
-                      </td>                
+                  <tr class="select_items">
+                    <td>作品简介</td>
+                    <td>
+                      <div class="brief_wrap">
+                        <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
+                      </div>
+                    </td>
                   </tr>
                   <tr v-if="picked == 4 ? true:false">
                     <td>学校名称</td>
-                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名"/></td>
+                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名" /></td>
                   </tr>
                   <tr>
                     <td colspan="2">
@@ -52,17 +56,17 @@
                               </div>
                               点击上传
                             </div>
-                            <input type="file" :disabled="!!imgCover" class="input_file" @change="uploadLifePhoto('workCover',$event)">                            
+                            <input type="file" :disabled="!!imgCover" class="input_file" @change="uploadLifePhoto('workCover',$event)">
                           </div>
                           <div class="preview-location">
-                            <div class="tip">(一张JPG格式,推荐比例16:9)</div> 
+                            <div class="tip">(一张JPG格式,推荐比例16:9)</div>
                           </div>
                         </div>
                         <div class="img-wrap">预览区域
                           <img v-if="imgCover" class='img' :src="imgCover" alt='img' />
                           <div class="img-mask" v-if="imgCover">
                             <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgCover')"></span>
-                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""  @click="deletePic('delWorksLogoFilePath','imgCover')"></span>
+                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delWorksLogoFilePath','imgCover')"></span>
                           </div>
                         </div>
                       </div>
@@ -71,34 +75,43 @@
                   <tr>
                     <td>选择作品</td>
                     <td class="compete_works">
-                      <el-select id="my-compete-works" v-model="value2" @visible-change='getWorkUrlDatas'>
-                        <el-option
-                          v-for="item in myworks"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                          :disabled="item.disabled">
+                      <el-select id="my-compete-works" v-model="value2" @visible-change='getWorkUrlDatas' popper-class="work-selector-popper">
+                        <el-option v-for="item in myworks" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled">
                         </el-option>
                       </el-select>
                     </td>
                   </tr>
                   <tr class="select_items">
-                    <td class="item_wrap"><div style="padding-left:0;">报名奖项</div></td>
+                    <td class="item_wrap">
+                      <div style="padding-left:0;">报名奖项</div>
+                    </td>
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]">
+                            <label :for="`checkbox_${index}`"></label>
+                            <span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]">
+                            <label :for="`checkbox_${index}`"></label>
+                            <span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          </p>
                         </div>
                       </div>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]">
+                            <label :for="`checkbox_${index}`"></label>
+                            <span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]"><label :for="`checkbox_${index}`"></label><span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span></p>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]">
+                            <label :for="`checkbox_${index}`"></label>
+                            <span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          </p>
                         </div>
                       </div>
                     </td>
@@ -110,7 +123,9 @@
                           <div class="idcard-type">
                             有效证件
                             <el-tooltip class="item" effect="dark" content="•身份证上传正反两面 •其他证件上传有效信息的一面" placement="top">
-                              <el-button><i class="el-icon-question"></i></el-button>
+                              <el-button>
+                                <i class="el-icon-question"></i>
+                              </el-button>
                             </el-tooltip>
                           </div>
                           <div class="clicktoup clicktoup2">
@@ -120,10 +135,10 @@
                               </div>
                               点击上传
                             </div>
-                              <input type="file" :disabled="!!imgIdCard_1 && !!imgIdCard_2" class="input_file" @change="uploadLifePhoto('idcard',$event)">                            
+                            <input type="file" :disabled="!!imgIdCard_1 && !!imgIdCard_2" class="input_file" @change="uploadLifePhoto('idcard',$event)">
                           </div>
                           <div class="preview-location">
-                            <div class="tip">(大小不超过5M)</div> 
+                            <div class="tip">(大小不超过5M)</div>
                           </div>
                         </div>
                         <div class="idcard-front-and-back">
@@ -131,7 +146,7 @@
                             <img v-if="imgIdCard_1" class='img' :src="imgIdCard_1" alt='img' />
                             <div class="img-mask" v-if="imgIdCard_1">
                               <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgIdCard_1')"></span>
-                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt=""  @click="deletePic('delimgIdCard_1FilePath','imgIdCard_1')"></span>
+                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgIdCard_1FilePath','imgIdCard_1')"></span>
                             </div>
                           </div>
                           <div class="img-wrap">预览区域
@@ -177,14 +192,11 @@
                 </table>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
-            </div> 
+            </div>
           </div>
         </div>
-      </div>  
-      <el-dialog
-        title="提示"
-        :visible.sync="dialogVisibleErr"
-        width="30%">
+      </div>
+      <el-dialog title="提示" :visible.sync="dialogVisibleErr" width="30%">
         <span>{{uploadworkMsg}}</span>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisibleErr = false">确 定</el-button>
@@ -198,34 +210,34 @@
           <span slot="uploadWorkSucceed">{{uploadworkMsg}}</span>
         </registerok>
       </el-dialog>
-       <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
+      <el-dialog :visible.sync="loginDialogVisible" width='500px' :show-close=false custom-class="login-dialog" :append-to-body=true>
         <login @close='setDialogVisible("loginDialogVisible", false)' @showJoinDialog='setDialogVisible("joinDialogVisible", true)' @onLogined='reGetUserinfo'></login>
       </el-dialog>
       <el-dialog :visible.sync="joinDialogVisible" width='500px' :show-close=false custom-class="join-dialog" :append-to-body=true>
-      <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
+        <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
       </el-dialog>
-    </main> 
-    <Footer></Footer>    
+    </main>
+    <Footer></Footer>
   </div>
 </template>
 <script>
-import Header from "./common/header";
-import Banner from "./common/banner";
-import Footer from "./common/footer";
-import registerok from "./register-ok";
-import login from "./login";
-import join from "./join";
-import "element-ui/lib/theme-chalk/display.css";
-import keepwork from "@/api/keepwork";
-import gitLabAPIGenerator from "@/api/node-gitlab-api";
-import axios from "axios";
-import sensitiveWord from "@/api/sensitiveWord";
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
+import Header from './common/header'
+import Banner from './common/banner'
+import Footer from './common/footer'
+import registerok from './register-ok'
+import login from './login'
+import join from './join'
+import 'element-ui/lib/theme-chalk/display.css'
+import keepwork from '@/api/keepwork'
+import gitLabAPIGenerator from '@/api/node-gitlab-api'
+import axios from 'axios'
+import sensitiveWord from '@/api/sensitiveWord'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
-  name: "register",
+  name: 'register',
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem("userinfo")),
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
       loginDialogVisible: false,
       joinDialogVisible: false,
       myworks: [
@@ -266,66 +278,66 @@ export default {
         false
       ],
       awards_item_public: [
-        "NPL 大奖",
-        "NPL 最佳编辑奖",
-        "NPL 最佳教程奖",
-        "NPL 最佳场景设计奖",
-        "NPL 最佳3D角色制作奖",
-        "NPL 最佳开源贡献奖",
-        "NPL 老顽童奖",
-        "NPL 小小梦想家",
-        "NPL 人气十佳"
+        'NPL 大奖',
+        'NPL 最佳编辑奖',
+        'NPL 最佳教程奖',
+        'NPL 最佳场景设计奖',
+        'NPL 最佳3D角色制作奖',
+        'NPL 最佳开源贡献奖',
+        'NPL 老顽童奖',
+        'NPL 小小梦想家',
+        'NPL 人气十佳'
       ],
       awards_item_student: [
-        "NPL 最佳故事短片奖",
-        "NPL 优秀游戏作品奖",
-        "NPL 优秀材质奖",
-        "NPL 优秀视觉特效奖",
-        "NPL 优秀原创音效奖",
-        "NPL 优秀剧本创意奖",
-        "NPL 人气十佳"
+        'NPL 最佳故事短片奖',
+        'NPL 优秀游戏作品奖',
+        'NPL 优秀材质奖',
+        'NPL 优秀视觉特效奖',
+        'NPL 优秀原创音效奖',
+        'NPL 优秀剧本创意奖',
+        'NPL 人气十佳'
       ],
-      work_title: "",
-      work_brief: "",
-      school_name: "",
-      value2: "选择您要比赛的作品",
+      work_title: '',
+      work_brief: '',
+      school_name: '',
+      value2: '选择您要比赛的作品',
       uploadworkVisible: false,
       dialogVisibleErr: false,
-      dialogImageUrl: "",
+      dialogImageUrl: '',
       dialogVisible: false,
-      imgCover: "", //封面
-      worksLogo: "", //作品封面地址
-      imgIdCard_1: "", //身份证正面
-      imgIdCard_2: "", //身份证反面
+      imgCover: '', //封面
+      worksLogo: '', //作品封面地址
+      imgIdCard_1: '', //身份证正面
+      imgIdCard_2: '', //身份证反面
       identifyUrl: [], //身份证地址
-      imgLife: "", //生活照
-      liveUrl: "", //生活照地址
-      enlargeImg: "",
-      delWorksLogoFilePath: "",
-      delimgIdCard_1FilePath: "",
-      delimgIdCard_2FilePath: "",
-      delimgLifeFilePath: "",
+      imgLife: '', //生活照
+      liveUrl: '', //生活照地址
+      enlargeImg: '',
+      delWorksLogoFilePath: '',
+      delimgIdCard_1FilePath: '',
+      delimgIdCard_2FilePath: '',
+      delimgLifeFilePath: '',
       uploadworkSuccessVisible: false,
-      uploadworkMsg: "",
+      uploadworkMsg: '',
       isSensitive: false
-    };
+    }
   },
   computed: {
     already_checked_item: function() {
       if (this.picked == 4) {
         for (let i = 0; i < this.checked_item_student.length; i++) {
           if (this.checked_item_student[i]) {
-            return true;
+            return true
           }
         }
-        return false;
+        return false
       } else {
         for (let i = 0; i < this.checked_item_public.length; i++) {
           if (this.checked_item_public[i]) {
-            return true;
+            return true
           }
         }
-        return false;
+        return false
       }
     },
     _pass: function() {
@@ -333,31 +345,31 @@ export default {
         this.work_title &&
         this.picked &&
         this.work_brief &&
-        this.value2 != "选择您要比赛的作品" &&
+        this.value2 != '选择您要比赛的作品' &&
         this.already_checked_item &&
         this.imgCover &&
         this.imgIdCard_1
       ) {
-        return true;
+        return true
       }
-      return false;
+      return false
     },
     awords: function() {
-      let tempArr = [];
+      let tempArr = []
       if (this.picked == 4) {
         for (let i = 0; i < this.checked_item_student.length; i++) {
           if (this.checked_item_student[i]) {
-            tempArr.push(this.awards_item_student[i]);
+            tempArr.push(this.awards_item_student[i])
           }
         }
-        return tempArr.join();
+        return tempArr.join()
       } else {
         for (let i = 0; i < this.checked_item_public.length; i++) {
           if (this.checked_item_public[i]) {
-            tempArr.push(this.awards_item_public[i]);
+            tempArr.push(this.awards_item_public[i])
           }
         }
-        return tempArr.join();
+        return tempArr.join()
       }
     }
   },
@@ -370,18 +382,20 @@ export default {
     join
   },
   mounted: function() {
-    if (!localStorage.getItem("userinfo")) {
-      this.loginDialogVisible = true;
+    if (!localStorage.getItem('userinfo')) {
+      this.loginDialogVisible = true
     }
   },
   methods: {
     getWorkUrlDatas() {
-      let that = this;
-      let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-      let {projectId,username} = JSON.parse(localStorage.getItem("userinfo")).defaultSiteDataSource;
+      let that = this
+      let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
+      let { projectId, username } = JSON.parse(
+        localStorage.getItem('userinfo')
+      ).defaultSiteDataSource
       axios
         .create({
-          baseURL: process.env.GITLAB_API_PREFIX + "/api/v4",
+          baseURL: process.env.GITLAB_API_PREFIX + '/api/v4',
           headers: { Authorization: authorization }
         })
         .get(
@@ -389,45 +403,45 @@ export default {
         )
         .then(function(result) {
           for (let i = 1; i < result.data.length; i++) {
-            let obj = {};
-            obj.value = result.data[i].path.split(".")[0];
-            obj.label = result.data[i].path.split(".")[0];
-            that.$set(that.myworks, i-1, obj);
+            let obj = {}
+            obj.value = result.data[i].path.split('.')[0]
+            obj.label = result.data[i].path.split('.')[0]
+            that.$set(that.myworks, i - 1, obj)
           }
         })
         .catch(function(error) {
           // console.log(error)
-        });
+        })
     },
     reGetUserinfo() {
-      this.loginDialogVisible = false;
-      this.joinDialogVisible = false;
-      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+      this.loginDialogVisible = false
+      this.joinDialogVisible = false
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
     selItem_stu(index) {
       this.$set(
         this.checked_item_student,
         index,
         !this.checked_item_student[index]
-      );
+      )
     },
     selItem_pub(index) {
       this.$set(
         this.checked_item_public,
         index,
         !this.checked_item_public[index]
-      );
+      )
     },
     setDialogVisible(key, value) {
-      this[key] = value;
+      this[key] = value
     },
     toLogout() {
-      this.userinfo = undefined;
-      localStorage.removeItem("userinfo");
-      localStorage.removeItem("token");
+      this.userinfo = undefined
+      localStorage.removeItem('userinfo')
+      localStorage.removeItem('token')
     },
     uploadLifePhoto(type, e) {
-      let files = e.target.files || e.dataTransfer.files;
+      let files = e.target.files || e.dataTransfer.files
       // console.log(files);
       let {
         projectId,
@@ -436,106 +450,106 @@ export default {
         dataSourceUsername,
         projectName,
         rawBaseUrl
-      } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
-      let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`;
-      let base64img;
-      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
-      let imgURL;
-      let reader = new FileReader();
-      reader.readAsDataURL(files[0]);
+      } = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
+      let base64img
+      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
+      let imgURL
+      let reader = new FileReader()
+      reader.readAsDataURL(files[0])
       reader.onload = e => {
-        base64img = e.target.result;
+        base64img = e.target.result
         filePath =
           filePath +
-          "." +
+          '.' +
           base64img
-            .split(",")[0]
-            .split(";")[0]
-            .split(":")[1]
-            .split("/")[1];
-        imgURL = `${rawBaseUrl}/${dataSourceUsername}/${projectName}/raw/master/${filePath}`;
-        if (type == "workCover") {
-          this.imgCover = e.target.result;
-          this.worksLogo = imgURL;
-          this.delWorksLogoFilePath = filePath;
-        } else if (type == "idcard") {
-          if (this.imgIdCard_1 == "") {
-            this.imgIdCard_1 = e.target.result;
-            this.$set(this.identifyUrl, 0, imgURL);
-            this.delimgIdCard_1FilePath = filePath;
+            .split(',')[0]
+            .split(';')[0]
+            .split(':')[1]
+            .split('/')[1]
+        imgURL = `${rawBaseUrl}/${dataSourceUsername}/${projectName}/raw/master/${filePath}`
+        if (type == 'workCover') {
+          this.imgCover = e.target.result
+          this.worksLogo = imgURL
+          this.delWorksLogoFilePath = filePath
+        } else if (type == 'idcard') {
+          if (this.imgIdCard_1 == '') {
+            this.imgIdCard_1 = e.target.result
+            this.$set(this.identifyUrl, 0, imgURL)
+            this.delimgIdCard_1FilePath = filePath
           } else {
-            this.imgIdCard_2 = e.target.result;
-            this.$set(this.identifyUrl, 1, imgURL);
-            this.delimgIdCard_2FilePath = filePath;
+            this.imgIdCard_2 = e.target.result
+            this.$set(this.identifyUrl, 1, imgURL)
+            this.delimgIdCard_2FilePath = filePath
           }
-        } else if (type == "lifePhoto") {
-          this.imgLife = e.target.result;
-          this.liveUrl = imgURL;
-          this.delimgLifeFilePath = filePath;
+        } else if (type == 'lifePhoto') {
+          this.imgLife = e.target.result
+          this.liveUrl = imgURL
+          this.delimgLifeFilePath = filePath
         }
-        api.projects.repository.files.create(projectId, filePath, "master", {
-          branch: "master",
-          commit_message: "keepwork commit:files/aaa1",
-          content: base64img.split(",")[1],
-          encoding: "base64"
-        });
-      };
+        api.projects.repository.files.create(projectId, filePath, 'master', {
+          branch: 'master',
+          commit_message: 'keepwork commit:files/aaa1',
+          content: base64img.split(',')[1],
+          encoding: 'base64'
+        })
+      }
     },
     enlargePic(whichPiC) {
-      this.dialogVisible = true;
-      this.enlargeImg = this[whichPiC];
+      this.dialogVisible = true
+      this.enlargeImg = this[whichPiC]
     },
     deletePic(delPicPath, delShowPreview) {
-      let that = this;
+      let that = this
       let {
         projectId,
         dataSourceToken,
         apiBaseUrl,
         dataSourceUsername
-      } = JSON.parse(localStorage.getItem("userinfo")).dataSource[0];
-      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken });
+      } = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
       api.projects.repository.files.remove(
         projectId,
         that[delPicPath],
-        "master"
-      );
-      this[delShowPreview] = "";
+        'master'
+      )
+      this[delShowPreview] = ''
     },
     async checkSensitive() {
-      let checkedWords = [this.work_title, this.work_brief, this.school_name];
+      let checkedWords = [this.work_title, this.work_brief, this.school_name]
       await sensitiveWord
         .checkSensitiveWords(checkedWords)
         .then(result => {
           if (result && result.length > 0) {
-            this.isSensitive = true;
+            this.isSensitive = true
           } else {
-            this.isSensitive = false;
+            this.isSensitive = false
           }
         })
         .catch(error => {
-          console.log(error);
-          this.isSensitive = false;
-        });
+          console.log(error)
+          this.isSensitive = false
+        })
     },
     async uploadwork() {
       if (!this.work_title) {
-        this.uploadworkMsg = "提交作品出错";
-        this.dialogVisibleErr = true;
-        return false;
+        this.uploadworkMsg = '提交作品出错'
+        this.dialogVisibleErr = true
+        return false
       } else {
-        await this.checkSensitive();
+        await this.checkSensitive()
         if (this.isSensitive) {
-          this.uploadworkMsg = "所填信息中包含敏感词！";
-          this.dialogVisibleErr = true;
-          return;
+          this.uploadworkMsg = '所填信息中包含敏感词！'
+          this.dialogVisibleErr = true
+          return
         }
-        let that = this;
+        let that = this
         keepwork.user
           .submitWorksApply({
             websiteId: iiccWebsiteId,
-            username: JSON.parse(localStorage.getItem("userinfo")).username,
-            realname: localStorage.getItem("realname"),
-            userid: JSON.parse(localStorage.getItem("userinfo")).dataSource[0]
+            username: JSON.parse(localStorage.getItem('userinfo')).username,
+            realname: localStorage.getItem('realname'),
+            userid: JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
               .dataSourceUserId,
             worksName: this.work_title,
             worksDesc: this.work_brief,
@@ -546,34 +560,35 @@ export default {
             awords: this.awords, //奖项
             identifyUrl: this.identifyUrl.join(),
             liveUrl: this.liveUrl,
-            visitCount: "",
-            voteCount: "",
-            todayVoteCount: "",
-            commentCount: ""
+            visitCount: '',
+            voteCount: '',
+            todayVoteCount: '',
+            commentCount: ''
           })
           .then(function(result) {
             if (result.error.id == 0) {
               // console.log(result);
-              that.uploadworkMsg = "恭喜你，成功上传作品！";
-              that.uploadworkSuccessVisible = true;
-              return true;
+              that.uploadworkMsg = '恭喜你，成功上传作品！'
+              that.uploadworkSuccessVisible = true
+              return true
             } else {
-              that.uploadworkMsg = "提交失败，请稍后再试！";
-              that.uploadworkSuccessVisible = true;
-              return false;
+              that.uploadworkMsg = '提交失败，请稍后再试！'
+              that.uploadworkSuccessVisible = true
+              return false
             }
           })
           .catch(function(error) {
-            console.log(err);
-          });
+            console.log(err)
+          })
       }
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .uploadwork-wrap {
   .reg_info .uploadwork_table {
+    font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
     .group_name {
       color: rgba(48, 49, 51, 0.5);
       font-size: 14px;
@@ -591,6 +606,7 @@ export default {
         margin: 0 0 0 9px;
         padding-left: 14px;
         height: 48px;
+        font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
       }
     }
   }
@@ -601,7 +617,7 @@ export default {
     label {
       margin-left: 30px;
     }
-    td [type="radio"] {
+    td [type='radio'] {
       display: none;
     }
     td label {
@@ -616,7 +632,7 @@ export default {
       cursor: pointer;
     }
     td label::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 3px;
       left: 3px;
@@ -626,12 +642,12 @@ export default {
       transform: scale(0);
       transition: transform 0.2s ease-out;
     }
-    td [type="radio"]:checked + label {
+    td [type='radio']:checked + label {
       border: 3px #303133 solid;
       background-color: #eee;
       transition: background-color 0.2s ease-in;
     }
-    td [type="radio"]:checked + label::after {
+    td [type='radio']:checked + label::after {
       background-color: #303133;
       transform: scale(1);
       transition: transform 0.2s ease-out;
@@ -651,7 +667,7 @@ export default {
         resize: none;
         width: 375px;
         font-size: 14px;
-        font-family: "Microsoft YaHei";
+        font-family: 'Microsoft YaHei';
       }
     }
     .item_wrap {
@@ -676,7 +692,7 @@ export default {
       height: 40px;
     }
   }
-  .uploadwork_table .select_items td [type="checkbox"] {
+  .uploadwork_table .select_items td [type='checkbox'] {
     display: none;
   }
   .uploadwork_table .select_items td label {
@@ -691,7 +707,7 @@ export default {
     cursor: pointer;
   }
   .uploadwork_table .select_items td label::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 1px;
@@ -704,12 +720,12 @@ export default {
     transform: rotate(-55deg);
     visibility: hidden;
   }
-  .uploadwork_table .select_items td [type="checkbox"]:checked + label {
+  .uploadwork_table .select_items td [type='checkbox']:checked + label {
     border: 2px #303133 solid;
     background-color: #eee;
     transition: border 0.2s ease-in;
   }
-  .uploadwork_table .select_items td [type="checkbox"]:checked + label::after {
+  .uploadwork_table .select_items td [type='checkbox']:checked + label::after {
     visibility: visible;
     transition: visibility 0.2s ease-out;
   }
@@ -729,7 +745,7 @@ export default {
     }
   }
   .content::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -20px;
@@ -763,7 +779,7 @@ export default {
       position: relative;
     }
     .transparent-bg::before {
-      content: "";
+      content: '';
       display: inline-block;
       width: 40px;
       height: 27px;
@@ -774,7 +790,7 @@ export default {
       box-shadow: 0px 10px 0px 0px #afafaf;
     }
     .transparent-bg::after {
-      content: "";
+      content: '';
       display: inline-block;
       width: 40px;
       height: 27px;
@@ -791,7 +807,7 @@ export default {
     position: relative;
   }
   .line::before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 100%;
     height: 8px;
@@ -801,7 +817,7 @@ export default {
     background-color: #cfcfcf;
   }
   .line::after {
-    content: "";
+    content: '';
     display: inline-block;
     height: 8px;
     position: absolute;
@@ -841,6 +857,7 @@ export default {
       font-size: 20px;
       margin: 34px auto;
       box-shadow: inset 0px -8px 0px 0px rgb(9, 20, 138);
+      cursor: pointer;
     }
   }
   .reg_info tr {
@@ -910,6 +927,7 @@ export default {
     .preview-location {
       position: absolute;
       top: 50px;
+      left: 0;
       width: 389px;
       .tip {
         font-size: 12px;
@@ -942,7 +960,6 @@ export default {
     margin: 0 auto;
     position: relative;
     font-size: 14px;
-
     .add-icon {
       position: absolute;
       top: 12px;
@@ -956,7 +973,7 @@ export default {
     position: relative;
   }
   .add::before {
-    content: "";
+    content: '';
     width: 12px;
     height: 2px;
     background-color: #444444;
@@ -965,7 +982,7 @@ export default {
     left: 3px;
   }
   .add::after {
-    content: "";
+    content: '';
     width: 2px;
     height: 12px;
     background-color: #444444;
@@ -976,6 +993,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.work-selector-popper {
+  font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
+}
 .el-tooltip__popper {
   width: 120px !important;
 }
@@ -989,6 +1009,7 @@ export default {
       width: 381px;
       height: 48px;
       background-color: #efefef;
+      font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
     }
   }
   .up_pic {
