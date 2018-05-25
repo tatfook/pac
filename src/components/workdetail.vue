@@ -254,6 +254,7 @@ export default {
           that.commentDataArr.push(commentData);
           console.log(that.commentDataArr);
         });
+      this.work_comments = ''
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
