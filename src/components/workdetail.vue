@@ -207,7 +207,7 @@ export default {
   },
   methods: {
     visitWork() {
-      alert("正在参观");
+      window.location.href="http://www.baidu.com"
     },
     showSocialShare(work) {
       let worksName = work.worksName || "未知标题";
