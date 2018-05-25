@@ -75,8 +75,8 @@
 
         <!-- <img src="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" class="work-video" alt=""> -->
         <div class="work_video">
-          <video id="video_1" class="" controls preload="none" width="700" height="440" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup="{}">
-              <source src="./49H888piCvYn.mp4" type='video/mp4' />
+          <video id="video_1" class="" controls preload="none" width="700" height="440" poster="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" data-setup="{}">
+              <source src="@/assets/pac/defaultVideo.mp4" type='video/mp4' />
               <!-- <source src="http://视频地址格式2.webm" type='video/webm' /> -->
               <!-- <source src="http://视频地址格式3.ogv" type='video/ogg' /> -->
           </video>
@@ -94,7 +94,7 @@
           </p>
           <span v-show="!showLike" @click="toVote" class="iconfont icon-star vote-btn"></span>
           <transition name="fade">
-          <span v-show="showLike" @click="toVote" class="iconfont icon-star vote-btn vote-btn2"></span>
+          <span v-show="showLike" class="iconfont icon-star vote-btn vote-btn2"></span>
           </transition>
         </div>
       </div>
@@ -246,8 +246,13 @@ export default {
     },
     toComment() {
       // alert('去评论')
-      keepwork.websiteComment.create({}).then(function(result) {
-        console.log();
+      keepwork.websiteComment.create({
+        websiteId:iiccWebsiteId,
+        userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
+        url: 'xiaoyao/paracraft/index.md',
+        content:this.work_comments
+      }).then(function(result) {
+        console.log(result);
       });
     },
     reGetUserinfo() {
