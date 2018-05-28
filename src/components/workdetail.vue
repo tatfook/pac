@@ -47,7 +47,7 @@
                 <i class="iconfont icon-visit"></i>{{work.visitCount}}
               </span>
               <span class="info-item">
-                <i class="iconfont icon-comment"></i>{{work.commentCount}}
+                <i class="iconfont icon-comment"></i>{{commentDataArr.length}}
               </span>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default {
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
-          worksUrl: "xiaoyao/paracraft/index"
+          worksUrl: this.$route.params.workUrl
         })
         .then(function(result) {
           console.log(result);
@@ -244,7 +244,7 @@ export default {
         .create({
           websiteId: iiccWebsiteId,
           userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
-          url: "xiaoyao/paracraft/index.md",
+          url: this.$route.params.workUrl,
           content: this.work_comments
         })
         .then(function(result) {

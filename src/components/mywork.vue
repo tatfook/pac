@@ -15,12 +15,12 @@
           <div class="works" v-if="myworksArr.length > 0">
             <div class="work-item" v-for="(work, index) in myworksArr" :key="index">
               <div class="work-title">
-                <h3>{{work.worksName}}</h3>
+                <h3 style="cursor:pointer"  @click="enterWorkDetail(work.worksUrl)">{{work.worksName}}</h3>
                 <p class="time">{{formatDate(work.updateDate)}}</p>
                 <span class="id-label" :title="(work.worksState === 'normal') ? '作品编号': '正在审核中'" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
               </div>
               <div class="work-content">
-                <img class="profile" :src='work.worksLogo' alt="">
+                <img class="profile" :src='work.worksLogo' alt="" @click="enterWorkDetail(work.worksUrl)">
                 <div class="info">
                   <div class="info-item">
                     <span class="label">参赛组别：</span>
@@ -43,7 +43,7 @@
                       <span class="other-info-item">
                         <i class="iconfont icon-comment"></i>{{work.commentCount || 0}}</span>
                       <span class="other-info-item">
-                        <i class="iconfont icon-star"></i>{{work.starCount || 0}}</span>
+                        <i class="iconfont icon-star"></i>{{work.voteCount || 0}}</span>
                     </div>
                     <el-popover class="pull-right" ref='share' trigger='click' @show='showSocialShare(work)' width='130'>
                       <span class="share-trigger-btn" slot="reference">分享</span>
@@ -96,6 +96,14 @@ export default {
     this.getAllWorks()
   },
   methods: {
+    enterWorkDetail(url) {
+      this.$router.push({
+        name: 'workdetail',
+        params: {
+          workUrl: url
+        }
+      })
+    },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
@@ -320,6 +328,7 @@ p {
   border-top: none;
 }
 .profile {
+  cursor: pointer;
   width: 280px;
   height: 160px;
   object-fit: cover;
