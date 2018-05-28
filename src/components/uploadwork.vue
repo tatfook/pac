@@ -506,7 +506,7 @@ export default {
           })
           .then(function(result) {
             if (result.error.id == 0) {
-              console.log(result);
+              // console.log(result);
               that.uploadworkMsg = '恭喜你，成功上传作品！'
               that.uploadworkSuccessVisible = true
               return true
@@ -615,13 +615,11 @@ export default {
       }
       div {
         flex: 1;
-        // height: 120px;
         padding-left: 6px;
       }
     }
     div {
       flex: 1;
-      // height: 120px;
       text-align: top;
     }
 
@@ -961,7 +959,6 @@ export default {
   .up_pic {
     position: relative;
     .idcard-front-and-back {
-      // border:1px solid red;
       display: flex;
       .idcard-img-wrap {
         margin-right: 14px;
