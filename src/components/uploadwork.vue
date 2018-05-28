@@ -20,12 +20,12 @@
                   <tr class="groups">
                     <td width='94'>参赛组别</td>
                     <td>
-                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="4" />
+                      <input type="radio" id="radio_1" name="group_name" v-model="picked" value="3" />
                       <label for="radio_1"></label>
-                      <span :class="picked == 4 ? 'group_name_sel' : 'group_name'">学生组</span>
-                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="3" />
-                      <label for="radio_2"></label>
                       <span :class="picked == 3 ? 'group_name_sel' : 'group_name'">公开组</span>
+                      <input type="radio" id="radio_2" name="group_name" v-model="picked" value="4" />
+                      <label for="radio_2"></label>
+                      <span :class="picked == 4 ? 'group_name_sel' : 'group_name'">学生组</span>
                     </td>
                   </tr>
                   <tr>
@@ -216,17 +216,17 @@ export default {
       loginDialogVisible: false,
       joinDialogVisible: false,
       myworks: [],
-      picked: 4,
+      picked: 3,
       awards_item_public: [
-        {label:'NPL 大奖',checked:false},
-        {label:'NPL 最佳编辑奖',checked:false},
-        {label:'NPL 最佳教程奖',checked:false},
-        {label:'NPL 最佳场景设计奖',checked:false},
-        {label:'NPL 最佳3D角色制作奖',checked:false},
-        {label:'NPL 最佳开源贡献奖',checked:false},
-        {label:'NPL 老顽童奖',checked:false},
-        {label:'NPL 小小梦想家',checked:false},
-        {label:'NPL 人气十佳',checked:false},
+        { label: 'NPL 大奖', checked: false },
+        { label: 'NPL 最佳编辑奖', checked: false },
+        { label: 'NPL 最佳教程奖', checked: false },
+        { label: 'NPL 最佳场景设计奖', checked: false },
+        { label: 'NPL 最佳3D角色制作奖', checked: false },
+        { label: 'NPL 最佳开源贡献奖', checked: false },
+        { label: 'NPL 老顽童奖', checked: false },
+        { label: 'NPL 小小梦想家', checked: false },
+        { label: 'NPL 人气十佳', checked: false }
       ],
       awards_item_student: [
         { label: 'NPL 最佳故事短片奖', checked: false },
