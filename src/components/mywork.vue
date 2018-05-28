@@ -28,7 +28,7 @@
                   </div>
                   <div class="info-item">
                     <span class="label">参赛奖项：</span>
-                    <div class="info-content">
+                    <div class="info-content" v-if="work.awords">
                       <span class="ward-item" v-for="(ward, index) in work.awords.split(',')" :key='index'>{{ward}}</span>
                     </div>
                   </div>
@@ -111,6 +111,7 @@ export default {
         })
         .then(result => {
           if (result.data) {
+            console.log(result.data)
             this.myworksArr = result.data
           }
         })
