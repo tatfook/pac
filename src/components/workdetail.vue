@@ -166,7 +166,7 @@ export default {
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
-        worksUrl: "xiaoyao/paracraft/index"
+        worksUrl: this.$route.params.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -184,7 +184,7 @@ export default {
     keepwork.websiteWorks
       .updateVisitCount({
         websiteId: iiccWebsiteId,
-        worksUrl: "xiaoyao/paracraft/index"
+        worksUrl: this.$route.params.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -195,7 +195,7 @@ export default {
     //获取全部评论
     keepwork.websiteComment
       .getByPageUrl({
-        url: "xiaoyao/paracraft/index.md",
+        url: this.$route.params.workUrl,
         pageSize: 10000000
       })
       .then(function(result) {

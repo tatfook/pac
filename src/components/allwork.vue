@@ -60,7 +60,7 @@
         <div class="works">
           <div class="work-item" v-for="(work, index) in allWorksArr" :key='index'>
             <span class="id-label">{{work.worksId}}</span>
-            <img class="cover" :src="work.worksLogo" alt="">
+            <img class="cover" :src="work.worksLogo" alt="" @click="enterWorkDetail(work.worksUrl)">
             <h2>{{work.worksName || '暂无标题'}}</h2>
             <p class="time">{{work.updateDate || '时间未知'}}</p>
             <p class="other-info">
@@ -171,6 +171,14 @@ export default {
     this.selectOrder = this.usableOrders[0].text
   },
   methods: {
+    enterWorkDetail(url) {
+      this.$router.push({
+        name: 'workdetail',
+        params: {
+          workUrl: url
+        }
+      })
+    },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
@@ -529,7 +537,7 @@ h2 {
   line-height: 50px;
   padding: 0 23px 0 15px;
 }
-.share-trigger-btn{
+.share-trigger-btn {
   cursor: pointer;
 }
 </style>
