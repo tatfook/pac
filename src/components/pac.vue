@@ -5,12 +5,61 @@
       <div class="row">
         <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       </div>
-      <div class="row intro-row">
+      <div class="row news-row">
         <div class="container">
           <div class="decoration hidden-xs-only">
+            <div class="first-block transparent-bg"></div>
             <div class="white-bg"></div>
-            <div class="transparent-bg"></div>
+            <div class="second-block transparent-bg"></div>
           </div>
+          <h1 class="title">
+            <img src="@/assets/pac/news_title.png" alt="">
+          </h1>
+          <p class="clearfix more-row hidden-xs-only">
+            <a href="https://keepwork.com/official/iicc2018/news/index" target="_blank">&gt;&gt;查看更多</a>
+          </p>
+          <div class="news-content">
+            <ul class="first-col">
+              <li title="中国动漫离“国际化”还有多远？">
+                <a href="https://keepwork.com/official/iicc2018/news/2" target="_blank">中国动漫离“国际化”还有多远？</a>
+                <span class="time">2018/05/12</span>
+              </li>
+              <li title="国际智能创意大奖赛”昨日正式启动">
+                <a href="https://keepwork.com/official/iicc2018/news/1" target="_blank">国际智能创意大奖赛”昨日正式启动</a>
+                <span class="time">2018/05/11</span>
+              </li>
+              <li title="深港啟動國際智能創意大獎賽">
+                <a href="https://keepwork.com/official/iicc2018/news/5" target="_blank">深港啟動國際智能創意大獎賽</a>
+                <span class="time">2018/05/11</span>
+              </li>
+            </ul>
+            <ul class="second-col">
+              <li title="为创意而战！2018年国际智能创意大奖赛等你来">
+                <a href="https://keepwork.com/official/iicc2018/news/4" target="_blank">为创意而战！2018年国际智能创意大奖赛等你来</a>
+                <span class="time">2018/05/10</span>
+              </li>
+              <li title="国际智能创意大奖赛落户深圳福田">
+                <a href="https://keepwork.com/official/iicc2018/news/3" target="_blank">国际智能创意大奖赛落户深圳福田</a>
+                <span class="time">2018/05/10</span>
+              </li>
+              <li title="国际智能创意大赛成功启动 大富科技创新助力“中国智造”">
+                <a href="https://keepwork.com/official/iicc2018/news/6" target="_blank">国际智能创意大赛成功启动 大富科技创新助力“中国智造”</a>
+                <span class="time">2018/05/10</span>
+              </li>
+            </ul>
+          </div>
+          <p class="clearfix more-row bottom hidden-sm-and-up">
+            <a href="https://keepwork.com/official/iicc2018/news/index" target="_blank">&gt;&gt;查看更多</a>
+          </p>
+          <div class="bottom-decoration decoration hidden-xs-only">
+            <div class="first-block transparent-bg"></div>
+            <div class="white-bg"></div>
+            <div class="second-block transparent-bg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row intro-row">
+        <div class="container">
           <div class="content">
             <h1 class="title">
               <img src="@/assets/pac/game_info_title.png" alt="">
@@ -667,108 +716,78 @@ input {
   .tooltip-no-radius {
     border-radius: 0;
   }
-  .intro-row {
-    background-color: #f5f5f5;
-    .content {
-      background-color: #fff;
-      padding: 0 105px 40px;
+  .news-row {
+    margin-bottom: -20px;
+    a {
+      color: #303133;
+    }
+    background-color: #e9e8e9;
+    .container {
+      font-size: 14px;
       position: relative;
       top: -90px;
     }
-    .content::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -20px;
-      width: 100%;
-      height: 20px;
-      background-color: transparent;
-      background-size: 20px 20px;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        white,
-        white 5.6px,
-        #d8d8d8 5.6px,
-        #d8d8d8 6.1px,
-        #3b3b3b 6.1px,
-        #3b3b3b 6.6px,
-        #d8d8d8 7.1px
-      );
+    .title,
+    .more-row {
+      background-color: #fff;
     }
-    .title {
-      padding-bottom: 30px;
+    .more-row {
+      padding-right: 80px;
+      a {
+        float: right;
+        color: #2c61ca;
+        font-weight: bold;
+      }
     }
-    .intro {
-      line-height: 37px;
-      padding: 50px 0;
-      position: relative;
-      color: #606266;
-      position: relative;
-      font-size: 14px;
-    }
-    .title::before {
-      content: '';
-      display: inline-block;
-      width: 100%;
-      height: 8px;
-      position: absolute;
-      left: 0;
-      bottom: -8px;
-      background-color: #cfcfcf;
-    }
-    .title::after {
-      content: '';
-      display: inline-block;
-      height: 8px;
-      position: absolute;
-      left: 20px;
-      right: 20px;
-      border: 15px solid #fff;
-      border-width: 0 15px;
-      bottom: -8px;
-      background-color: #cfcfcf;
-    }
-    .paracraft {
+    .news-content {
+      background-color: #fff;
+      padding: 20px 80px;
       display: flex;
-      align-items: center;
-      background-color: #dcecff;
-      border: 4px dashed #5583ba;
-      padding: 10px 30px;
-      p {
-        line-height: 28px;
-        font-size: 14px;
-        color: #282828;
-      }
     }
-    .paracraft-intro {
+    ul {
       flex: 1;
-      padding: 0 24px;
-      border-right: 3px solid #e5ecf4;
+      max-width: 50%;
+      // flex-shrink: 0;
     }
-    .more {
-      padding-left: 26px;
+    li {
+      position: relative;
+      padding: 8px 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
-    .stress {
-      font-weight: bold;
-    }
-    .paracraft-info {
-      text-align: center;
-      color: #009fe8;
-      font-size: 14px;
-      font-weight: bold;
-      margin-top: 40px;
-      img {
-        margin-right: 13px;
-        vertical-align: middle;
+    .first-col {
+      position: relative;
+      li {
+        padding-right: 140px;
       }
-      .transform-img {
-        transform: rotate(180deg);
+    }
+    .second-col {
+      li {
+        padding-right: 95px;
+        padding-left: 45px;
       }
+      .time {
+        right: 0;
+      }
+    }
+    .first-col::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 15px;
+      bottom: 15px;
+      width: 3px;
+      background-color: #eee;
+    }
+    .time {
+      position: absolute;
+      right: 50px;
+      color: #909399;
     }
     .decoration {
       display: flex;
       position: relative;
-      top: -90px;
       height: 40px;
       .white-bg {
         background-color: #fff;
@@ -786,20 +805,116 @@ input {
         height: 27px;
         background-color: #fff;
         position: absolute;
-        left: 15px;
-        bottom: 25px;
-        box-shadow: 0px 10px 0px 0px #afafaf;
+        left: -15px;
+        bottom: 18px;
+        box-shadow: 0px 8px 0px 0px #afafaf;
       }
-      .transparent-bg::after {
-        content: '';
-        display: inline-block;
-        width: 40px;
-        height: 27px;
-        background-color: #fff;
-        position: absolute;
-        left: 55px;
-        bottom: -12px;
-        box-shadow: 0px 10px 0px 0px #afafaf;
+      .second-block::before {
+        right: -15px;
+        left: auto;
+      }
+    }
+    .bottom-decoration {
+      height: 25px;
+      .white-bg {
+        box-shadow: 0 10px 0 0 #cfcfcf;
+      }
+      .transparent-bg {
+        box-shadow: inset 0 10px 0 0 #cfcfcf;
+      }
+      .transparent-bg::before {
+        display: none;
+      }
+    }
+  }
+  .intro-row {
+    background-color: #fff;
+    .content {
+      padding: 60px 105px 40px;
+      position: relative;
+      border: 2px solid #f6f6f6;
+      border-width: 0 2px;
+    }
+    .content::before {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      top: 0;
+      bottom: 0;
+      border: 2px solid #f6f6f6;
+      border-width: 0 2px;
+      z-index: 1;
+    }
+    .content::after {
+      content: '';
+      width: 2px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      background-color: #f6f6f6;
+    }
+    .intro {
+      line-height: 37px;
+      margin: 50px 0;
+      position: relative;
+      color: #606266;
+      position: relative;
+      font-size: 14px;
+      height: 180px;
+      overflow-y: auto;
+      z-index: 2;
+    }
+    .paracraft {
+      display: flex;
+      align-items: center;
+      background-color: #3b5bed;
+      box-shadow: 0 8px 0 0 #2c42a6;
+      border-radius: 4px;
+      padding: 10px 30px;
+      position: relative;
+      z-index: 2;
+      p {
+        line-height: 28px;
+        font-size: 14px;
+        color: #fff;
+      }
+    }
+    .paracraft-intro {
+      flex: 1;
+      padding: 0 24px;
+      position: relative;
+    }
+    .paracraft-intro::after {
+      content: '';
+      border-right: 3px dashed #fff;
+      position: absolute;
+      right: 0;
+      top: 20px;
+      bottom: 20px;
+    }
+    .more {
+      padding-left: 26px;
+      a {
+        color: #fff;
+      }
+    }
+    .stress {
+      font-weight: bold;
+    }
+    .paracraft-info {
+      text-align: center;
+      color: #009fe8;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 40px;
+      img {
+        margin-right: 13px;
+        vertical-align: middle;
+      }
+      .transform-img {
+        transform: rotate(180deg);
       }
     }
   }
@@ -1333,11 +1448,49 @@ input {
         width: 110px;
       }
     }
-    .intro-row {
+    .news-row {
       padding: 15px;
+      margin-bottom: -30px;
+      .container {
+        top: -40px;
+      }
+      .title {
+        padding: 15px 0;
+        border-radius: 4px;
+      }
+      .title img {
+        width: 160px;
+      }
+      .more-row {
+        padding-right: 15px;
+      }
+      .bottom {
+        padding: 15px;
+        border-radius: 4px;
+      }
+      .news-content {
+        padding: 0 15px;
+        flex-direction: column;
+      }
+      ul {
+        max-width: 100%;
+      }
+      .first-col li {
+        padding-right: 95px;
+      }
+      .first-col::after {
+        display: none;
+      }
+      .second-col li {
+        padding-left: 0;
+      }
+      .time {
+        right: 0;
+      }
+    }
+    .intro-row {
       .content {
         padding: 15px;
-        top: -40px;
       }
       .intro {
         line-height: 30px;
@@ -1348,6 +1501,10 @@ input {
         max-height: 200px;
         overflow-y: auto;
       }
+      .content::before,
+      .content::after {
+        display: none;
+      }
       .paracraft {
         flex-direction: column;
         padding: 10px 15px;
@@ -1356,6 +1513,9 @@ input {
       .paracraft-intro {
         padding: 0;
         border: none;
+      }
+      .paracraft-intro::after {
+        display: none;
       }
       .more {
         align-self: center;

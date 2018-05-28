@@ -43,11 +43,17 @@ export const websiteWorks = {
 export const sensitiveWords = {
   query: (...args) => post('/sensitive_words/query', ...args)
 }
+export const websiteComment = {
+  create: (...args) => post('website_comment/create', ...args),
+  getByPageUrl: (...args) => post('website_comment/getByPageUrl', ...args),
+  deleteById: (...args) => post('website_comment/deleteById', ...args)
+}
 export const keepwork = {
   user,
   pages,
   websiteMember,
   websiteWorks,
-  sensitiveWords
+  sensitiveWords,
+  websiteComment
 }
 export default keepwork
