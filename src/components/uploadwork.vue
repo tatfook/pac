@@ -88,29 +88,33 @@
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]">
-                            <label :for="`checkbox_${index}`"></label>
-                            <span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                            <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
+                            <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="selItem_stu(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_student[index]">
-                            <label :for="`checkbox_${index}`"></label>
-                            <span :class="checked_item_student[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                            <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
+                            <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                       </div>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]">
-                            <label :for="`checkbox_${index}`"></label>
-                            <span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                            <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
+                            <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="selItem_pub(index)"><input type="checkbox" :id="`checkbox_${index}`" v-model="checked_item_public[index]">
-                            <label :for="`checkbox_${index}`"></label>
-                            <span :class="checked_item_public[index] ? 'group_name_sel' : 'group_name'">{{item}}</span>
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                            <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
+                            <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                       </div>
@@ -160,35 +164,6 @@
                       </div>
                     </td>
                   </tr>
-                  <!-- <tr>
-                    <td colspan="2">
-                      <div class="up_pic">
-                        <div class="idcard">
-                          <div class="idcard-type">生活照</div>
-                          <div class="clicktoup clicktoup2">
-                            <div class="add-center">
-                              <div class="add-icon">
-                                <div class="add"></div>
-                              </div>
-                              点击上传
-                            </div>
-                            <input type="file" class="input_file" @change="uploadLifePhoto('lifePhoto',$event)">                            
-                          </div>
-                          <div class="preview-location">
-                            <div class="tip">(一张JPG格式，分辨率1024*768以上)</div> 
-                          </div>
-                        </div>
-                        <div class="img-wrap">预览区域
-                          <img v-if="imgLife" class='img' :src="imgLife" alt='img' />
-                          <div class="img-mask" v-if="imgLife">
-                            <span><img width="20px" src="@/assets/pac/enlarge.png" alt=""  @click="enlargePic('imgLife')"></span>
-                            <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgLifeFilePath','imgLife')"></span>
-                          </div>
-                        </div>
-                          
-                      </div>
-                    </td>
-                  </tr> -->
                 </table>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
@@ -240,62 +215,27 @@ export default {
       userinfo: JSON.parse(localStorage.getItem('userinfo')),
       loginDialogVisible: false,
       joinDialogVisible: false,
-      myworks: [
-        // {
-        //   value: "1",
-        //   label: "1太阳"
-        // },
-        // {
-        //   value: "4",
-        //   label: "4云朵"
-        // }
-      ],
+      myworks: [],
       picked: 4,
-      checked_item_student: [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ],
-      checked_item_public: [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ],
       awards_item_public: [
-        'NPL 大奖',
-        'NPL 最佳编辑奖',
-        'NPL 最佳教程奖',
-        'NPL 最佳场景设计奖',
-        'NPL 最佳3D角色制作奖',
-        'NPL 最佳开源贡献奖',
-        'NPL 老顽童奖',
-        'NPL 小小梦想家',
-        'NPL 人气十佳'
+        {label:'NPL 大奖',checked:false},
+        {label:'NPL 最佳编辑奖',checked:false},
+        {label:'NPL 最佳教程奖',checked:false},
+        {label:'NPL 最佳场景设计奖',checked:false},
+        {label:'NPL 最佳3D角色制作奖',checked:false},
+        {label:'NPL 最佳开源贡献奖',checked:false},
+        {label:'NPL 老顽童奖',checked:false},
+        {label:'NPL 小小梦想家',checked:false},
+        {label:'NPL 人气十佳',checked:false},
       ],
       awards_item_student: [
-        'NPL 最佳故事短片奖',
-        'NPL 优秀游戏作品奖',
-        'NPL 优秀材质奖',
-        'NPL 优秀视觉特效奖',
-        'NPL 优秀原创音效奖',
-        'NPL 优秀剧本创意奖',
-        'NPL 人气十佳'
+        { label: 'NPL 最佳故事短片奖', checked: false },
+        { label: 'NPL 优秀游戏作品奖', checked: false },
+        { label: 'NPL 优秀材质奖', checked: false },
+        { label: 'NPL 优秀视觉特效奖', checked: false },
+        { label: 'NPL 优秀原创音效奖', checked: false },
+        { label: 'NPL 优秀剧本创意奖', checked: false },
+        { label: 'NPL 人气十佳', checked: false }
       ],
       work_title: '',
       work_brief: '',
@@ -305,13 +245,12 @@ export default {
       dialogVisibleErr: false,
       dialogImageUrl: '',
       dialogVisible: false,
-      imgCover: '', //封面
-      worksLogo: '', //作品封面地址
-      imgIdCard_1: '', //身份证正面
-      imgIdCard_2: '', //身份证反面
-      identifyUrl: [], //身份证地址
-      imgLife: '', //生活照
-      liveUrl: '', //生活照地址
+      imgCover: '',
+      worksLogo: '',
+      imgIdCard_1: '',
+      imgIdCard_2: '',
+      identifyUrl: [],
+      liveUrl: '',
       enlargeImg: '',
       delWorksLogoFilePath: '',
       delimgIdCard_1FilePath: '',
@@ -319,21 +258,40 @@ export default {
       delimgLifeFilePath: '',
       uploadworkSuccessVisible: false,
       uploadworkMsg: '',
-      isSensitive: false
+      isSensitive: false,
+      checkedVals_stu: [],
+      checkedVals_pub: [],
+      maxLen: 3
+    }
+  },
+  watch: {
+    checkedVals_stu(val) {
+      this.awards_item_student.map(item => (item.checked = false))
+      val.map(item => (this.awards_item_student[item].checked = true))
+    },
+    checkedVals_pub(val) {
+      this.awards_item_public.map(item => (item.checked = false))
+      val.map(item => (this.awards_item_public[item].checked = true))
     }
   },
   computed: {
+    isDisable_stu() {
+      return this.checkedVals_stu.length >= this.maxLen ? true : false
+    },
+    isDisable_pub() {
+      return this.checkedVals_pub.length >= this.maxLen ? true : false
+    },
     already_checked_item: function() {
       if (this.picked == 4) {
-        for (let i = 0; i < this.checked_item_student.length; i++) {
-          if (this.checked_item_student[i]) {
+        for (let i = 0; i < this.awards_item_student.length; i++) {
+          if (this.awards_item_student[i].checked) {
             return true
           }
         }
         return false
       } else {
-        for (let i = 0; i < this.checked_item_public.length; i++) {
-          if (this.checked_item_public[i]) {
+        for (let i = 0; i < this.awards_item_public.length; i++) {
+          if (this.awards_item_public[i].checked) {
             return true
           }
         }
@@ -357,16 +315,16 @@ export default {
     awords: function() {
       let tempArr = []
       if (this.picked == 4) {
-        for (let i = 0; i < this.checked_item_student.length; i++) {
-          if (this.checked_item_student[i]) {
-            tempArr.push(this.awards_item_student[i])
+        for (let i = 0; i < this.awards_item_student.length; i++) {
+          if (this.awards_item_student[i].checked) {
+            tempArr.push(this.awards_item_student[i].label)
           }
         }
         return tempArr.join()
       } else {
-        for (let i = 0; i < this.checked_item_public.length; i++) {
-          if (this.checked_item_public[i]) {
-            tempArr.push(this.awards_item_public[i])
+        for (let i = 0; i < this.awards_item_public.length; i++) {
+          if (this.awards_item_public[i].checked) {
+            tempArr.push(this.awards_item_public[i].label)
           }
         }
         return tempArr.join()
@@ -418,20 +376,6 @@ export default {
       this.joinDialogVisible = false
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
-    selItem_stu(index) {
-      this.$set(
-        this.checked_item_student,
-        index,
-        !this.checked_item_student[index]
-      )
-    },
-    selItem_pub(index) {
-      this.$set(
-        this.checked_item_public,
-        index,
-        !this.checked_item_public[index]
-      )
-    },
     setDialogVisible(key, value) {
       this[key] = value
     },
@@ -442,7 +386,6 @@ export default {
     },
     uploadLifePhoto(type, e) {
       let files = e.target.files || e.dataTransfer.files
-      // console.log(files);
       let {
         projectId,
         dataSourceToken,
@@ -482,10 +425,6 @@ export default {
             this.$set(this.identifyUrl, 1, imgURL)
             this.delimgIdCard_2FilePath = filePath
           }
-        } else if (type == 'lifePhoto') {
-          this.imgLife = e.target.result
-          this.liveUrl = imgURL
-          this.delimgLifeFilePath = filePath
         }
         api.projects.repository.files.create(projectId, filePath, 'master', {
           branch: 'master',
@@ -555,9 +494,9 @@ export default {
             worksDesc: this.work_brief,
             worksLogo: this.worksLogo,
             worksFlag: this.picked,
-            worksUrl: this.value2, //作品地址
+            worksUrl: this.value2,
             schoolName: this.school_name,
-            awords: this.awords, //奖项
+            awords: this.awords,
             identifyUrl: this.identifyUrl.join(),
             liveUrl: this.liveUrl,
             visitCount: '',
@@ -567,7 +506,7 @@ export default {
           })
           .then(function(result) {
             if (result.error.id == 0) {
-              // console.log(result);
+              console.log(result);
               that.uploadworkMsg = '恭喜你，成功上传作品！'
               that.uploadworkSuccessVisible = true
               return true
@@ -653,7 +592,6 @@ export default {
       transition: transform 0.2s ease-out;
     }
   }
-  // 奖项选择
   .uploadwork_table .select_items {
     .brief_wrap {
       margin-left: 9px;
@@ -695,7 +633,7 @@ export default {
   .uploadwork_table .select_items td [type='checkbox'] {
     display: none;
   }
-  .uploadwork_table .select_items td label {
+  .uploadwork_table .select_items td label.checkBox_sty {
     margin-right: 10px;
     display: inline-block;
     position: relative;
@@ -706,7 +644,7 @@ export default {
     background-color: #fff;
     cursor: pointer;
   }
-  .uploadwork_table .select_items td label::after {
+  .uploadwork_table .select_items td label.checkBox_sty::after {
     content: '';
     position: absolute;
     top: 0;
@@ -720,12 +658,20 @@ export default {
     transform: rotate(-55deg);
     visibility: hidden;
   }
-  .uploadwork_table .select_items td [type='checkbox']:checked + label {
+  .uploadwork_table
+    .select_items
+    td
+    [type='checkbox']:checked
+    + label.checkBox_sty {
     border: 2px #303133 solid;
     background-color: #eee;
     transition: border 0.2s ease-in;
   }
-  .uploadwork_table .select_items td [type='checkbox']:checked + label::after {
+  .uploadwork_table
+    .select_items
+    td
+    [type='checkbox']:checked
+    + label.checkBox_sty::after {
     visibility: visible;
     transition: visibility 0.2s ease-out;
   }
