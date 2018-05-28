@@ -174,7 +174,7 @@ export default {
     enterWorkDetail(url) {
       this.$router.push({
         name: 'workdetail',
-        params: {
+        query: {
           workUrl: url
         }
       })

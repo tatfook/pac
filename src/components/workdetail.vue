@@ -157,7 +157,8 @@ export default {
       work_comments: "",
       commentDataArr: [],
       showCommentCount: 3,
-      commentBottom: "查看更多>"
+      commentBottom: "查看更多>",
+      workUrl:this.$route.query.workUrl
     };
   },
   created: function() {
@@ -166,7 +167,7 @@ export default {
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
-        worksUrl: this.$route.params.workUrl
+        worksUrl: this.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -184,7 +185,7 @@ export default {
     keepwork.websiteWorks
       .updateVisitCount({
         websiteId: iiccWebsiteId,
-        worksUrl: this.$route.params.workUrl
+        worksUrl: this.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -195,7 +196,7 @@ export default {
     //获取全部评论
     keepwork.websiteComment
       .getByPageUrl({
-        url: this.$route.params.workUrl,
+        url: this.workUrl,
         pageSize: 10000000
       })
       .then(function(result) {
@@ -227,7 +228,7 @@ export default {
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
-          worksUrl: this.$route.params.workUrl
+          worksUrl: this.workUrl
         })
         .then(function(result) {
           console.log(result);
@@ -244,7 +245,7 @@ export default {
         .create({
           websiteId: iiccWebsiteId,
           userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
-          url: this.$route.params.workUrl,
+          url: this.workUrl,
           content: this.work_comments
         })
         .then(function(result) {
