@@ -107,7 +107,7 @@
           </h3>
           <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
-              <img :src="`http://keepwork.com/${userinfo.portrait}`" alt="" class="profile pull-left">
+              <img :src="`${userinfo.portrait}`" alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
                 <h4>{{userinfo.username}}</h4>
                 <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
