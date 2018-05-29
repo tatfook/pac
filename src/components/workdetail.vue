@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="container row intro-row">
-        <h1 class="title">
+        <!-- <h1 class="title">
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
         <div class="work_video">
@@ -78,7 +78,7 @@
               <source src="http://视频地址格式2.webm" type='video/webm' />
               <source src="http://视频地址格式3.ogv" type='video/ogg' />
           </video>
-        </div>
+        </div> -->
         <h1 class="title">
           <img src="@/assets/pac/work_intro_title.png" alt="">
         </h1>
@@ -107,7 +107,7 @@
           </h3>
           <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
-              <img :src="`${userinfo.portrait}`" alt="" class="profile pull-left">
+              <img :src='getUserPortrait(userinfo)' alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
                 <h4>{{userinfo.username}}</h4>
                 <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
@@ -209,6 +209,14 @@ export default {
   methods: {
     visitWork() {
       window.location.href="#"
+    },
+    getUserPortrait() {
+      let portrait = this.userinfo.portrait
+      let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
+      if (!portrait || KPOldDefaultPortrait.test(portrait)) {
+        return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
+      }
+      return this.userinfo.portrait
     },
     showSocialShare(work) {
       let worksName = work.worksName || "未知标题";
@@ -564,6 +572,7 @@ textarea:focus {
   text-align: center;
   border-radius: 4px;
   margin: 10px 0 20px;
+  cursor: pointer;
 }
 .comment-row {
   padding: 35px 30px 20px;
