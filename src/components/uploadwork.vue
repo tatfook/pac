@@ -120,50 +120,6 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <td colspan="2" style="padding-bottom:0">
-                      <div class="up_pic">
-                        <div class="idcard">
-                          <div class="idcard-type">
-                            有效证件
-                            <el-tooltip class="item" effect="dark" content="•身份证上传正反两面 •其他证件上传有效信息的一面" placement="top">
-                              <el-button>
-                                <i class="el-icon-question"></i>
-                              </el-button>
-                            </el-tooltip>
-                          </div>
-                          <div class="clicktoup clicktoup2">
-                            <div class="add-center">
-                              <div class="add-icon">
-                                <div class="add"></div>
-                              </div>
-                              点击上传
-                            </div>
-                            <input type="file" :disabled="!!imgIdCard_1 && !!imgIdCard_2" class="input_file" @change="uploadLifePhoto('idcard',$event)">
-                          </div>
-                          <div class="preview-location">
-                            <div class="tip">(大小不超过5M)</div>
-                          </div>
-                        </div>
-                        <div class="idcard-front-and-back">
-                          <div class="img-wrap idcard-img-wrap">预览区域
-                            <img v-if="imgIdCard_1" class='img' :src="imgIdCard_1" alt='img' />
-                            <div class="img-mask" v-if="imgIdCard_1">
-                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgIdCard_1')"></span>
-                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgIdCard_1FilePath','imgIdCard_1')"></span>
-                            </div>
-                          </div>
-                          <div class="img-wrap">预览区域
-                            <img v-if="imgIdCard_2" class='img' :src="imgIdCard_2" alt='img' />
-                            <div class="img-mask" v-if="imgIdCard_2">
-                              <span><img width="20px" src="@/assets/pac/enlarge.png" alt="" @click="enlargePic('imgIdCard_2')"></span>
-                              <span><img width="18px" src="@/assets/pac/delete(1).png" alt="" @click="deletePic('delimgIdCard_2FilePath','imgIdCard_2')"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
                 </table>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
@@ -247,8 +203,6 @@ export default {
       dialogVisible: false,
       imgCover: '',
       worksLogo: '',
-      imgIdCard_1: '',
-      imgIdCard_2: '',
       identifyUrl: [],
       liveUrl: '',
       enlargeImg: '',
@@ -305,8 +259,7 @@ export default {
         this.work_brief &&
         this.value2 != '选择您要比赛的作品' &&
         this.already_checked_item &&
-        this.imgCover &&
-        this.imgIdCard_1
+        this.imgCover
       ) {
         return true
       }
@@ -415,16 +368,6 @@ export default {
           this.imgCover = e.target.result
           this.worksLogo = imgURL
           this.delWorksLogoFilePath = filePath
-        } else if (type == 'idcard') {
-          if (this.imgIdCard_1 == '') {
-            this.imgIdCard_1 = e.target.result
-            this.$set(this.identifyUrl, 0, imgURL)
-            this.delimgIdCard_1FilePath = filePath
-          } else {
-            this.imgIdCard_2 = e.target.result
-            this.$set(this.identifyUrl, 1, imgURL)
-            this.delimgIdCard_2FilePath = filePath
-          }
         }
         api.projects.repository.files.create(projectId, filePath, 'master', {
           branch: 'master',
