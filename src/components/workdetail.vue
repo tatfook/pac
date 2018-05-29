@@ -73,10 +73,10 @@
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
         <div class="work_video">
-          <video id="video_1" class="" controls preload="none" width="700" height="440" poster="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" data-setup="{}">
+          <video id="video_1" class="" controls preload="none" width="785" height="435" poster="http://git.keepwork.com/gitlab_rls_xiaoyao/world_test1/raw/master/preview.jpg" data-setup="{}">
               <source src="@/assets/pac/defaultVideo.mp4" type='video/mp4' />
-              <!-- <source src="http://视频地址格式2.webm" type='video/webm' /> -->
-              <!-- <source src="http://视频地址格式3.ogv" type='video/ogg' /> -->
+              <source src="http://视频地址格式2.webm" type='video/webm' />
+              <source src="http://视频地址格式3.ogv" type='video/ogg' />
           </video>
         </div>
         <h1 class="title">
@@ -85,7 +85,7 @@
         <p class="intro">
           {{work.worksDesc}}
         </p>
-        <div class="vote-area">
+        <!-- <div class="vote-area">
           <p class="vote-info">
             <span>喜欢他的作品，就为他投上宝贵的一票吧</span>
           </p>
@@ -93,7 +93,7 @@
           <transition name="fade">
           <span v-show="showLike" class="iconfont icon-star vote-btn vote-btn2"></span>
           </transition>
-        </div>
+        </div> -->
       </div>
       <div class="container row comment-row">
         <textarea v-model.trim="work_comments" placeholder="谈谈你的感受"></textarea>
@@ -157,7 +157,8 @@ export default {
       work_comments: "",
       commentDataArr: [],
       showCommentCount: 3,
-      commentBottom: "查看更多>"
+      commentBottom: "查看更多>",
+      workUrl:this.$route.query.workUrl
     };
   },
   created: function() {
@@ -166,7 +167,7 @@ export default {
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
-        worksUrl: this.$route.params.workUrl
+        worksUrl: this.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -184,7 +185,7 @@ export default {
     keepwork.websiteWorks
       .updateVisitCount({
         websiteId: iiccWebsiteId,
-        worksUrl: this.$route.params.workUrl
+        worksUrl: this.workUrl
       })
       .then(function(result) {
         console.log(result);
@@ -195,7 +196,7 @@ export default {
     //获取全部评论
     keepwork.websiteComment
       .getByPageUrl({
-        url: this.$route.params.workUrl,
+        url: this.workUrl,
         pageSize: 10000000
       })
       .then(function(result) {
@@ -207,7 +208,7 @@ export default {
   },
   methods: {
     visitWork() {
-      window.location.href="http://www.baidu.com"
+      window.location.href="#"
     },
     showSocialShare(work) {
       let worksName = work.worksName || "未知标题";
@@ -227,7 +228,7 @@ export default {
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
-          worksUrl: this.$route.params.workUrl
+          worksUrl: this.workUrl
         })
         .then(function(result) {
           console.log(result);
@@ -244,7 +245,7 @@ export default {
         .create({
           websiteId: iiccWebsiteId,
           userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
-          url: this.$route.params.workUrl,
+          url: this.workUrl,
           content: this.work_comments
         })
         .then(function(result) {
@@ -422,7 +423,7 @@ p {
   }
 }
 .paracraft-info {
-  margin: 25px 0;
+  margin: 18px 0;
 }
 .other-info {
   font-size: 12px;
@@ -459,6 +460,7 @@ p {
     line-height: 36px;
     font-weight: bold;
     cursor: pointer;
+    border-radius: 4px;
   }
 }
 .share-btn {
@@ -607,6 +609,9 @@ textarea:focus {
 }
 </style>
 <style lang="scss">
+.el-popover {
+  top:465px !important;
+}
 .iicc-social-share.social-share {
   text-align: center;
 
