@@ -346,7 +346,7 @@ export default {
         dataSourceUsername,
         projectName,
         rawBaseUrl
-      } = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      } = JSON.parse(localStorage.getItem('userinfo')).defaultSiteDataSource;
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
@@ -455,7 +455,7 @@ export default {
               return true
             } else {
               that.uploadworkMsg = '提交失败，请稍后再试！'
-              that.uploadworkSuccessVisible = true
+              that.dialogVisibleErr = true
               return false
             }
           })
