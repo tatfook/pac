@@ -273,14 +273,14 @@ export default {
             tempArr.push(this.awards_item_student[i].label)
           }
         }
-        return tempArr.join()
+        return tempArr
       } else {
         for (let i = 0; i < this.awards_item_public.length; i++) {
           if (this.awards_item_public[i].checked) {
             tempArr.push(this.awards_item_public[i].label)
           }
         }
-        return tempArr.join()
+        return tempArr
       }
     }
   },
