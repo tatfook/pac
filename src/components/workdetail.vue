@@ -34,14 +34,14 @@
                 <span class="award-item">{{work.awords}}</span>
               </p>
             </div>
-            <div class="paracraft-info">
+            <!-- <div class="paracraft-info">
               <p>软件版本：
                 <span>1.0.0.6</span>
               </p>
               <p>作品大小：
                 <span>2MB</span>
               </p>
-            </div>
+            </div> -->
             <div class="other-info">
               <span class="info-item">
                 <i class="iconfont icon-visit"></i>{{work.visitCount}}
