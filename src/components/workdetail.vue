@@ -30,7 +30,7 @@
                 <span>{{worksFlag}}</span>
               </p>
               <p>参赛奖项：
-                <span class="award-item">{{work.awords}}</span>
+                <span class="award-item" v-for="(aword, index) in work.awords" :key="index">{{aword}}</span>
               </p>
             </div>
             <!-- <div class="paracraft-info">
@@ -290,7 +290,7 @@ export default {
 .main-container {
   background-color: #f5f5f5;
   color: #909399;
-  padding-top: 26px;
+  padding: 26px 0 80px;
 }
 .container {
   width: 90%;
@@ -420,6 +420,7 @@ p {
   }
   span {
     color: #303133;
+    margin-right: 10px;
   }
 }
 .paracraft-info {
@@ -514,7 +515,7 @@ p {
   font-size: 14px;
   color: #606266;
   text-align: left;
-  margin-bottom: 35px;
+  padding-bottom: 35px;
 }
 .work_video {
   height: 440px;
