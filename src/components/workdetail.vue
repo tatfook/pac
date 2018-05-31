@@ -106,9 +106,9 @@
           </h3>
           <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
-              <img :src='getUserPortrait(userinfo)' alt="" class="profile pull-left">
+              <img :src='getUserPortrait(commet)' alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
-                <h4>{{userinfo.username}}</h4>
+                <h4>{{commet.userInfo && commet.userInfo.username}}</h4>
                 <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
                 <p class="comment-content">
                   {{commet.content}}
@@ -206,9 +206,10 @@ export default {
         url: this.workUrl,
         pageSize: 10000000
       })
-      .then(function(result) {
+      .then(result => {
+        console.log('全部评论')
         console.log(result)
-        that.commentDataArr = result.data.commentList
+        this.commentDataArr = result.data.commentList
       })
       .catch(function(result) {})
   },
@@ -216,13 +217,17 @@ export default {
     visitWork() {
       window.location.href = '#'
     },
-    getUserPortrait() {
-      let portrait = this.userinfo.portrait
+    getUserPortrait(commet) {
+      if(commet.userInfo){
+      let portrait = commet.userInfo.portrait
       let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
       if (!portrait || KPOldDefaultPortrait.test(portrait)) {
         return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
       }
-      return this.userinfo.portrait
+      return portrait
+      }else{
+        return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
+      }
     },
     showSocialShare(work) {
       let worksName = work.worksName || '未知标题'
@@ -252,7 +257,6 @@ export default {
       if (this.commentDataArr.length >= this.showCommentCount) {
         this.commentBottom = '查看更多>'
       }
-      let that = this
       keepwork.websiteComment
         .create({
           websiteId: iiccWebsiteId,
@@ -260,11 +264,20 @@ export default {
           url: this.workUrl,
           content: this.work_comments
         })
-        .then(function(result) {
-          keepwork.websit
-          let commentData = result.data
-          that.commentDataArr.unshift(commentData)
-          console.log(that.commentDataArr)
+        .then(result => {
+          console.log('创建评论')
+          console.log(result)
+          keepwork.websiteComment
+            .getByPageUrl({
+              url: this.workUrl,
+              pageSize: 10000000
+            })
+            .then(result => {
+              console.log('全部评论')
+              console.log(result)
+              this.commentDataArr = result.data.commentList
+            })
+            .catch(function(result) {})
         })
       this.work_comments = ''
     },
