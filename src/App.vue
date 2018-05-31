@@ -12,6 +12,7 @@
 import Header from './components/common/header'
 import Banner from './components/common/banner'
 import Footer from './components/common/footer'
+import userHelper from "@/helper/user";
 export default {
   name: 'App',
   components: {
@@ -19,9 +20,15 @@ export default {
     Banner,
     Footer
   },
+  async mounted(){
+    let isLogined = await userHelper.getIsLogined()
+    if (isLogined) {
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
+    }
+  },
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem('userinfo'))
+      userinfo: undefined
     }
   },
   methods: {

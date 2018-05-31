@@ -202,6 +202,7 @@ export default {
     },
     toUpload() {
       this.$router.push({ path: '/uploadwork' })
+      this.appliedInfoDialogVisible = false
     },
     toLogout() {
       this.$emit('onLogOut')
