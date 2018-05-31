@@ -104,14 +104,14 @@
             <i class="iconfont icon-comment"></i>作品评论
             <span class="info">{{commentDataArr.length}}条评论</span>
           </h3>
-          <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
+          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
-              <img :src='getUserPortrait(commet)' alt="" class="profile pull-left">
+              <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
               <div class="comment-detail pull-left">
-                <h4>{{commet.userInfo && commet.userInfo.username}}</h4>
-                <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
+                <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
+                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
                 <p class="comment-content">
-                  {{commet.content}}
+                  {{comment.content}}
                 </p>
               </div>
             </div>
@@ -217,9 +217,9 @@ export default {
     visitWork() {
       window.location.href = '#'
     },
-    getUserPortrait(commet) {
-      if(commet.userInfo){
-      let portrait = commet.userInfo.portrait
+    getUserPortrait(comment) {
+      if(comment.userInfo){
+      let portrait = comment.userInfo.portrait
       let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
       if (!portrait || KPOldDefaultPortrait.test(portrait)) {
         return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
