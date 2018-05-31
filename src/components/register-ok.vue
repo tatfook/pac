@@ -5,13 +5,18 @@
       <slot name="registerok"></slot>
       <slot name="uploadWorkSucceed"></slot>
     </h1>
-    <div class="form">
-      <!-- <img src="@/assets/pac/flag.png" alt=""> -->  
-      <!-- <div class="login-button" @click='toUploadWork'>
-        去上传作品
-      </div> -->
+    <div class="form" v-if="this.$route.name === 'uploadwork'">
+      <div class="login-button" @click='toHome'>
+          确定
+      </div>
+    </div>
+    <div class="form" v-if="this.$route.name === 'register'">
+      <img src="@/assets/pac/flag.png" alt="">  
       <div class="login-button" @click='toUploadWork'>
-        确定
+        去上传作品
+      </div>
+      <div class="stop" @click='closeDialog'>
+        暂时不去
       </div>
     </div>
   </div>
@@ -31,7 +36,9 @@ export default {
       this.$emit('close')
     },
     toUploadWork(){
-        // this.$router.push({ path: '/uploadwork' })
+        this.$router.push({ path: '/uploadwork' })
+    },
+    toHome(){
         this.$router.push({ path: '/' })
     }
   }
@@ -73,6 +80,10 @@ export default {
     box-sizing: border-box;
     background-color: transparent;
     padding: 0 20px;
+  }
+  .stop{
+    cursor: pointer;
+    text-decoration: underline;
   }
   .input-addon {
     position: absolute;

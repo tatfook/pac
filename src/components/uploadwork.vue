@@ -299,7 +299,6 @@ export default {
   },
   methods: {
     getWorkUrlDatas() {
-      let that = this
       let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
       let { projectId, username } = JSON.parse(
         localStorage.getItem('userinfo')
@@ -312,15 +311,19 @@ export default {
         .get(
           `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
         )
-        .then(function(result) {
-          for (let i = 1; i < result.data.length; i++) {
+        .then(result => {
+          this.myworks = []
+          for (let i = 0; i < result.data.length; i++) {
+            let path = result.data[i].path
             let obj = {}
-            obj.value = result.data[i].path.split('.')[0]
-            obj.label = result.data[i].path.split('.')[0]
-            that.$set(that.myworks, i - 1, obj)
+            if (path.indexOf(this.userinfo.username + '/paracraft/world_') == 0) {
+              obj.value = path.split('.')[0]
+              obj.label = path.split('.')[0]
+              this.myworks.push(obj)
+            }
           }
         })
-        .catch(function(error) {
+        .catch(error => {
           // console.log(error)
         })
     },
@@ -346,7 +349,7 @@ export default {
         dataSourceUsername,
         projectName,
         rawBaseUrl
-      } = JSON.parse(localStorage.getItem('userinfo')).defaultSiteDataSource;
+      } = JSON.parse(localStorage.getItem('userinfo')).defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })

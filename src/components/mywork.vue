@@ -29,7 +29,7 @@
                   <div class="info-item">
                     <span class="label">参赛奖项：</span>
                     <div class="info-content" v-if="work.awords">
-                      <span class="ward-item" v-for="(ward, index) in work.awords.split(',')" :key='index'>{{ward}}</span>
+                      <span class="ward-item" v-for="(ward, index) in work.awords" :key='index'>{{ward}}</span>
                     </div>
                   </div>
                   <div class="info-item intro">
