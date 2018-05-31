@@ -1,7 +1,5 @@
 <template>
   <div class="all-works">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
-    <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
     <div class="main-container">
       <div class="decoration hidden-xs-only">
         <div class="white-bg"></div>
@@ -88,14 +86,10 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import keepwork from '@/api/keepwork'
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 const Awards = {
   default: {
@@ -125,11 +119,6 @@ const Awards = {
 }
 export default {
   name: 'allwork',
-  components: {
-    Header,
-    Banner,
-    Footer
-  },
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem('userinfo')),

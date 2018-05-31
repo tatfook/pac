@@ -1,8 +1,6 @@
 <template>
   <div class="uploadwork-wrap">
-    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>
     <main>
-      <Banner :userinfo='userinfo'></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
           <div class="top-square-uploadpage">
@@ -148,13 +146,9 @@
         <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
       </el-dialog>
     </main>
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 import registerok from './register-ok'
 import login from './login'
 import join from './join'
@@ -285,9 +279,6 @@ export default {
     }
   },
   components: {
-    Header,
-    Banner,
-    Footer,
     registerok,
     login,
     join

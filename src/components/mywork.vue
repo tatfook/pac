@@ -1,8 +1,6 @@
 <template>
   <div class="myworks">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
-      <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       <div class="main-container">
         <div class="decoration hidden-xs-only">
           <div class="white-bg"></div>
@@ -66,25 +64,16 @@
         </div>
       </div>
     </main>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import keepwork from '@/api/keepwork'
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'social-share.js/dist/js/social-share.min.js'
 import 'social-share.js/dist/css/share.min.css'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'register',
-  components: {
-    Header,
-    Banner,
-    Footer
-  },
   data() {
     return {
       myworksArr: [],

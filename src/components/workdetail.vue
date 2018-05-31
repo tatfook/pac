@@ -1,6 +1,5 @@
 <template>
   <div class="work-detail">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <div class="main-container">
       <div class="decoration hidden-xs-only">
         <div class="white-bg"></div>
@@ -131,20 +130,13 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import keepwork from "@/api/keepwork";
-import Header from "./common/header";
-import Footer from "./common/footer";
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
 export default {
   name: "workdetail",
-  components: {
-    Header,
-    Footer
-  },
   data() {
     return {
       userinfo: JSON.parse(localStorage.getItem("userinfo")),
