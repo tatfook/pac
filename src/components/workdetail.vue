@@ -33,14 +33,14 @@
                 <span class="award-item" v-for="(aword, index) in work.awords" :key="index">{{aword}}</span>
               </p>
             </div>
-            <!-- <div class="paracraft-info">
+            <div class="paracraft-info">
               <p>软件版本：
-                <span>1.0.0.6</span>
+                <span>{{revision}}</span>
               </p>
               <p>作品大小：
-                <span>2MB</span>
+                <span>{{filesTotals}}</span>
               </p>
-            </div> -->
+            </div>
             <div class="other-info">
               <span class="info-item">
                 <i class="iconfont icon-visit"></i>{{work.visitCount}}
@@ -115,16 +115,6 @@
                 </p>
               </div>
             </div>
-            <!-- <div class="comment-item clearfix">
-              <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
-              <div class="comment-detail pull-left">
-                <h4>A smooth traveler</h4>
-                <p class="time">2017年4月28日 16:44</p>
-                <p class="comment-content">
-                  评论内容评论内容评论内容评论内容评论内容
-                </p>
-              </div>
-            </div> -->
           </div>
             <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
         </div>
@@ -133,74 +123,98 @@
   </div>
 </template>
 <script>
-import keepwork from "@/api/keepwork";
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
+import keepwork from '@/api/keepwork'
+import axios from 'axios'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
-  name: "workdetail",
+  name: 'workdetail',
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem("userinfo")),
-      work: "", //当前作品
-      worksFlag: "", //组别
-      createYear: "",
-      createMonth: "",
-      createDay: "",
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      work: '',
+      worksFlag: '',
+      createYear: '',
+      createMonth: '',
+      createDay: '',
       showLike: false,
-      work_comments: "",
+      work_comments: '',
       commentDataArr: [],
       showCommentCount: 3,
-      commentBottom: "查看更多>",
-      workUrl:this.$route.query.workUrl
-    };
+      commentBottom: '查看更多>',
+      workUrl: this.$route.query.workUrl,
+      revision: '',
+      filesTotals: ''
+    }
   },
   created: function() {
-    let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-    let that = this;
+    let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
         worksUrl: this.workUrl
       })
-      .then(function(result) {
-        console.log(result);
-        let work = result.data;
-        that.work = work;
-        that.worksFlag = work.worksFlag == 3 ? "公开组" : "学生组";
-        that.createYear = work.createDate.split(" ")[0].split("-")[0];
-        that.createMonth = work.createDate.split(" ")[0].split("-")[1];
-        that.createDay = work.createDate.split(" ")[0].split("-")[2];
+      .then(result => {
+        console.log(result)
+        let work = result.data
+        this.work = work
+        this.worksFlag = work.worksFlag == 3 ? '公开组' : '学生组'
+        this.createYear = work.createDate.split(' ')[0].split('-')[0]
+        this.createMonth = work.createDate.split(' ')[0].split('-')[1]
+        this.createDay = work.createDate.split(' ')[0].split('-')[2]
+        let baseUrl = ''
+        switch (process.env.NODE_ENV) {
+          case 'production':
+            baseUrl = 'keepwork.com'
+            break
+          default:
+            baseUrl = 'fix.pac.stage.keepwork.com'
+            break
+        }
+        axios
+          .create({
+            baseURL: 'http://' + baseUrl,
+            headers: { Authorization: authorization }
+          })
+          .post('/api/mod/worldshare/models/worlds/getWorldByFilePath', {
+            filePath: work.worksUrl
+          })
+          .then(result => {
+            let data = result.data.data
+            this.revision = data.revision + '.0.0'
+            this.filesTotals = (data.filesTotals / 1024).toFixed(2) + 'MB'
+          })
+          .catch(error => {
+            console.log(error)
+          })
       })
       .catch(function(error) {
         // console.log(error)
-      });
-    //增加浏览量
+      })
     keepwork.websiteWorks
       .updateVisitCount({
         websiteId: iiccWebsiteId,
         worksUrl: this.workUrl
       })
       .then(function(result) {
-        console.log(result);
+        // console.log(result);
       })
       .catch(function(err) {
-        console.log(err);
-      });
-    //获取全部评论
+        console.log(err)
+      })
     keepwork.websiteComment
       .getByPageUrl({
         url: this.workUrl,
         pageSize: 10000000
       })
       .then(function(result) {
-        console.log("全部评论")
         console.log(result)
         that.commentDataArr = result.data.commentList
       })
-      .catch(function(result) {});
+      .catch(function(result) {})
   },
   methods: {
     visitWork() {
-      window.location.href="#"
+      window.location.href = '#'
     },
     getUserPortrait() {
       let portrait = this.userinfo.portrait
@@ -211,36 +225,34 @@ export default {
       return this.userinfo.portrait
     },
     showSocialShare(work) {
-      let worksName = work.worksName || "未知标题";
+      let worksName = work.worksName || '未知标题'
       window.socialShare(`#work${work.worksId}`, {
-        mode: "prepend",
+        mode: 'prepend',
         description: `快来看${work.username}做的作品《${worksName}》`,
         title: `${worksName}`,
-        sites: ["qq", "qzone", "weibo", "wechat"],
-        wechatQrcodeTitle: "", // 微信二维码提示文字
-        wechatQrcodeHelper: "扫描二维码打开网页",
+        sites: ['qq', 'qzone', 'weibo', 'wechat'],
+        wechatQrcodeTitle: '', // 微信二维码提示文字
+        wechatQrcodeHelper: '扫描二维码打开网页',
         url: `${window.location.origin}${work.worksUrl}`
-      });
+      })
     },
     toVote() {
-      // alert("去投票");
-      this.showLike = true;
+      this.showLike = true
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
           worksUrl: this.workUrl
         })
         .then(function(result) {
-          console.log(result);
-        });
+          console.log(result)
+        })
     },
     toComment() {
-      // alert('去评论')
-      if (this.work_comments == "") return;
+      if (this.work_comments == '') return
       if (this.commentDataArr.length >= this.showCommentCount) {
-        this.commentBottom = "查看更多>";
+        this.commentBottom = '查看更多>'
       }
-      let that = this;
+      let that = this
       keepwork.websiteComment
         .create({
           websiteId: iiccWebsiteId,
@@ -249,34 +261,32 @@ export default {
           content: this.work_comments
         })
         .then(function(result) {
-          console.log(result);
-
-          keepwork.websit;
-          let commentData = result.data;
-          that.commentDataArr.unshift(commentData);
-          console.log(that.commentDataArr);
-        });
-      this.work_comments = "";
+          keepwork.websit
+          let commentData = result.data
+          that.commentDataArr.unshift(commentData)
+          console.log(that.commentDataArr)
+        })
+      this.work_comments = ''
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
-        this.showCommentCount = this.commentDataArr.length;
-        this.commentBottom = "到底了，没有更多评论了";
+        this.showCommentCount = this.commentDataArr.length
+        this.commentBottom = '到底了，没有更多评论了'
       } else {
-        this.showCommentCount += 4;
+        this.showCommentCount += 4
       }
-      console.log(this.showCommentCount);
+      console.log(this.showCommentCount)
     },
     reGetUserinfo() {
-      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
     toLogout() {
-      this.userinfo = undefined;
-      localStorage.removeItem("token");
-      localStorage.removeItem("userinfo");
+      this.userinfo = undefined
+      localStorage.removeItem('token')
+      localStorage.removeItem('userinfo')
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .fade-enter-active,
@@ -306,7 +316,7 @@ export default {
   color: #b0b4bb;
 }
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
@@ -375,7 +385,7 @@ p {
     top: 0;
   }
   .top-square:after {
-    content: "";
+    content: '';
     display: inline-block;
     width: 40px;
     height: 27px;
@@ -386,7 +396,7 @@ p {
     box-shadow: 0px 10px 0px 0px #afafaf;
   }
   .top-square:before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 40px;
     height: 27px;
@@ -531,7 +541,7 @@ p {
   }
 }
 .vote-info::after {
-  content: "";
+  content: '';
   display: inline-block;
   left: 0;
   right: 0;
@@ -576,7 +586,7 @@ textarea:focus {
   border-bottom: 1px solid #dddddd;
 }
 .comment-item::after {
-  content: "";
+  content: '';
   height: 1px;
   width: 100px;
   background-color: #ffffff;
@@ -612,7 +622,7 @@ textarea:focus {
 </style>
 <style lang="scss">
 .el-popover {
-  top:465px !important;
+  top: 465px !important;
 }
 .iicc-social-share.social-share {
   text-align: center;
