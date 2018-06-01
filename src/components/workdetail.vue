@@ -155,7 +155,7 @@ export default {
         websiteId: iiccWebsiteId,
         worksUrl: this.workUrl
       })
-      .then(function(result) {
+      .then(result => {
         // console.log(result);
       })
       .catch(function(err) {
@@ -167,11 +167,11 @@ export default {
         pageSize: 10000000
       })
       .then(result => {
-        console.log('全部评论')
-        console.log(result)
+        // console.log('全部评论')
+        // console.log(result)
         this.commentDataArr = result.data.commentList
       })
-      .catch(function(result) {})
+      .catch(err => {})
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
@@ -211,7 +211,7 @@ export default {
             console.log(error)
           })
       })
-      .catch(function(error) {
+      .catch(error => {
         // console.log(error)
       })
   },
@@ -250,7 +250,7 @@ export default {
           websiteId: iiccWebsiteId,
           worksUrl: this.workUrl
         })
-        .then(function(result) {
+        .then(result => {
           console.log(result)
         })
     },
@@ -285,19 +285,15 @@ export default {
           content: this.work_comments
         })
         .then(result => {
-          console.log('创建评论')
-          console.log(result)
           keepwork.websiteComment
             .getByPageUrl({
               url: this.workUrl,
               pageSize: 10000000
             })
             .then(result => {
-              console.log('全部评论')
-              console.log(result)
               this.commentDataArr = result.data.commentList
             })
-            .catch(function(result) {})
+            .catch(err => {})
         })
       this.work_comments = ''
     },
@@ -308,7 +304,6 @@ export default {
       } else {
         this.showCommentCount += 4
       }
-      console.log(this.showCommentCount)
     },
     reGetUserinfo() {
       this.userinfo = JSON.parse(localStorage.getItem('userinfo'))

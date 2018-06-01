@@ -353,7 +353,7 @@ export default {
         dataSourceUsername,
         projectName,
         rawBaseUrl
-      } = JSON.parse(localStorage.getItem('userinfo')).defaultSiteDataSource
+      } = this.userinfo.defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
@@ -395,7 +395,7 @@ export default {
         dataSourceToken,
         apiBaseUrl,
         dataSourceUsername
-      } = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      } = this.userinfo.dataSource[0]
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
       api.projects.repository.files.remove(
         projectId,
@@ -427,13 +427,12 @@ export default {
         this.dialogVisibleErr = true
         return
       }
-      let that = this
       keepwork.user
         .submitWorksApply({
           websiteId: iiccWebsiteId,
-          username: JSON.parse(localStorage.getItem('userinfo')).username,
+          username: this.userinfo.username,
           realname: localStorage.getItem('realname'),
-          userid: JSON.parse(localStorage.getItem('userinfo'))._id,
+          userid: this.userinfo._id,
           worksName: this.work_title,
           worksDesc: this.work_brief,
           worksLogo: this.worksLogo,
@@ -448,19 +447,19 @@ export default {
           todayVoteCount: '',
           commentCount: ''
         })
-        .then(function(result) {
+        .then(result => {
           if (result.error.id == 0) {
             // console.log(result);
-            that.uploadworkMsg = '恭喜你，成功上传作品！'
-            that.uploadworkSuccessVisible = true
+            this.uploadworkMsg = '恭喜你，成功上传作品！'
+            this.uploadworkSuccessVisible = true
             return true
           } else {
-            that.uploadworkMsg = '提交失败，请稍后再试！'
-            that.dialogVisibleErr = true
+            this.uploadworkMsg = '提交失败，请稍后再试！'
+            this.dialogVisibleErr = true
             return false
           }
         })
-        .catch(function(error) {
+        .catch(error => {
           console.log(err)
         })
     }
