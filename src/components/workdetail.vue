@@ -280,7 +280,7 @@ export default {
       keepwork.websiteComment
         .create({
           websiteId: iiccWebsiteId,
-          userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
+          userId: this.userinfo._id,
           url: this.workUrl,
           content: this.work_comments
         })

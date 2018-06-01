@@ -433,8 +433,7 @@ export default {
           websiteId: iiccWebsiteId,
           username: JSON.parse(localStorage.getItem('userinfo')).username,
           realname: localStorage.getItem('realname'),
-          userid: JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
-            .dataSourceUserId,
+          userid: JSON.parse(localStorage.getItem('userinfo'))._id,
           worksName: this.work_title,
           worksDesc: this.work_brief,
           worksLogo: this.worksLogo,
