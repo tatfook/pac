@@ -125,6 +125,7 @@
 <script>
 import keepwork from '@/api/keepwork'
 import axios from 'axios'
+import sensitiveWord from '@/api/sensitiveWord'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'workdetail',
@@ -143,11 +144,34 @@ export default {
       commentBottom: '查看更多>',
       workUrl: this.$route.query.workUrl,
       revision: '',
-      filesTotals: ''
+      filesTotals: '',
+      isSensitive: false
     }
   },
   created: function() {
     let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
+    keepwork.websiteWorks
+      .updateVisitCount({
+        websiteId: iiccWebsiteId,
+        worksUrl: this.workUrl
+      })
+      .then(function(result) {
+        // console.log(result);
+      })
+      .catch(function(err) {
+        console.log(err)
+      })
+    keepwork.websiteComment
+      .getByPageUrl({
+        url: this.workUrl,
+        pageSize: 10000000
+      })
+      .then(result => {
+        console.log('全部评论')
+        console.log(result)
+        this.commentDataArr = result.data.commentList
+      })
+      .catch(function(result) {})
     keepwork.websiteWorks
       .getByWorksUrl({
         websiteId: iiccWebsiteId,
@@ -190,42 +214,20 @@ export default {
       .catch(function(error) {
         // console.log(error)
       })
-    keepwork.websiteWorks
-      .updateVisitCount({
-        websiteId: iiccWebsiteId,
-        worksUrl: this.workUrl
-      })
-      .then(function(result) {
-        // console.log(result);
-      })
-      .catch(function(err) {
-        console.log(err)
-      })
-    keepwork.websiteComment
-      .getByPageUrl({
-        url: this.workUrl,
-        pageSize: 10000000
-      })
-      .then(result => {
-        console.log('全部评论')
-        console.log(result)
-        this.commentDataArr = result.data.commentList
-      })
-      .catch(function(result) {})
   },
   methods: {
     visitWork() {
       window.location.href = '#'
     },
     getUserPortrait(comment) {
-      if(comment.userInfo){
-      let portrait = comment.userInfo.portrait
-      let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
-      if (!portrait || KPOldDefaultPortrait.test(portrait)) {
-        return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
-      }
-      return portrait
-      }else{
+      if (comment.userInfo) {
+        let portrait = comment.userInfo.portrait
+        let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
+        if (!portrait || KPOldDefaultPortrait.test(portrait)) {
+          return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
+        }
+        return portrait
+      } else {
         return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
       }
     },
@@ -252,8 +254,26 @@ export default {
           console.log(result)
         })
     },
-    toComment() {
+    async checkSensitive(){
+      let checkedWords = this.work_comments
+      await sensitiveWord.checkSensitiveWords(checkedWords).then(result => {
+        if(result && result.length > 0){
+          this.isSensitive = true
+        }else{
+          this.isSensitive = false
+        }
+      }).catch(err => {
+        console.log(err)
+        this.isSensitive = false
+      })
+    },
+    async toComment() {
       if (this.work_comments == '') return
+      await this.checkSensitive()
+      if(this.isSensitive){
+        this.$message({ message: '评论中包含敏感词', center: true,type: 'warning' })
+        return
+      }
       if (this.commentDataArr.length >= this.showCommentCount) {
         this.commentBottom = '查看更多>'
       }
@@ -664,4 +684,3 @@ textarea:focus {
   }
 }
 </style>
-

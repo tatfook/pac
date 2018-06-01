@@ -421,55 +421,49 @@ export default {
         })
     },
     async uploadwork() {
-      if (!this.work_title) {
-        this.uploadworkMsg = '提交作品出错'
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.uploadworkMsg = '所填信息中包含敏感词！'
         this.dialogVisibleErr = true
-        return false
-      } else {
-        await this.checkSensitive()
-        if (this.isSensitive) {
-          this.uploadworkMsg = '所填信息中包含敏感词！'
-          this.dialogVisibleErr = true
-          return
-        }
-        let that = this
-        keepwork.user
-          .submitWorksApply({
-            websiteId: iiccWebsiteId,
-            username: JSON.parse(localStorage.getItem('userinfo')).username,
-            realname: localStorage.getItem('realname'),
-            userid: JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
-              .dataSourceUserId,
-            worksName: this.work_title,
-            worksDesc: this.work_brief,
-            worksLogo: this.worksLogo,
-            worksFlag: this.picked,
-            worksUrl: this.value2,
-            schoolName: this.school_name,
-            awords: this.awords,
-            identifyUrl: this.identifyUrl.join(),
-            liveUrl: this.liveUrl,
-            visitCount: '',
-            voteCount: '',
-            todayVoteCount: '',
-            commentCount: ''
-          })
-          .then(function(result) {
-            if (result.error.id == 0) {
-              // console.log(result);
-              that.uploadworkMsg = '恭喜你，成功上传作品！'
-              that.uploadworkSuccessVisible = true
-              return true
-            } else {
-              that.uploadworkMsg = '提交失败，请稍后再试！'
-              that.dialogVisibleErr = true
-              return false
-            }
-          })
-          .catch(function(error) {
-            console.log(err)
-          })
+        return
       }
+      let that = this
+      keepwork.user
+        .submitWorksApply({
+          websiteId: iiccWebsiteId,
+          username: JSON.parse(localStorage.getItem('userinfo')).username,
+          realname: localStorage.getItem('realname'),
+          userid: JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+            .dataSourceUserId,
+          worksName: this.work_title,
+          worksDesc: this.work_brief,
+          worksLogo: this.worksLogo,
+          worksFlag: this.picked,
+          worksUrl: this.value2,
+          schoolName: this.school_name,
+          awords: this.awords,
+          identifyUrl: this.identifyUrl.join(),
+          liveUrl: this.liveUrl,
+          visitCount: '',
+          voteCount: '',
+          todayVoteCount: '',
+          commentCount: ''
+        })
+        .then(function(result) {
+          if (result.error.id == 0) {
+            // console.log(result);
+            that.uploadworkMsg = '恭喜你，成功上传作品！'
+            that.uploadworkSuccessVisible = true
+            return true
+          } else {
+            that.uploadworkMsg = '提交失败，请稍后再试！'
+            that.dialogVisibleErr = true
+            return false
+          }
+        })
+        .catch(function(error) {
+          console.log(err)
+        })
     }
   }
 }
