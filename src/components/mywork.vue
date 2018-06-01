@@ -13,7 +13,7 @@
           <div class="works" v-if="myworksArr.length > 0">
             <div class="work-item" v-for="(work, index) in myworksArr" :key="index">
               <div class="work-title">
-                <h3 style="cursor:pointer"  @click="enterWorkDetail(work.worksUrl)">{{work.worksName}}</h3>
+                <h3 @click="enterWorkDetail(work.worksUrl)">{{work.worksName}}</h3>
                 <p class="time">{{formatDate(work.updateDate)}}</p>
                 <span class="id-label" :title="(work.worksState === 'normal') ? '作品编号': '正在审核中'" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
               </div>
@@ -53,9 +53,7 @@
             </div>
           </div>
           <div class="empty" v-if="myworksArr.length <= 0">
-            <p>还没有上传过作品
-              <span class="fake-btn" @click="toUpload">立马上传</span>
-            </p>
+            <img src="@/assets/pac/empty_my_work.png" alt="">
           </div>
           <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
             <h1>上传作品</h1>
@@ -178,6 +176,7 @@ h3 {
   font-size: 18px;
   margin: 0;
   color: #303133;
+  cursor: pointer;
 }
 p {
   margin: 0;
@@ -374,6 +373,7 @@ p {
 }
 .empty {
   text-align: center;
+  padding: 10px 0 40px;
 }
 </style>
 <style lang="scss">
