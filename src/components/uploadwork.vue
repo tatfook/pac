@@ -86,15 +86,15 @@
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4">
-                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="disabledMsg(index,3)">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4">
-                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="disabledMsg(index,3)">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
@@ -102,15 +102,15 @@
                       </div>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3">
-                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="disabledMsg(index,4)">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3">
-                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="disabledMsg(index,4)">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
@@ -207,27 +207,27 @@ export default {
       uploadworkSuccessVisible: false,
       uploadworkMsg: '',
       isSensitive: false,
-      checkedVals_stu: [],
       checkedVals_pub: [],
+      checkedVals_stu: [],
       maxLen: 3
     }
   },
   watch: {
-    checkedVals_stu(val) {
-      this.awards_item_student.map(item => (item.checked = false))
-      val.map(item => (this.awards_item_student[item].checked = true))
-    },
     checkedVals_pub(val) {
       this.awards_item_public.map(item => (item.checked = false))
       val.map(item => (this.awards_item_public[item].checked = true))
+    },
+    checkedVals_stu(val) {
+      this.awards_item_student.map(item => (item.checked = false))
+      val.map(item => (this.awards_item_student[item].checked = true))
     }
   },
   computed: {
-    isDisable_stu() {
-      return this.checkedVals_stu.length >= this.maxLen ? true : false
-    },
     isDisable_pub() {
       return this.checkedVals_pub.length >= this.maxLen ? true : false
+    },
+    isDisable_stu() {
+      return this.checkedVals_stu.length >= this.maxLen ? true : false
     },
     already_checked_item: function() {
       if (this.picked == 4) {
@@ -289,6 +289,17 @@ export default {
     }
   },
   methods: {
+    disabledMsg(index, itemNum) {
+      if (
+        itemNum == 3 &&
+        this.isDisable_pub &&
+        !this.checkedVals_pub.includes(index)
+      ) {
+        this.$message({ message: '最多只能选择3项哦!', center: true })
+      } else if (this.isDisable_stu && !this.checkedVals_stu.includes(index)) {
+        this.$message({ message: '最多只能选择3项哦!', center: true })
+      }
+    },
     getWorkUrlDatas() {
       let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
       let { projectId, username } = JSON.parse(
@@ -307,7 +318,9 @@ export default {
           for (let i = 0; i < result.data.length; i++) {
             let path = result.data[i].path
             let obj = {}
-            if (path.indexOf(this.userinfo.username + '/paracraft/world_') == 0) {
+            if (
+              path.indexOf(this.userinfo.username + '/paracraft/world_') == 0
+            ) {
               obj.value = path.split('.')[0]
               obj.label = path.split('.')[0]
               this.myworks.push(obj)
