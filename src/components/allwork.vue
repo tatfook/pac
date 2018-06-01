@@ -224,7 +224,7 @@ export default {
         sites: ['qq', 'qzone', 'weibo', 'wechat'],
         wechatQrcodeTitle: '', // 微信二维码提示文字
         wechatQrcodeHelper: '扫描二维码打开网页',
-        url: `${window.location.origin}${work.worksUrl}`
+        url: `${window.location.origin}/#/detail?workUrl=${work.worksUrl}`
       })
     }
   },
