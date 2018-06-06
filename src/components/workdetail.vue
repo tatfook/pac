@@ -147,9 +147,7 @@ export default {
       workUrl: this.$route.query.workUrl,
       revision: '',
       filesTotals: '',
-      isSensitive: false,
-      idx: -1,
-      mouseOver: false
+      isSensitive: false
     }
   },
   created: function() {
@@ -310,14 +308,6 @@ export default {
           }
         })
       this.work_comments = ''
-    },
-    overHandler(index) {
-      this.idx = index
-      this.mouseOver = true
-    },
-    outHandler() {
-      this.idx = -1
-      this.mouseOver = false
     },
     deleteComment(index, comment) {
       if (comment.userInfo.username == this.userinfo.username) {
