@@ -102,11 +102,12 @@
         <div class="comments">
           <h3>
             <i class="iconfont icon-comment"></i>作品评论
-            <span class="info">{{commentDataArr.length}}条评论</span>
+            <span class="info">({{commentDataArr.length}}条评论)</span>
           </h3>
           <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
               <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
+              <span v-if="(userinfo && userinfo.username) && (userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username)" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
               <div class="comment-detail pull-left">
                 <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
                 <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
@@ -127,6 +128,7 @@ import keepwork from '@/api/keepwork'
 import axios from 'axios'
 import sensitiveWord from '@/api/sensitiveWord'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
+
 export default {
   name: 'workdetail',
   data() {
@@ -145,7 +147,9 @@ export default {
       workUrl: this.$route.query.workUrl,
       revision: '',
       filesTotals: '',
-      isSensitive: false
+      isSensitive: false,
+      idx: -1,
+      mouseOver: false
     }
   },
   created: function() {
@@ -254,24 +258,31 @@ export default {
           console.log(result)
         })
     },
-    async checkSensitive(){
+    async checkSensitive() {
       let checkedWords = this.work_comments
-      await sensitiveWord.checkSensitiveWords(checkedWords).then(result => {
-        if(result && result.length > 0){
-          this.isSensitive = true
-        }else{
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true
+          } else {
+            this.isSensitive = false
+          }
+        })
+        .catch(err => {
+          console.log(err)
           this.isSensitive = false
-        }
-      }).catch(err => {
-        console.log(err)
-        this.isSensitive = false
-      })
+        })
     },
     async toComment() {
       if (this.work_comments == '') return
       await this.checkSensitive()
-      if(this.isSensitive){
-        this.$message({ message: '评论中包含敏感词', center: true,type: 'warning' })
+      if (this.isSensitive) {
+        this.$message({
+          message: '评论中包含敏感词',
+          center: true,
+          type: 'warning'
+        })
         return
       }
       if (this.commentDataArr.length >= this.showCommentCount) {
@@ -285,17 +296,52 @@ export default {
           content: this.work_comments
         })
         .then(result => {
-          keepwork.websiteComment
-            .getByPageUrl({
-              url: this.workUrl,
-              pageSize: 10000000
-            })
-            .then(result => {
-              this.commentDataArr = result.data.commentList
-            })
-            .catch(err => {})
+          // console.log(result)
+          if (result.error.id == 0) {
+            keepwork.websiteComment
+              .getByPageUrl({
+                url: this.workUrl,
+                pageSize: 10000000
+              })
+              .then(result => {
+                this.commentDataArr = result.data.commentList
+              })
+              .catch(err => {})
+          }
         })
       this.work_comments = ''
+    },
+    overHandler(index) {
+      this.idx = index
+      this.mouseOver = true
+    },
+    outHandler() {
+      this.idx = -1
+      this.mouseOver = false
+    },
+    deleteComment(index, comment) {
+      if (comment.userInfo.username == this.userinfo.username) {
+        keepwork.websiteComment
+          .deleteById({ _id: comment._id })
+          .then(result => {
+            // console.log(result)
+            if (result.error.id == 0) {
+              keepwork.websiteComment
+                .getByPageUrl({
+                  url: this.workUrl,
+                  pageSize: 10000000
+                })
+                .then(result => {
+                  // console.log(result)
+                  this.commentDataArr = result.data.commentList
+                })
+                .catch(err => {})
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
@@ -612,6 +658,30 @@ textarea:focus {
   position: relative;
   padding: 31px 0;
   border-bottom: 1px solid #dddddd;
+  .deleteComment {
+    display: block;
+    padding-left: 16px;
+    width: 28px;
+    height: 15px;
+    line-height: 17px;
+    font-size: 12px;
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    cursor: pointer;
+    background: url('.././assets/pac/delete_gray.png') no-repeat;
+    display: none;
+  }
+  .deleteComment:hover{
+    color: red;
+    cursor: pointer;
+    background: url('.././assets/pac/delete_red.png') no-repeat
+  }
+  &:hover{
+    .deleteComment{
+      display: block;
+    }
+  }
 }
 .comment-item::after {
   content: '';
