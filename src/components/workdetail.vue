@@ -627,6 +627,7 @@ textarea:focus {
   line-height: 120px;
   text-decoration: underline;
   color: #303133;
+  cursor: pointer;
 }
 .profile {
   width: 76px;
