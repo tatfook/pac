@@ -107,7 +107,7 @@
           <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
               <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
-              <span v-if="(userinfo && userinfo.username) && (userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username)" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
+              <span v-if="(userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username) || workUrl.split('/')[0] == userinfo.username" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
               <div class="comment-detail pull-left">
                 <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
                 <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
@@ -310,7 +310,6 @@ export default {
       this.work_comments = ''
     },
     deleteComment(index, comment) {
-      if (comment.userInfo.username == this.userinfo.username) {
         keepwork.websiteComment
           .deleteById({ _id: comment._id })
           .then(result => {
@@ -331,7 +330,6 @@ export default {
           .catch(err => {
             console.log(err)
           })
-      }
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
