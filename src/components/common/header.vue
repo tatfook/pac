@@ -202,6 +202,7 @@ export default {
     },
     toUpload() {
       this.$router.push({ path: '/uploadwork' })
+      this.appliedInfoDialogVisible = false
     },
     toLogout() {
       this.$emit('onLogOut')
@@ -349,6 +350,7 @@ export default {
     list-style: none;
     float: left;
     padding: 0 24px;
+    font-size: 14px;
   }
   a {
     color: #606266;
@@ -365,13 +367,14 @@ export default {
     margin-left: 24px;
     border-radius: 4px;
     padding: 0 20.5px;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     img {
       margin-right: 10px;
       vertical-align: middle;
       top: -2px;
       position: relative;
+      width: 36px;
     }
   }
   .login-btn {

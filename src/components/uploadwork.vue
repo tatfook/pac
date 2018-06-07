@@ -1,8 +1,6 @@
 <template>
   <div class="uploadwork-wrap">
-    <Header :userinfo='userinfo' @onLogOut='toLogout'></Header>
     <main>
-      <Banner :userinfo='userinfo'></Banner>
       <div class="intro-row-reg">
         <div class="container-reg">
           <div class="top-square-uploadpage">
@@ -88,15 +86,15 @@
                     <td>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4">
-                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3" @click="disabledMsg(index,3)">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4">
-                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
+                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3" @click="disabledMsg(index,3)">
+                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
@@ -104,15 +102,15 @@
                       </div>
                       <div class="item_wrap">
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index < 5 && picked == 3">
-                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index < 4  && picked == 4" @click="disabledMsg(index,4)">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
                         </div>
                         <div>
-                          <p class="item-content" v-for="(item,index) in awards_item_public" :key="index" v-if="index >= 5 && picked == 3">
-                            <input type="checkbox" :disabled="isDisable_pub && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_pub">
+                          <p class="item-content" v-for="(item,index) in awards_item_student" :key="index" v-if="index >= 4 && picked == 4" @click="disabledMsg(index,4)">
+                            <input type="checkbox" :disabled="isDisable_stu && !item.checked" :id="`checkbox_${index}`" :value="index" v-model="checkedVals_stu">
                             <label :for="`checkbox_${index}`" class="checkBox_sty"></label>
                             <label :for="`checkbox_${index}`" :class="item.checked ? 'group_name_sel' : 'group_name'">{{item.label}}</label>
                           </p>
@@ -148,13 +146,9 @@
         <join @close='setDialogVisible("joinDialogVisible", false)' @showLoginDialog='setDialogVisible("loginDialogVisible", true)' @onLogined='reGetUserinfo'></join>
       </el-dialog>
     </main>
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 import registerok from './register-ok'
 import login from './login'
 import join from './join'
@@ -213,27 +207,27 @@ export default {
       uploadworkSuccessVisible: false,
       uploadworkMsg: '',
       isSensitive: false,
-      checkedVals_stu: [],
       checkedVals_pub: [],
+      checkedVals_stu: [],
       maxLen: 3
     }
   },
   watch: {
-    checkedVals_stu(val) {
-      this.awards_item_student.map(item => (item.checked = false))
-      val.map(item => (this.awards_item_student[item].checked = true))
-    },
     checkedVals_pub(val) {
       this.awards_item_public.map(item => (item.checked = false))
       val.map(item => (this.awards_item_public[item].checked = true))
+    },
+    checkedVals_stu(val) {
+      this.awards_item_student.map(item => (item.checked = false))
+      val.map(item => (this.awards_item_student[item].checked = true))
     }
   },
   computed: {
-    isDisable_stu() {
-      return this.checkedVals_stu.length >= this.maxLen ? true : false
-    },
     isDisable_pub() {
       return this.checkedVals_pub.length >= this.maxLen ? true : false
+    },
+    isDisable_stu() {
+      return this.checkedVals_stu.length >= this.maxLen ? true : false
     },
     already_checked_item: function() {
       if (this.picked == 4) {
@@ -273,21 +267,18 @@ export default {
             tempArr.push(this.awards_item_student[i].label)
           }
         }
-        return tempArr.join()
+        return tempArr
       } else {
         for (let i = 0; i < this.awards_item_public.length; i++) {
           if (this.awards_item_public[i].checked) {
             tempArr.push(this.awards_item_public[i].label)
           }
         }
-        return tempArr.join()
+        return tempArr
       }
     }
   },
   components: {
-    Header,
-    Banner,
-    Footer,
     registerok,
     login,
     join
@@ -298,8 +289,18 @@ export default {
     }
   },
   methods: {
+    disabledMsg(index, itemNum) {
+      if (
+        itemNum == 3 &&
+        this.isDisable_pub &&
+        !this.checkedVals_pub.includes(index)
+      ) {
+        this.$message({ message: '最多只能选择3项哦!', center: true })
+      } else if (this.isDisable_stu && !this.checkedVals_stu.includes(index)) {
+        this.$message({ message: '最多只能选择3项哦!', center: true })
+      }
+    },
     getWorkUrlDatas() {
-      let that = this
       let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
       let { projectId, username } = JSON.parse(
         localStorage.getItem('userinfo')
@@ -312,15 +313,21 @@ export default {
         .get(
           `/projects/${projectId}/repository/tree?isFetchAll=true&path=${username}/paracraft&ref=master&recursive=false`
         )
-        .then(function(result) {
-          for (let i = 1; i < result.data.length; i++) {
+        .then(result => {
+          this.myworks = []
+          for (let i = 0; i < result.data.length; i++) {
+            let path = result.data[i].path
             let obj = {}
-            obj.value = result.data[i].path.split('.')[0]
-            obj.label = result.data[i].path.split('.')[0]
-            that.$set(that.myworks, i - 1, obj)
+            if (
+              path.indexOf(this.userinfo.username + '/paracraft/world_') == 0
+            ) {
+              obj.value = path.split('.')[0]
+              obj.label = path.split('.')[0]
+              this.myworks.push(obj)
+            }
           }
         })
-        .catch(function(error) {
+        .catch(error => {
           // console.log(error)
         })
     },
@@ -346,7 +353,7 @@ export default {
         dataSourceUsername,
         projectName,
         rawBaseUrl
-      } = JSON.parse(localStorage.getItem('userinfo')).defaultSiteDataSource;
+      } = this.userinfo.defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
@@ -388,7 +395,7 @@ export default {
         dataSourceToken,
         apiBaseUrl,
         dataSourceUsername
-      } = JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
+      } = this.userinfo.dataSource[0]
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
       api.projects.repository.files.remove(
         projectId,
@@ -414,55 +421,47 @@ export default {
         })
     },
     async uploadwork() {
-      if (!this.work_title) {
-        this.uploadworkMsg = '提交作品出错'
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.uploadworkMsg = '所填信息中包含敏感词！'
         this.dialogVisibleErr = true
-        return false
-      } else {
-        await this.checkSensitive()
-        if (this.isSensitive) {
-          this.uploadworkMsg = '所填信息中包含敏感词！'
-          this.dialogVisibleErr = true
-          return
-        }
-        let that = this
-        keepwork.user
-          .submitWorksApply({
-            websiteId: iiccWebsiteId,
-            username: JSON.parse(localStorage.getItem('userinfo')).username,
-            realname: localStorage.getItem('realname'),
-            userid: JSON.parse(localStorage.getItem('userinfo')).dataSource[0]
-              .dataSourceUserId,
-            worksName: this.work_title,
-            worksDesc: this.work_brief,
-            worksLogo: this.worksLogo,
-            worksFlag: this.picked,
-            worksUrl: this.value2,
-            schoolName: this.school_name,
-            awords: this.awords,
-            identifyUrl: this.identifyUrl.join(),
-            liveUrl: this.liveUrl,
-            visitCount: '',
-            voteCount: '',
-            todayVoteCount: '',
-            commentCount: ''
-          })
-          .then(function(result) {
-            if (result.error.id == 0) {
-              // console.log(result);
-              that.uploadworkMsg = '恭喜你，成功上传作品！'
-              that.uploadworkSuccessVisible = true
-              return true
-            } else {
-              that.uploadworkMsg = '提交失败，请稍后再试！'
-              that.dialogVisibleErr = true
-              return false
-            }
-          })
-          .catch(function(error) {
-            console.log(err)
-          })
+        return
       }
+      keepwork.user
+        .submitWorksApply({
+          websiteId: iiccWebsiteId,
+          username: this.userinfo.username,
+          realname: localStorage.getItem('realname'),
+          userid: this.userinfo._id,
+          worksName: this.work_title,
+          worksDesc: this.work_brief,
+          worksLogo: this.worksLogo,
+          worksFlag: this.picked,
+          worksUrl: this.value2,
+          schoolName: this.school_name,
+          awords: this.awords,
+          identifyUrl: this.identifyUrl.join(),
+          liveUrl: this.liveUrl,
+          visitCount: '',
+          voteCount: '',
+          todayVoteCount: '',
+          commentCount: ''
+        })
+        .then(result => {
+          if (result.error.id == 0) {
+            // console.log(result);
+            this.uploadworkMsg = '恭喜你，成功上传作品！'
+            this.uploadworkSuccessVisible = true
+            return true
+          } else {
+            this.uploadworkMsg = '提交失败，请稍后再试！'
+            this.dialogVisibleErr = true
+            return false
+          }
+        })
+        .catch(error => {
+          console.log(err)
+        })
     }
   }
 }

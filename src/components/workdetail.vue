@@ -1,6 +1,5 @@
 <template>
   <div class="work-detail">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <div class="main-container">
       <div class="decoration hidden-xs-only">
         <div class="white-bg"></div>
@@ -31,17 +30,17 @@
                 <span>{{worksFlag}}</span>
               </p>
               <p>参赛奖项：
-                <span class="award-item">{{work.awords}}</span>
+                <span class="award-item" v-for="(aword, index) in work.awords" :key="index">{{aword}}</span>
               </p>
             </div>
-            <!-- <div class="paracraft-info">
+            <div class="paracraft-info">
               <p>软件版本：
-                <span>1.0.0.6</span>
+                <span>{{revision}}</span>
               </p>
               <p>作品大小：
-                <span>2MB</span>
+                <span>{{filesTotals}}</span>
               </p>
-            </div> -->
+            </div>
             <div class="other-info">
               <span class="info-item">
                 <i class="iconfont icon-visit"></i>{{work.visitCount}}
@@ -103,188 +102,253 @@
         <div class="comments">
           <h3>
             <i class="iconfont icon-comment"></i>作品评论
-            <span class="info">{{commentDataArr.length}}条评论</span>
+            <span class="info">({{commentDataArr.length}}条评论)</span>
           </h3>
-          <div v-for="(commet,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
+          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
             <div class="comment-item clearfix">
-              <img :src='getUserPortrait(userinfo)' alt="" class="profile pull-left">
+              <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
+              <span v-if="(userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username) || workUrl.split('/')[0] == userinfo.username" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
               <div class="comment-detail pull-left">
-                <h4>{{userinfo.username}}</h4>
-                <p class="time">{{commet.createTime.split(' ')[0].split('-')[0]}}年{{commet.createTime.split(' ')[0].split('-')[1]}}月{{commet.createTime.split(' ')[0].split('-')[2]}}日 {{commet.createTime.split(' ')[1].split('-')[0]}}:{{commet.createTime.split(' ')[1].split('-')[1]}}:{{commet.createTime.split(' ')[1].split('-')[2]}}</p>
+                <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
+                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
                 <p class="comment-content">
-                  {{commet.content}}
+                  {{comment.content}}
                 </p>
               </div>
             </div>
-            <!-- <div class="comment-item clearfix">
-              <img src="http://keepwork.com/wiki/assets/imgs/default_portrait.png" alt="" class="profile pull-left">
-              <div class="comment-detail pull-left">
-                <h4>A smooth traveler</h4>
-                <p class="time">2017年4月28日 16:44</p>
-                <p class="comment-content">
-                  评论内容评论内容评论内容评论内容评论内容
-                </p>
-              </div>
-            </div> -->
           </div>
             <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import keepwork from "@/api/keepwork";
-import Header from "./common/header";
-import Footer from "./common/footer";
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
+import keepwork from '@/api/keepwork'
+import axios from 'axios'
+import sensitiveWord from '@/api/sensitiveWord'
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
+
 export default {
-  name: "workdetail",
-  components: {
-    Header,
-    Footer
-  },
+  name: 'workdetail',
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem("userinfo")),
-      work: "", //当前作品
-      worksFlag: "", //组别
-      createYear: "",
-      createMonth: "",
-      createDay: "",
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
+      work: '',
+      worksFlag: '',
+      createYear: '',
+      createMonth: '',
+      createDay: '',
       showLike: false,
-      work_comments: "",
+      work_comments: '',
       commentDataArr: [],
       showCommentCount: 3,
-      commentBottom: "查看更多>",
-      workUrl:this.$route.query.workUrl
-    };
+      commentBottom: '查看更多>',
+      workUrl: this.$route.query.workUrl,
+      revision: '',
+      filesTotals: '',
+      isSensitive: false
+    }
   },
   created: function() {
-    let authorization = "bearer " + JSON.parse(localStorage.getItem("token"));
-    let that = this;
-    keepwork.websiteWorks
-      .getByWorksUrl({
-        websiteId: iiccWebsiteId,
-        worksUrl: this.workUrl
-      })
-      .then(function(result) {
-        console.log(result);
-        let work = result.data;
-        that.work = work;
-        that.worksFlag = work.worksFlag == 3 ? "公开组" : "学生组";
-        that.createYear = work.createDate.split(" ")[0].split("-")[0];
-        that.createMonth = work.createDate.split(" ")[0].split("-")[1];
-        that.createDay = work.createDate.split(" ")[0].split("-")[2];
-      })
-      .catch(function(error) {
-        // console.log(error)
-      });
-    //增加浏览量
+    let authorization = 'bearer ' + JSON.parse(localStorage.getItem('token'))
     keepwork.websiteWorks
       .updateVisitCount({
         websiteId: iiccWebsiteId,
         worksUrl: this.workUrl
       })
-      .then(function(result) {
-        console.log(result);
+      .then(result => {
+        // console.log(result);
       })
       .catch(function(err) {
-        console.log(err);
-      });
-    //获取全部评论
+        console.log(err)
+      })
     keepwork.websiteComment
       .getByPageUrl({
         url: this.workUrl,
         pageSize: 10000000
       })
-      .then(function(result) {
-        console.log("全部评论")
-        console.log(result)
-        that.commentDataArr = result.data.commentList
+      .then(result => {
+        // console.log('全部评论')
+        // console.log(result)
+        this.commentDataArr = result.data.commentList
       })
-      .catch(function(result) {});
+      .catch(err => {})
+    keepwork.websiteWorks
+      .getByWorksUrl({
+        websiteId: iiccWebsiteId,
+        worksUrl: this.workUrl
+      })
+      .then(result => {
+        console.log(result)
+        let work = result.data
+        this.work = work
+        this.worksFlag = work.worksFlag == 3 ? '公开组' : '学生组'
+        this.createYear = work.createDate.split(' ')[0].split('-')[0]
+        this.createMonth = work.createDate.split(' ')[0].split('-')[1]
+        this.createDay = work.createDate.split(' ')[0].split('-')[2]
+        let baseUrl = ''
+        switch (process.env.NODE_ENV) {
+          case 'production':
+            baseUrl = 'keepwork.com'
+            break
+          default:
+            baseUrl = 'fix.pac.stage.keepwork.com'
+            break
+        }
+        axios
+          .create({
+            baseURL: 'http://' + baseUrl,
+            headers: { Authorization: authorization }
+          })
+          .post('/api/mod/worldshare/models/worlds/getWorldByFilePath', {
+            filePath: work.worksUrl
+          })
+          .then(result => {
+            let data = result.data.data
+            this.revision = data.revision + '.0.0'
+            this.filesTotals = (data.filesTotals / 1024).toFixed(2) + 'MB'
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+      .catch(error => {
+        // console.log(error)
+      })
   },
   methods: {
     visitWork() {
-      window.location.href="#"
+      window.location.href = '#'
     },
-    getUserPortrait() {
-      let portrait = this.userinfo.portrait
-      let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
-      if (!portrait || KPOldDefaultPortrait.test(portrait)) {
+    getUserPortrait(comment) {
+      if (comment.userInfo) {
+        let portrait = comment.userInfo.portrait
+        let KPOldDefaultPortrait = /^\/wiki\/assets\/imgs\/default_portrait.png/
+        if (!portrait || KPOldDefaultPortrait.test(portrait)) {
+          return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
+        }
+        return portrait
+      } else {
         return 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
       }
-      return this.userinfo.portrait
     },
     showSocialShare(work) {
-      let worksName = work.worksName || "未知标题";
+      let worksName = work.worksName || '未知标题'
       window.socialShare(`#work${work.worksId}`, {
-        mode: "prepend",
+        mode: 'prepend',
         description: `快来看${work.username}做的作品《${worksName}》`,
         title: `${worksName}`,
-        sites: ["qq", "qzone", "weibo", "wechat"],
-        wechatQrcodeTitle: "", // 微信二维码提示文字
-        wechatQrcodeHelper: "扫描二维码打开网页",
-        url: `${window.location.origin}${work.worksUrl}`
-      });
+        sites: ['qq', 'qzone', 'weibo', 'wechat'],
+        wechatQrcodeTitle: '', // 微信二维码提示文字
+        wechatQrcodeHelper: '扫描二维码打开网页',
+        url: `${window.location.origin}/#/detail?workUrl=${work.worksUrl}`
+      })
     },
     toVote() {
-      // alert("去投票");
-      this.showLike = true;
+      this.showLike = true
       keepwork.websiteWorks
         .toVote({
           websiteId: iiccWebsiteId,
           worksUrl: this.workUrl
         })
-        .then(function(result) {
-          console.log(result);
-        });
+        .then(result => {
+          console.log(result)
+        })
     },
-    toComment() {
-      // alert('去评论')
-      if (this.work_comments == "") return;
-      if (this.commentDataArr.length >= this.showCommentCount) {
-        this.commentBottom = "查看更多>";
+    async checkSensitive() {
+      let checkedWords = this.work_comments
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true
+          } else {
+            this.isSensitive = false
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          this.isSensitive = false
+        })
+    },
+    async toComment() {
+      if (this.work_comments == '') return
+      await this.checkSensitive()
+      if (this.isSensitive) {
+        this.$message({
+          message: '评论中包含敏感词',
+          center: true,
+          type: 'warning'
+        })
+        return
       }
-      let that = this;
+      if (this.commentDataArr.length >= this.showCommentCount) {
+        this.commentBottom = '查看更多>'
+      }
       keepwork.websiteComment
         .create({
           websiteId: iiccWebsiteId,
-          userId: this.userinfo.defaultSiteDataSource.dataSourceUserId,
+          userId: this.userinfo._id,
           url: this.workUrl,
           content: this.work_comments
         })
-        .then(function(result) {
-          console.log(result);
-
-          keepwork.websit;
-          let commentData = result.data;
-          that.commentDataArr.unshift(commentData);
-          console.log(that.commentDataArr);
-        });
-      this.work_comments = "";
+        .then(result => {
+          // console.log(result)
+          if (result.error.id == 0) {
+            keepwork.websiteComment
+              .getByPageUrl({
+                url: this.workUrl,
+                pageSize: 10000000
+              })
+              .then(result => {
+                this.commentDataArr = result.data.commentList
+              })
+              .catch(err => {})
+          }
+        })
+      this.work_comments = ''
+    },
+    deleteComment(index, comment) {
+        keepwork.websiteComment
+          .deleteById({ _id: comment._id })
+          .then(result => {
+            // console.log(result)
+            if (result.error.id == 0) {
+              keepwork.websiteComment
+                .getByPageUrl({
+                  url: this.workUrl,
+                  pageSize: 10000000
+                })
+                .then(result => {
+                  // console.log(result)
+                  this.commentDataArr = result.data.commentList
+                })
+                .catch(err => {})
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
-        this.showCommentCount = this.commentDataArr.length;
-        this.commentBottom = "到底了，没有更多评论了";
+        this.showCommentCount = this.commentDataArr.length
+        this.commentBottom = '到底了，没有更多评论了'
       } else {
-        this.showCommentCount += 4;
+        this.showCommentCount += 4
       }
-      console.log(this.showCommentCount);
     },
     reGetUserinfo() {
-      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
     toLogout() {
-      this.userinfo = undefined;
-      localStorage.removeItem("token");
-      localStorage.removeItem("userinfo");
+      this.userinfo = undefined
+      localStorage.removeItem('token')
+      localStorage.removeItem('userinfo')
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .fade-enter-active,
@@ -298,7 +362,7 @@ export default {
 .main-container {
   background-color: #f5f5f5;
   color: #909399;
-  padding-top: 26px;
+  padding: 26px 0 80px;
 }
 .container {
   width: 90%;
@@ -314,7 +378,7 @@ export default {
   color: #b0b4bb;
 }
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
@@ -383,7 +447,7 @@ p {
     top: 0;
   }
   .top-square:after {
-    content: "";
+    content: '';
     display: inline-block;
     width: 40px;
     height: 27px;
@@ -394,7 +458,7 @@ p {
     box-shadow: 0px 10px 0px 0px #afafaf;
   }
   .top-square:before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 40px;
     height: 27px;
@@ -428,6 +492,7 @@ p {
   }
   span {
     color: #303133;
+    margin-right: 10px;
   }
 }
 .paracraft-info {
@@ -522,7 +587,7 @@ p {
   font-size: 14px;
   color: #606266;
   text-align: left;
-  margin-bottom: 35px;
+  padding-bottom: 35px;
 }
 .work_video {
   height: 440px;
@@ -538,7 +603,7 @@ p {
   }
 }
 .vote-info::after {
-  content: "";
+  content: '';
   display: inline-block;
   left: 0;
   right: 0;
@@ -581,9 +646,33 @@ textarea:focus {
   position: relative;
   padding: 31px 0;
   border-bottom: 1px solid #dddddd;
+  .deleteComment {
+    display: block;
+    padding-left: 16px;
+    width: 28px;
+    height: 15px;
+    line-height: 17px;
+    font-size: 12px;
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    cursor: pointer;
+    background: url('.././assets/pac/delete_gray.png') no-repeat;
+    display: none;
+  }
+  .deleteComment:hover{
+    color: red;
+    cursor: pointer;
+    background: url('.././assets/pac/delete_red.png') no-repeat
+  }
+  &:hover{
+    .deleteComment{
+      display: block;
+    }
+  }
 }
 .comment-item::after {
-  content: "";
+  content: '';
   height: 1px;
   width: 100px;
   background-color: #ffffff;
@@ -596,6 +685,7 @@ textarea:focus {
   line-height: 120px;
   text-decoration: underline;
   color: #303133;
+  cursor: pointer;
 }
 .profile {
   width: 76px;
@@ -618,9 +708,6 @@ textarea:focus {
 }
 </style>
 <style lang="scss">
-.el-popover {
-  top:465px !important;
-}
 .iicc-social-share.social-share {
   text-align: center;
 
@@ -648,4 +735,3 @@ textarea:focus {
   }
 }
 </style>
-

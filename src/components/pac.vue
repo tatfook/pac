@@ -1,10 +1,6 @@
 <template>
   <div class="pac">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
-      <div class="row">
-        <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
-      </div>
       <div class="row news-row">
         <div class="container">
           <div class="decoration hidden-xs-only">
@@ -556,37 +552,17 @@
         <h4>关注公众号，了解比赛实时动态</h4>
       </div>
     </main>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'pac',
-  components: {
-    Header,
-    Banner,
-    Footer
-  },
   data() {
     return {
-      userinfo: JSON.parse(localStorage.getItem('userinfo')),
       rank1ActiveName: '1',
       rank2ActiveName: '1'
-    }
-  },
-  methods: {
-    reGetUserinfo() {
-      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
-    },
-    toLogout() {
-      this.userinfo = undefined
-      localStorage.removeItem('token')
-      localStorage.removeItem('userinfo')
     }
   }
 }

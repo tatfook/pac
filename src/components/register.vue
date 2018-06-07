@@ -1,8 +1,6 @@
 <template>
   <div class="register-wrap">
-    <Header :userinfo='userinfo' @onLogOut='toLogout' ref="header"></Header>   
     <main>
-      <Banner :userinfo='userinfo'></Banner>
       <div class="register-container">
         <div class="container-reg">
           <div class="top-square">
@@ -197,13 +195,9 @@
         </div>
       </el-dialog>
     </main> 
-    <Footer></Footer>    
   </div>
 </template>
 <script>
-import Header from "./common/header";
-import Banner from "./common/banner";
-import Footer from "./common/footer";
 import registerok from "./register-ok";
 import login from "./login";
 import join from "./join";
@@ -254,9 +248,6 @@ export default {
     }
   },
   components: {
-    Header,
-    Banner,
-    Footer,
     login,
     join,
     registerok
@@ -647,4 +638,3 @@ export default {
   }
 }
 </style>
-

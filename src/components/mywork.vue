@@ -1,8 +1,6 @@
 <template>
   <div class="myworks">
-    <Header :userinfo='userinfo' @onLogined='reGetUserinfo' @onLogOut='toLogout'></Header>
     <main>
-      <Banner :userinfo='userinfo' @onLogined='reGetUserinfo'></Banner>
       <div class="main-container">
         <div class="decoration hidden-xs-only">
           <div class="white-bg"></div>
@@ -15,7 +13,7 @@
           <div class="works" v-if="myworksArr.length > 0">
             <div class="work-item" v-for="(work, index) in myworksArr" :key="index">
               <div class="work-title">
-                <h3 style="cursor:pointer"  @click="enterWorkDetail(work.worksUrl)">{{work.worksName}}</h3>
+                <h3 @click="enterWorkDetail(work.worksUrl)">{{work.worksName}}</h3>
                 <p class="time">{{formatDate(work.updateDate)}}</p>
                 <span class="id-label" :title="(work.worksState === 'normal') ? '作品编号': '正在审核中'" :class="{'warning': work.worksState !== 'normal'}">{{(work.worksState === 'normal') ? work._id : '待审核'}}</span>
               </div>
@@ -29,7 +27,7 @@
                   <div class="info-item">
                     <span class="label">参赛奖项：</span>
                     <div class="info-content" v-if="work.awords">
-                      <span class="ward-item" v-for="(ward, index) in work.awords.split(',')" :key='index'>{{ward}}</span>
+                      <span class="ward-item" v-for="(ward, index) in work.awords" :key='index'>{{ward}}</span>
                     </div>
                   </div>
                   <div class="info-item intro">
@@ -55,9 +53,7 @@
             </div>
           </div>
           <div class="empty" v-if="myworksArr.length <= 0">
-            <p>还没有上传过作品
-              <span class="fake-btn" @click="toUpload">立马上传</span>
-            </p>
+            <img src="@/assets/pac/empty_my_work.png" alt="">
           </div>
           <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
             <h1>上传作品</h1>
@@ -66,25 +62,16 @@
         </div>
       </div>
     </main>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import keepwork from '@/api/keepwork'
-import Header from './common/header'
-import Banner from './common/banner'
-import Footer from './common/footer'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'social-share.js/dist/js/social-share.min.js'
 import 'social-share.js/dist/css/share.min.css'
 const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
   name: 'register',
-  components: {
-    Header,
-    Banner,
-    Footer
-  },
   data() {
     return {
       myworksArr: [],
@@ -189,6 +176,7 @@ h3 {
   font-size: 18px;
   margin: 0;
   color: #303133;
+  cursor: pointer;
 }
 p {
   margin: 0;
@@ -385,6 +373,7 @@ p {
 }
 .empty {
   text-align: center;
+  padding: 10px 0 40px;
 }
 </style>
 <style lang="scss">
