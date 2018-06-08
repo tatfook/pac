@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="container row intro-row">
+      <div class="container intro-row">
         <!-- <h1 class="title">
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
@@ -94,7 +94,7 @@
           </transition>
         </div> -->
       </div>
-      <div class="container row comment-row">
+      <div class="container comment-row">
         <textarea v-model.trim="work_comments" placeholder="谈谈你的感受"></textarea>
         <div class="clearfix">
           <span class="comment-btn pull-right" @click="toComment">评论</span>
@@ -104,20 +104,21 @@
             <i class="iconfont icon-comment"></i>作品评论
             <span class="info">({{commentDataArr.length}}条评论)</span>
           </h3>
-          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
+          <div class="noCommentImg" v-if="commentDataArr.length <= 0"><img src="@/assets/pac/nocomment.png" alt=""></div>
+          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount" v-else>
             <div class="comment-item clearfix">
               <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
               <span v-if="(userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username) || workUrl.split('/')[0] == userinfo.username" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
               <div class="comment-detail pull-left">
                 <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
-                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
+                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}/{{comment.createTime.split(' ')[0].split('-')[1]}}/{{comment.createTime.split(' ')[0].split('-')[2]}}/{{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
                 <p class="comment-content">
                   {{comment.content}}
                 </p>
               </div>
             </div>
           </div>
-            <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
+            <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore"><span>{{commentBottom}}</span></div>
         </div>
       </div>
     </div>
@@ -470,8 +471,9 @@ p {
   }
 }
 .time {
-  font-size: 14px;
-  color: #606266;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #909399;
 }
 .content {
   padding: 15px 30px;
@@ -525,6 +527,7 @@ p {
 .visit-btn {
   position: relative;
   .visit-inner-btn {
+    cursor: pointer;
     display: inline-block;
     width: 160px;
     font-size: 18px;
@@ -537,6 +540,7 @@ p {
   }
 }
 .share-btn {
+  cursor: pointer;
   width: 50px;
   background-color: #253994;
   box-shadow: 0 8px 0 0 #1a2b7c;
@@ -588,6 +592,8 @@ p {
   color: #606266;
   text-align: left;
   padding-bottom: 35px;
+  line-height: 24px;
+  border-bottom: 1px dashed #eee;
 }
 .work_video {
   height: 440px;
@@ -671,10 +677,14 @@ textarea:focus {
     }
   }
 }
+.noCommentImg{
+  margin-top: 10px;
+  text-align: center;
+}
 .comment-item::after {
   content: '';
   height: 1px;
-  width: 100px;
+  width: 76px;
   background-color: #ffffff;
   position: absolute;
   bottom: -1px;
@@ -683,23 +693,25 @@ textarea:focus {
   height: 100px;
   text-align: center;
   line-height: 120px;
-  text-decoration: underline;
   color: #303133;
   cursor: pointer;
+  span{
+    border-bottom: 1px solid black;
+  }
 }
 .profile {
-  width: 76px;
-  height: 76px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
-  margin-right: 20px;
+  // margin-right: 20px;
   position: absolute;
   padding: 31px 0;
   left: 0;
   top: 0;
 }
 .comment-detail {
-  padding-left: 96px;
+  padding-left: 72px;
 }
 .comment-content {
   margin-top: 20px;

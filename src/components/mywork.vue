@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="empty" v-if="myworksArr.length <= 0">
-            <img src="@/assets/pac/empty_my_work.png" alt="">
+            <img src="@/assets/pac/no_uploadwork.png" alt="">
           </div>
           <el-dialog :visible.sync='uploadDialogVisible' width='500px'>
             <h1>上传作品</h1>
@@ -122,7 +122,7 @@ export default {
         sites: ['qq', 'qzone', 'weibo', 'wechat'],
         wechatQrcodeTitle: '', // 微信二维码提示文字
         wechatQrcodeHelper: '扫描二维码打开网页',
-        url: `${window.location.origin}${work.worksUrl}`
+        url: `${window.location.origin}/#/detail?workUrl=${work.worksUrl}`
       })
     },
     formatDate(date) {

@@ -28,19 +28,19 @@
                   </tr>
                   <tr>
                     <td>作品名称</td>
-                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称" /></td>
+                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称" @blur="isHaveSensitive"/></td>
                   </tr>
                   <tr class="select_items">
                     <td>作品简介</td>
                     <td>
                       <div class="brief_wrap">
-                        <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
+                        <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..." @blur="isHaveSensitive"></textarea>
                       </div>
                     </td>
                   </tr>
                   <tr v-if="picked == 4 ? true:false">
                     <td>学校名称</td>
-                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名" /></td>
+                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名" @blur="isHaveSensitive"/></td>
                   </tr>
                   <tr>
                     <td colspan="2">
@@ -54,7 +54,7 @@
                               </div>
                               点击上传
                             </div>
-                            <input type="file" :disabled="!!imgCover" class="input_file" @change="uploadLifePhoto('workCover',$event)">
+                            <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式,推荐比例16:9)</div>
@@ -126,6 +126,7 @@
         </div>
       </div>
       <el-dialog title="提示" :visible.sync="dialogVisibleErr" width="30%">
+        <span slot="title"><i class="el-icon-warning icon-red"></i> 提示</span>
         <span>{{uploadworkMsg}}</span>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisibleErr = false">确 定</el-button>
@@ -135,7 +136,7 @@
         <img width="100%" :src="enlargeImg" alt="">
       </el-dialog>
       <el-dialog :visible.sync="uploadworkSuccessVisible" width='500px' :show-close=false>
-        <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)'>
+        <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)' :workUrl="value2">
           <span slot="uploadWorkSucceed">{{uploadworkMsg}}</span>
         </registerok>
       </el-dialog>
@@ -420,13 +421,15 @@ export default {
           this.isSensitive = false
         })
     },
-    async uploadwork() {
+    async isHaveSensitive() {
       await this.checkSensitive()
       if (this.isSensitive) {
         this.uploadworkMsg = '所填信息中包含敏感词！'
         this.dialogVisibleErr = true
         return
       }
+    },
+    uploadwork() {
       keepwork.user
         .submitWorksApply({
           websiteId: iiccWebsiteId,
@@ -879,6 +882,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.icon-red{
+  color: red;
+}
 .work-selector-popper {
   font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
 }
@@ -907,6 +913,7 @@ export default {
       }
     }
     .img-wrap {
+      margin-left: 82px;
       cursor: pointer;
       width: 227px;
       height: 127px;
@@ -947,5 +954,3 @@ export default {
   }
 }
 </style>
-
-

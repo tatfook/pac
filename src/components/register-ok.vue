@@ -6,7 +6,8 @@
       <slot name="uploadWorkSucceed"></slot>
     </h1>
     <div class="form" v-if="this.$route.name === 'uploadwork'">
-      <div class="login-button" @click='toHome'>
+      <img src="@/assets/pac/uploadworksuccess.png" alt="">        
+      <div class="login-button" @click='toWorkDetail'>
           确定
       </div>
     </div>
@@ -31,6 +32,10 @@ export default {
       password: '',
     }
   },
+  props:['workUrl'],
+  mounted(){
+    console.log(this.workUrl)
+  },
   methods: {
     closeDialog(){
       this.$emit('close')
@@ -40,6 +45,14 @@ export default {
     },
     toHome(){
         this.$router.push({ path: '/' })
+    },
+    toWorkDetail(){
+      this.$router.push({
+        name: 'workdetail',
+        query: {
+          workUrl: this.workUrl
+        }
+      })
     }
   }
 }
@@ -98,9 +111,8 @@ export default {
     color: #ffffff;
     font-size: 20px;
     background-color: #0ca6fe;
-    // color: #434103;
-    border: 4px solid #434103;
     font-weight: bold;
+    border-radius: 6px;
     position: relative;
     margin: 32px 0 22px;
     cursor: pointer;
@@ -112,6 +124,7 @@ export default {
     height: 10px;
     background-color: #0e75af;
     position: absolute;
+    border-radius:0 0 4px 4px;
     left: 0;
     bottom: 0;
   }
