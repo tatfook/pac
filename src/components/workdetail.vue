@@ -678,7 +678,7 @@ textarea:focus {
   }
 }
 .noCommentImg{
-  margin-top: 10px;
+  margin: 30px 0 15px;
   text-align: center;
 }
 .comment-item::after {

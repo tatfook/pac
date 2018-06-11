@@ -560,7 +560,7 @@ export default {
       }
       div {
         flex: 1;
-        padding-left: 6px;
+        padding-left: 11px;
       }
     }
     div {
