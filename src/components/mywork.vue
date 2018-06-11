@@ -107,7 +107,19 @@ export default {
         .then(result => {
           if (result.data) {
             console.log(result.data)
-            this.myworksArr = result.data
+            let workData = result.data
+            let compare = function(obj1, obj2) {
+              var val1 = new Date(obj1.updateDate.replace(/\-/g, '/'))
+              var val2 = new Date(obj2.updateDate.replace(/\-/g, '/'))
+              if (val1 < val2) {
+                return 1
+              } else if (val1 > val2) {
+                return -1
+              } else {
+                return 0
+              }
+            }
+            this.myworksArr = workData.sort(compare);
           }
         })
         .catch(error => {
