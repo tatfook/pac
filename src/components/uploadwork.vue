@@ -127,7 +127,7 @@
       </div>
       <el-dialog title="提示" :visible.sync="dialogVisibleErr" width="30%">
         <span slot="title"><i class="el-icon-warning icon-red"></i> 提示</span>
-        <span>{{uploadworkMsg}}</span>
+        <div style="margin:0 auto;width:60%;">{{uploadworkMsg}}</div>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisibleErr = false">确 定</el-button>
         </span>
@@ -424,7 +424,7 @@ export default {
     async isHaveSensitive() {
       await this.checkSensitive()
       if (this.isSensitive) {
-        this.uploadworkMsg = '所填信息中包含敏感词！'
+        this.uploadworkMsg = '您输入的信息包含敏感词，请调整！'
         this.dialogVisibleErr = true
         return
       }
