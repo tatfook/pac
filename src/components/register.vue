@@ -3,6 +3,7 @@
     <main>
       <div class="register-container">
         <div class="container-reg">
+          <div class="content-wrap">
           <div class="top-square">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
@@ -14,14 +15,14 @@
             <div class="line"></div>
            <div class="reg_info">
               <form @submit.prevent="register">
-                <table width="476px" cellspacing="0">
+                <table class="tableRegister" cellspacing="0" >
                   
                   <tr>
-                    <td width='850'>姓名</td>
+                    <td class="firstTd">姓名</td>
                     <td colspan="2"><input maxlength="15" type="text" id="name" class="inputsty" v-model.trim="user_name" placeholder="请输入您的姓名" /></td>
                   </tr>
                   <tr class="gender">
-                    <td width='850'>性别</td>
+                    <td>性别</td>
                     <td colspan="2">
                       <div>
                         <input type="radio" name='gender' v-model="gender" id="boy" value="男"><label for="boy">男</label>
@@ -85,6 +86,7 @@
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
             </div> 
+          </div>
           </div>
         </div>
       </div>
@@ -515,7 +517,14 @@ export default {
     text-align: center;
   }
   .reg_info {
-    width: 476px;
+    width: 60%;
+    .tableRegister{
+      .firstTd{
+        width: 20%;
+        min-width: 60px;
+      }
+      width: 100%;
+    }
     margin: 0 auto;
     .birth {
       .block {
@@ -633,6 +642,51 @@ export default {
           top: -14px;
           right: -10px;
         }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 768px) {
+  .container-reg{
+    width: 100%;
+    max-width: 768px;
+    .content-wrap{
+      width:84%;
+      margin:0 auto;
+      .reg_info{
+        width:100%;
+        margin:0;
+        margin-right:0;
+        .tableRegister{
+          #boy,#girl{
+            width:30px;
+          }
+          #tel{
+            width: 140px;
+          }
+          width:100%;
+          min-width: 477px !important;
+          .block{
+            width: 100%;
+            .el-input__inner{
+              width:300px;
+            }
+          }
+          .tel-prefix-sty{
+            width:130px;
+            .el-input__inner{
+              width:120px;
+            }
+          }
+        }
+        input{
+          width: 70%;
+        }
+      }
+      .tableRegister{
+
       }
     }
   }

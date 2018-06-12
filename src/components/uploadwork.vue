@@ -357,7 +357,7 @@ export default {
       } = this.userinfo.defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
-      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
+      let api = gitLabAPIGenerator({ url: "https://api-stage.keepwork.com/git/api/v4", token: dataSourceToken })
       let imgURL
       let reader = new FileReader()
       reader.readAsDataURL(files[0])
@@ -396,7 +396,7 @@ export default {
         dataSourceToken,
         apiBaseUrl,
         dataSourceUsername
-      } = this.userinfo.dataSource[0]
+      } = this.userinfo.defaultSiteDataSource
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
       api.projects.repository.files.remove(
         projectId,
