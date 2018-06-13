@@ -3,6 +3,7 @@
     <main>
       <div class="intro-row-reg">
         <div class="container-reg">
+          <div class="uploadworkContent_wrap">
           <div class="top-square-uploadpage">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
@@ -16,8 +17,8 @@
               <form @submit.prevent="uploadwork">
                 <table class="uploadwork_table">
                   <tr class="groups">
-                    <td width='94'>参赛组别</td>
-                    <td>
+                    <td class="firstRow">参赛组别</td>
+                    <td class="secondRow">
                       <input type="radio" id="radio_1" name="group_name" v-model="picked" value="3" />
                       <label for="radio_1"></label>
                       <span :class="picked == 3 ? 'group_name_sel' : 'group_name'">公开组</span>
@@ -123,6 +124,7 @@
               </form>
             </div>
           </div>
+        </div>
         </div>
       </div>
       <el-dialog title="提示" :visible.sync="dialogVisibleErr" width="30%">
@@ -357,7 +359,10 @@ export default {
       } = this.userinfo.defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
-      let api = gitLabAPIGenerator({ url: "https://api-stage.keepwork.com/git/api/v4", token: dataSourceToken })
+      let api = gitLabAPIGenerator({
+        url: 'https://api-stage.keepwork.com/git/api/v4',
+        token: dataSourceToken
+      })
       let imgURL
       let reader = new FileReader()
       reader.readAsDataURL(files[0])
@@ -554,12 +559,13 @@ export default {
       }
     }
     .item_wrap {
-      display: flex;
+      // display: flex;
       .item-content {
         cursor: pointer;
       }
       div {
-        flex: 1;
+        // flex: 1;
+        float: left;
         padding-left: 11px;
       }
     }
@@ -817,13 +823,13 @@ export default {
       position: absolute;
       top: 50px;
       left: 0;
-      width: 389px;
+      width: 60%;
       .tip {
         font-size: 12px;
-        padding: 8px 105px;
+        padding: 8px 0 8px 105px;
         color: #606266;
         line-height: 12px;
-        width: 385px;
+        width: 100%;
       }
       .preview {
         text-align: center;
@@ -882,7 +888,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.icon-red{
+.icon-red {
   color: red;
 }
 .work-selector-popper {
@@ -954,3 +960,202 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+@media (max-width: 768px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      // border: 1px solid red;
+      .uploadworkContent_wrap {
+        // border:1px solid blue;
+        width: 96% !important;
+        margin: 0 auto;
+        .top-square-uploadpage{
+          display: none;
+        }
+        .content {
+          border:1px solid red;
+          .reg_info {
+            width: 100%;
+            table tr td {
+              &.firstRow{
+                width:90px;
+              }
+              &.secondRow{
+                width:300px !important;
+              }
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 22px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 100px;
+              }
+              .el-select{
+                width:92%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 415px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      // border: 1px solid red;
+      .uploadworkContent_wrap {
+        // border:1px solid blue;
+        width: 96% !important;
+        margin: 0 auto;
+        .content{
+          border:1px solid red;
+          padding:0 !important;
+          .reg_info {
+            width: 100%;
+            .btn{
+              width:40%;
+            }
+            table tr td {
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              .idcard-type{
+                width:30px;
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 4px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 100px;
+              }
+              .el-select{
+                width:92%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 321px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      .uploadworkContent_wrap {
+        width: 96% !important;
+        margin: 0 auto;
+        .content{
+          border:1px solid red;
+          padding:0 !important;
+          .reg_info {
+            width: 100%;
+            .btn{
+              width:40%;
+            }
+            table tr td {
+              &.firstRow{
+                width:90px !important;
+              }
+              &.secondRow{
+                width:300px !important;
+              }
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              .idcard-type{
+                width:30px;
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 4px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 60px;
+              }
+              .el-select{
+                width:94%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+

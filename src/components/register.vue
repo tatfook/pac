@@ -740,7 +740,7 @@ export default {
   .container-reg {
     width:100%;
     .content-wrap {
-      width:100%;
+      width:96%;
       .content {
         .reg_info {
           .tableRegister {
@@ -751,10 +751,10 @@ export default {
             .block {
               width: 100%;
               .el-date-editor {
-                width: 120%;
+                width: 100%;
               }
               .el-input__inner {
-                width: 84.5%;
+                width: 101.5%;
               }
             }
           }
