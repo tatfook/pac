@@ -1,14 +1,10 @@
 <template>
   <div class="work-detail">
     <div class="main-container">
-      <div class="decoration hidden-xs-only">
-        <div class="white-bg"></div>
-        <div class="transparent-bg"></div>
-      </div>
       <div class="detail-header">
         <div class="top-square">
         </div>
-        <div style="padding:8px 30px 0;background:#fff;width:88%">
+        <div class="topTile">
             <h2 style="margin-bottom:0;height:30px">{{work.worksName}}
             <span class="info">作品编号：{{work._id}}</span>
           </h2>
@@ -20,7 +16,7 @@
       <div class="container row">
         
         <div class="content">
-          <img :src="work.worksLogo" class="work-cover" alt="">
+          <div><img :src="work.worksLogo" class="work-cover" alt=""></div>
           <div class="detail">
             <div class="upload-work-info">
               <p>作品作者：
@@ -104,7 +100,7 @@
             <i class="iconfont icon-comment"></i>作品评论
             <span class="info">({{commentDataArr.length}}条评论)</span>
           </h3>
-          <div class="noCommentImg" v-if="commentDataArr.length <= 0"><img src="@/assets/pac/nocomment.png" alt=""></div>
+          <div class="noCommentImg" v-if="commentDataArr.length <= 0"><img src="@/assets/pac/nocomment.png" alt="" class="nothing"></div>
           <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount" v-else>
             <div class="comment-item clearfix">
               <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
@@ -311,26 +307,26 @@ export default {
       this.work_comments = ''
     },
     deleteComment(index, comment) {
-        keepwork.websiteComment
-          .deleteById({ _id: comment._id })
-          .then(result => {
-            // console.log(result)
-            if (result.error.id == 0) {
-              keepwork.websiteComment
-                .getByPageUrl({
-                  url: this.workUrl,
-                  pageSize: 10000000
-                })
-                .then(result => {
-                  // console.log(result)
-                  this.commentDataArr = result.data.commentList
-                })
-                .catch(err => {})
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+      keepwork.websiteComment
+        .deleteById({ _id: comment._id })
+        .then(result => {
+          // console.log(result)
+          if (result.error.id == 0) {
+            keepwork.websiteComment
+              .getByPageUrl({
+                url: this.workUrl,
+                pageSize: 10000000
+              })
+              .then(result => {
+                // console.log(result)
+                this.commentDataArr = result.data.commentList
+              })
+              .catch(err => {})
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
@@ -440,6 +436,12 @@ p {
   // border:1px solid red;
   // padding: 8px 30px;
   border-bottom: 2px solid #f5f5f5;
+  .topTile {
+    padding: 8px 30px 0;
+    background: #fff;
+    width: 95%;
+    box-sizing: border-box;
+  }
   .top-square {
     width: 15%;
     height: 40px;
@@ -477,17 +479,21 @@ p {
 }
 .content {
   padding: 15px 30px;
-  display: flex;
+  // display: flex;
+  overflow: auto;
   border-bottom: 2px solid #f5f5f5;
 }
+
 .work-cover {
+  float: left;
   width: 233px;
   height: 131px;
   object-fit: cover;
+  margin: 0 16px 16px 0;
 }
 .detail {
-  flex: 1;
-  padding: 0 30px;
+  float: left;
+  // flex: 1;
   font-size: 14px;
   p {
     margin-bottom: 5px;
@@ -666,20 +672,25 @@ textarea:focus {
     background: url('.././assets/pac/delete_gray.png') no-repeat;
     display: none;
   }
-  .deleteComment:hover{
+  .deleteComment:hover {
     color: red;
     cursor: pointer;
-    background: url('.././assets/pac/delete_red.png') no-repeat
+    background: url('.././assets/pac/delete_red.png') no-repeat;
   }
-  &:hover{
-    .deleteComment{
+  &:hover {
+    .deleteComment {
       display: block;
     }
   }
 }
-.noCommentImg{
-  margin: 30px 0 15px;
+.noCommentImg {
+  margin: 30px auto 15px;
   text-align: center;
+  max-width: 462px;
+  .nothing {
+    width: 100%;
+    object-fit: cover;
+  }
 }
 .comment-item::after {
   content: '';
@@ -695,7 +706,7 @@ textarea:focus {
   line-height: 120px;
   color: #303133;
   cursor: pointer;
-  span{
+  span {
     border-bottom: 1px solid black;
   }
 }
@@ -743,6 +754,23 @@ textarea:focus {
     }
     h4 {
       display: none;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 769px) {
+  .work-detail {
+    .main-container {
+      .detail-header {
+        .topTile {
+          width: 100% !important;
+        }
+        .top-square{
+          // width: 30px;
+          display: none;
+        }
+      }
     }
   }
 }
