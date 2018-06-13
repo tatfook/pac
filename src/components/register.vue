@@ -15,8 +15,8 @@
             <div class="line"></div>
            <div class="reg_info">
               <form @submit.prevent="register">
-                <table class="tableRegister" cellspacing="0" >
-                  
+                <div class="tableRegister">
+                <table cellspacing="0" style="margin:auto;">
                   <tr>
                     <td class="firstTd">姓名</td>
                     <td colspan="2"><input maxlength="15" type="text" id="name" class="inputsty" v-model.trim="user_name" placeholder="请输入您的姓名" /></td>
@@ -78,6 +78,7 @@
                   
                   
                 </table>
+                </div>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
                 <!-- <div class="radio_1">
                   <input type="checkbox" id="isagree" name="agree" v-model="isdisabled"><label for="isagree"></label>同意<span style="color:#5196e7;cursor:pointer;" @click="show_agree">《2018国际智能创意大奖赛比赛协议》</span><br>
@@ -200,40 +201,40 @@
   </div>
 </template>
 <script>
-import registerok from "./register-ok";
-import login from "./login";
-import join from "./join";
-import "element-ui/lib/theme-chalk/display.css";
-import keepwork from "@/api/keepwork";
-import areaCode from "@/assets/area_code.js";
+import registerok from './register-ok'
+import login from './login'
+import join from './join'
+import 'element-ui/lib/theme-chalk/display.css'
+import keepwork from '@/api/keepwork'
+import areaCode from '@/assets/area_code.js'
 import sensitiveWord from '@/api/sensitiveWord'
-const iiccWebsiteId = process.env.IICC_WEBSITE_ID;
+const iiccWebsiteId = process.env.IICC_WEBSITE_ID
 export default {
-  name: "register",
+  name: 'register',
   data() {
     return {
       options: areaCode,
       loginBeforeLogin: false,
-      userinfo: JSON.parse(localStorage.getItem("userinfo")),
+      userinfo: JSON.parse(localStorage.getItem('userinfo')),
       show_agreement: false,
       registerOkVisible: false,
       loginDialogVisible: false,
       joinDialogVisible: false,
       showerr: false,
-      errmsg: "",
-      value2: "+86",
+      errmsg: '',
+      value2: '+86',
       isdisabled: true,
-      gender: "",
-      user_name: "",
-      email: "",
-      QQId: "",
-      location: "",
-      tel: "",
-      idcard_no: "",
-      birth: "",
-      reminder: "",
+      gender: '',
+      user_name: '',
+      email: '',
+      QQId: '',
+      location: '',
+      tel: '',
+      idcard_no: '',
+      birth: '',
+      reminder: '',
       isSensitive: false
-    };
+    }
   },
   computed: {
     _pass: function() {
@@ -244,9 +245,9 @@ export default {
         this.idcard_no &&
         this.isdisabled
       ) {
-        return true;
+        return true
       }
-      return false;
+      return false
     }
   },
   components: {
@@ -259,114 +260,118 @@ export default {
       // this.show_agreement = true;
     },
     setDialogVisible(key, value) {
-      this[key] = value;
+      this[key] = value
     },
     toLogout() {
       this.userinfo = undefined
-      localStorage.removeItem("userinfo")
+      localStorage.removeItem('userinfo')
       localStorage.removeItem('token')
     },
     showErr(err) {
-      this.showerr = true;
-      this.errmsg = err;
+      this.showerr = true
+      this.errmsg = err
     },
     reGetUserinfo() {
-      this.loginDialogVisible = false;
-      this.joinDialogVisible = false;
-      this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+      this.loginDialogVisible = false
+      this.joinDialogVisible = false
+      this.userinfo = JSON.parse(localStorage.getItem('userinfo'))
     },
-    async checkSensitive(){
-      let checkedWords = [
-        this.user_name,
-        this.location
-      ]
-      await sensitiveWord.checkSensitiveWords(checkedWords).then((result)=>{
-        if (result && result.length > 0) {
-          this.isSensitive = true
-        }else{
+    async checkSensitive() {
+      let checkedWords = [this.user_name, this.location]
+      await sensitiveWord
+        .checkSensitiveWords(checkedWords)
+        .then(result => {
+          if (result && result.length > 0) {
+            this.isSensitive = true
+          } else {
+            this.isSensitive = false
+          }
+        })
+        .catch(error => {
+          console.log(error)
           this.isSensitive = false
-        }
-      }).catch((error)=>{
-        console.log(error)
-        this.isSensitive = false
-      })
+        })
     },
     async register() {
       await this.checkSensitive()
       if (this.isSensitive) {
-        this.showErr("所填信息中包含敏感词！");
-        return;
+        this.showErr('所填信息中包含敏感词！')
+        return
       }
       if (/[@#`!()/`~,?><"{|}\[\]\$%\^&\*]+/g.test(this.user_name)) {
-        this.showErr("姓名中不能包含特殊字符");
-        return false;
+        this.showErr('姓名中不能包含特殊字符')
+        return false
       } else if (
         !/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.email)
       ) {
-        this.showErr("邮箱地址不正确");
-        return false;
-      } else if (this.value2 == "+86" && !/^1\d{10}$/.test(this.tel)) {
-        this.showErr("手机号码错误");
-        return false;
-      } else if (this.value2 != "+86" && !/\d{4,}$/.test(this.tel)) {
-        this.showErr("手机号码错误");
-        return false;
+        this.showErr('邮箱地址不正确')
+        return false
+      } else if (this.value2 == '+86' && !/^1\d{10}$/.test(this.tel)) {
+        this.showErr('手机号码错误')
+        return false
+      } else if (this.value2 != '+86' && !/\d{4,}$/.test(this.tel)) {
+        this.showErr('手机号码错误')
+        return false
       } else if (!/\d{5,}$/g.test(this.idcard_no)) {
-        this.showErr("证件号码不正确");
-        return false;
-      } else if (!localStorage.getItem("userinfo")) {
-        this.loginDialogVisible = true;
+        this.showErr('证件号码不正确')
+        return false
+      } else if (!localStorage.getItem('userinfo')) {
+        this.loginDialogVisible = true
       } else {
-        let that = this;
-        that.showerr = false;
+        let that = this
+        that.showerr = false
         let parameterList = {
-                  websiteId: iiccWebsiteId,
-                  username: that.userinfo
-                    .username,
-                  portrait:
-                    that.userinfo.portrait ||
-                    "http://keepwork.com/wiki/assets/imgs/default_portrait.png",
-                  sex: that.gender,
-                  realname: that.user_name,
-                  email: that.email,
-                  QQId: that.QQId,
-                  cellphoneId: that.value2 + that.tel,
-                  identifyCardId: that.idcard_no,
-                  birthdate: that.birth.getFullYear()+'-'+(that.birth.getMonth()+1)+'-'+that.birth.getDate(),
-                  location: that.location
-                }
+          websiteId: iiccWebsiteId,
+          username: that.userinfo.username,
+          portrait:
+            that.userinfo.portrait ||
+            'http://keepwork.com/wiki/assets/imgs/default_portrait.png',
+          sex: that.gender,
+          realname: that.user_name,
+          email: that.email,
+          QQId: that.QQId,
+          cellphoneId: that.value2 + that.tel,
+          identifyCardId: that.idcard_no,
+          birthdate:
+            that.birth.getFullYear() +
+            '-' +
+            (that.birth.getMonth() + 1) +
+            '-' +
+            that.birth.getDate(),
+          location: that.location
+        }
         keepwork.user
           .submitMemberApply(parameterList)
           .then(function(result) {
             // console.log(result);
-            localStorage.setItem("realname", that.user_name);
+            localStorage.setItem('realname', that.user_name)
             if (result.error.id == 0) {
               keepwork.user
                 .agreeMemberApply(parameterList)
                 .then(function(result) {
                   // console.log(result);
                   if (result.error.id == 0) {
-                    localStorage.setItem("realname", that.user_name);
-                    that.registerOkVisible = true;
-                    return true;
+                    localStorage.setItem('realname', that.user_name)
+                    that.registerOkVisible = true
+                    return true
                   } else {
-                    that.loginBeforeLogin = true;
-                    that.reminder = "网络错误，请稍后重试!!";
-                    return false;
+                    that.loginBeforeLogin = true
+                    that.reminder = '网络错误，请稍后重试!!'
+                    return false
                   }
                 })
-                .catch(function(error) {});
+                .catch(function(error) {})
             } else {
-              that.loginBeforeLogin = true;
-              that.reminder = "网络错误，请稍后重试!";
-              return false;
+              that.loginBeforeLogin = true
+              that.reminder = '网络错误，请稍后重试!'
+              return false
             }
           })
-          .catch(function(error) {});
+          .catch(function(error) {})
       }
     }
   }
-};
+}
 </script>
 <style lang="scss">
 .register-wrap {
@@ -374,7 +379,7 @@ export default {
     height: 800px;
     overflow-y: scroll;
   }
-  .radio_1 [type="checkbox"] {
+  .radio_1 [type='checkbox'] {
     display: none;
   }
   .radio_1 {
@@ -391,7 +396,7 @@ export default {
       cursor: pointer;
     }
     label::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 3px;
       left: 3px;
@@ -402,12 +407,12 @@ export default {
       transform: scale(0);
       transition: transform 0.2s ease-out;
     }
-    [type="checkbox"]:checked + label {
+    [type='checkbox']:checked + label {
       border: 3px #303133 solid;
       background-color: #eee;
       transition: background-color 0.2s ease-in;
     }
-    [type="checkbox"]:checked + label::after {
+    [type='checkbox']:checked + label::after {
       background-color: #303133;
       transform: scale(1);
       transition: transform 0.2s ease-out;
@@ -430,7 +435,7 @@ export default {
     }
   }
   .content::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -20px;
@@ -464,7 +469,7 @@ export default {
       position: relative;
     }
     .transparent-bg::before {
-      content: "";
+      content: '';
       display: inline-block;
       width: 40px;
       height: 27px;
@@ -475,7 +480,7 @@ export default {
       box-shadow: 0px 10px 0px 0px #afafaf;
     }
     .transparent-bg::after {
-      content: "";
+      content: '';
       display: inline-block;
       width: 40px;
       height: 27px;
@@ -492,7 +497,7 @@ export default {
     position: relative;
   }
   .line::before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 100%;
     height: 8px;
@@ -502,7 +507,7 @@ export default {
     background-color: #cfcfcf;
   }
   .line::after {
-    content: "";
+    content: '';
     display: inline-block;
     height: 8px;
     position: absolute;
@@ -518,10 +523,10 @@ export default {
   }
   .reg_info {
     width: 60%;
-    .tableRegister{
-      .firstTd{
+    .tableRegister {
+      .firstTd {
         width: 20%;
-        min-width: 60px;
+        min-width: 70px;
       }
       width: 100%;
     }
@@ -530,11 +535,11 @@ export default {
       .block {
         .el-date-editor {
           width: 391px;
-            .el-input__inner {
-              width: 391px;
-              padding-left: 38px;
-              color: #303133;
-            }
+          .el-input__inner {
+            width: 391px;
+            padding-left: 38px;
+            color: #303133;
+          }
         }
       }
     }
@@ -617,7 +622,6 @@ export default {
   }
   .slash {
     height: 20px;
-    border: 1px solid red;
   }
   .tel-prefix-sty {
     .el-input {
@@ -626,7 +630,7 @@ export default {
       }
     }
   }
-  .el-popper[x-placement^="bottom"] {
+  .el-popper[x-placement^='bottom'] {
     margin-top: 3px;
   }
   .el-scrollbar__view {
@@ -648,47 +652,175 @@ export default {
 }
 </style>
 <style lang="scss">
-@media (max-width: 768px) {
-  .container-reg{
+@media (max-width: 769px) {
+  .container-reg {
     width: 100%;
     max-width: 768px;
-    .content-wrap{
-      width:84%;
-      margin:0 auto;
-      .reg_info{
-        width:100%;
-        margin:0;
-        margin-right:0;
-        .tableRegister{
-          #boy,#girl{
-            width:30px;
+    .content-wrap {
+      width: 96%;
+      margin: 0 auto;
+      .top-square {
+        display: none;
+      }
+      .content {
+        padding: 0 5px !important;
+      }
+      .reg_info {
+        width: 100%;
+        margin: 0;
+        margin-right: 0;
+        .hint {
+          text-align: center;
+        }
+        .tableRegister {
+          #boy,
+          #girl {
+            width: 30px;
           }
-          #tel{
-            width: 140px;
+          #tel {
+            width: 86%;
           }
-          width:100%;
-          min-width: 477px !important;
-          .block{
-            width: 100%;
-            .el-input__inner{
-              width:300px;
+          min-width: 100px !important;
+          .block {
+            width: 102%;
+            .el-date-editor {
+              width: 100%;
+            }
+            .el-input__inner {
+              width: 99%;
             }
           }
-          .tel-prefix-sty{
-            width:130px;
-            .el-input__inner{
-              width:120px;
+          .tel-prefix-sty {
+            width: 130px;
+            .el-input__inner {
+              width: 120px;
             }
           }
         }
-        input{
-          width: 70%;
+        .inputsty {
+          width: 93%;
         }
       }
-      .tableRegister{
-
+    }
+    .btn {
+      width: 40% !important;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 414px) {
+  .container-reg {
+    .content-wrap {
+      .content {
+        .reg_info {
+          .tableRegister {
+            #tel {
+              width: 94%;
+              padding-left: 4px;
+            }
+            .block {
+              width: 101.5%;
+              .el-date-editor {
+                width: 100%;
+              }
+              .el-input__inner {
+                width: 100%;
+              }
+            }
+          }
+        }
       }
     }
   }
 }
 </style>
+<style lang="scss">
+@media (max-width: 361px) {
+  .container-reg {
+    width:100%;
+    .content-wrap {
+      width:100%;
+      .content {
+        .reg_info {
+          .tableRegister {
+            #tel {
+              width: 95%;
+              padding-left: 4px;
+            }
+            .block {
+              width: 100%;
+              .el-date-editor {
+                width: 120%;
+              }
+              .el-input__inner {
+                width: 84.5%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+@media (max-width: 321px) {
+  .container-reg {
+    width: 90%;
+    max-width: 768px;
+    .content-wrap {
+      width: 96%;
+      margin: 0 auto;
+      .top-square {
+        display: none;
+      }
+      .content {
+        padding: 0 5px !important;
+      }
+      .reg_info {
+        width: 100%;
+        margin: 0;
+        margin-right: 0;
+        .hint {
+          text-align: center;
+        }
+        .tableRegister {
+          #boy,
+          #girl {
+            width: 30px;
+          }
+          #tel {
+            width: 90% !important;
+          }
+          min-width: 100px !important;
+          .block {
+            width: 98%;
+            .el-date-editor {
+              width: 100%;
+            }
+            .el-input__inner {
+              width: 88%;
+            }
+          }
+          .tel-prefix-sty {
+            width: 130px;
+            .el-input__inner {
+              width: 120px;
+            }
+          }
+        }
+        .inputsty {
+          width: 91%;
+        }
+      }
+    }
+    .btn {
+      width: 40% !important;
+    }
+  }
+}
+</style>
+
+
