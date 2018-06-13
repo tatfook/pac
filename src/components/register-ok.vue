@@ -143,3 +143,13 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+@media (max-width: 769px) {
+  .el-dialog__wrapper{
+    .el-dialog{
+      width: 310px !important;
+      height:480px !important;
+    }
+  }
+}
+</style>

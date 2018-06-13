@@ -5,7 +5,7 @@
         <div class="top-square">
         </div>
         <div class="topTile">
-            <h2 style="margin-bottom:0;height:30px">{{work.worksName}}
+            <h2 style="margin-bottom:0;">{{work.worksName}}
             <span class="info">作品编号：{{work._id}}</span>
           </h2>
         </div>
@@ -429,12 +429,8 @@ p {
   margin: 0 auto;
   max-width: 850px;
   font-size: 14px;
-  height: 84px;
   position: relative;
-  // background-color: #fff;
   box-sizing: border-box;
-  // border:1px solid red;
-  // padding: 8px 30px;
   border-bottom: 2px solid #f5f5f5;
   .topTile {
     padding: 8px 30px 0;
@@ -479,7 +475,6 @@ p {
 }
 .content {
   padding: 15px 30px;
-  // display: flex;
   overflow: auto;
   border-bottom: 2px solid #f5f5f5;
 }
@@ -493,7 +488,6 @@ p {
 }
 .detail {
   float: left;
-  // flex: 1;
   font-size: 14px;
   p {
     margin-bottom: 5px;
@@ -562,8 +556,6 @@ p {
 .intro-row {
   padding: 0 30px;
   text-align: center;
-  // padding-bottom: 200px;
-  // position: relative;
   .vote-area {
     position: relative;
     padding-bottom: 150px;
@@ -603,7 +595,6 @@ p {
 }
 .work_video {
   height: 440px;
-  // border: 1px solid black;
 }
 .vote-info {
   position: relative;
@@ -715,7 +706,6 @@ textarea:focus {
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
-  // margin-right: 20px;
   position: absolute;
   padding: 31px 0;
   left: 0;
@@ -767,7 +757,6 @@ textarea:focus {
           width: 100% !important;
         }
         .top-square{
-          // width: 30px;
           display: none;
         }
       }
