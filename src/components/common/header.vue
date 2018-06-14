@@ -321,7 +321,7 @@ export default {
 .pac-header {
   height: 70px;
   line-height: 48px;
-  padding: 11px 0;
+  padding: 11px 15px;
   box-sizing: border-box;
   .brand {
     float: left;
@@ -419,9 +419,30 @@ export default {
 }
 </style>
 <style lang="scss">
+@media (max-width: 1200px) {
+  .pac-header {
+    .brand img {
+      width: 150px;
+    }
+  }
+}
+@media (max-width: 992px) {
+  .pac-header {
+    li {
+      padding: 0 8px;
+    }
+    .join-btn {
+      padding: 0 10px;
+      margin-left: 5px;
+    }
+  }
+}
 @media (max-width: 768px) {
   .pac-header {
     padding: 8px 15px;
+    .brand img {
+      width: auto;
+    }
     .xs-dropdown {
       float: right;
       font-size: 28px;

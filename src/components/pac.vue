@@ -312,7 +312,7 @@
         <h1 class="title">
           <img src="@/assets/pac/process_title.png" alt="">
         </h1>
-        <div class="time-shaft clearfix hidden-xs-only">
+        <div class="time-shaft clearfix hidden-md-and-down">
           <div class="shaft-item first">
             <p class='time'>2018年5月10日</p>
             <p class="dot-box">
@@ -368,7 +368,7 @@
             <p>颁奖典礼</p>
           </div>
         </div>
-        <div class="time-shaft-xs hidden-sm-and-up">
+        <div class="time-shaft-xs hidden-lg-and-up">
           <div class="shaft-item first">
             <p>
               <span class="time">2018年5月10日</span>
@@ -693,6 +693,7 @@ input {
     border-radius: 0;
   }
   .news-row {
+    padding: 0 20px;
     margin-bottom: -20px;
     a {
       color: #303133;
@@ -916,6 +917,7 @@ input {
       width: 460px;
       position: relative;
       margin-top: 60px;
+      max-width: 49%;
     }
     .item-box:last-child {
       float: right;
@@ -1225,6 +1227,7 @@ input {
     background-color: #f5f5f5;
     .container {
       border: 2px solid #ededed;
+      box-sizing: border-box;
       border-width: 0 2px;
       position: relative;
       padding: 75px 0 50px;
@@ -1405,6 +1408,70 @@ input {
 }
 </style>
 <style lang="scss">
+@media (max-width: 1200px) {
+  .pac{
+    .process-row {
+      padding: 20px 0;
+      .time-shaft-xs {
+        padding: 20px 15px 0 35px;
+        position: relative;
+      }
+      .time-shaft-xs::after {
+        content: '';
+        width: 2px;
+        left: 18px;
+        top: 30px;
+        bottom: 30px;
+        position: absolute;
+        // background-color: #fff;
+        background-image: linear-gradient(180deg, #b10cfe, #2e0cfe);
+      }
+      .shaft-item {
+        width: 100%;
+        text-align: left;
+        font-size: 14px;
+        padding-bottom: 20px;
+        position: relative;
+      }
+      .shaft-item::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: absolute;
+        left: -20px;
+        top: 6px;
+        z-index: 1;
+      }
+      .first::before {
+        background-color: #b117fc;
+      }
+      .second::before {
+        background-color: #a417fc;
+      }
+      .third::before {
+        background-color: #9717fc;
+      }
+      .forth::before {
+        background-color: #7b17fc;
+      }
+      .fifth::before {
+        background-color: #5717fc;
+      }
+      .sixth::before {
+        background-color: #3417fc;
+      }
+      .detail {
+        margin-top: 5px;
+        line-height: 22px;
+        opacity: 0.5;
+      }
+    }
+  }
+  
+}
 @media (max-width: 768px) {
   .el-popper.xs-dropdown-menu {
     margin-top: 0;
@@ -1544,6 +1611,8 @@ input {
       .item-box {
         max-width: 100%;
         margin-top: 20px;
+        float: none !important;
+        margin: 20px auto;
       }
       .item-info {
         font-size: 14px;
@@ -1559,65 +1628,6 @@ input {
         width: 70px;
         right: 15px;
         top: 8px;
-      }
-    }
-    .process-row {
-      padding: 20px 0;
-      .time-shaft-xs {
-        padding: 20px 15px 0 35px;
-        position: relative;
-      }
-      .time-shaft-xs::after {
-        content: '';
-        width: 2px;
-        left: 18px;
-        top: 30px;
-        bottom: 30px;
-        position: absolute;
-        // background-color: #fff;
-        background-image: linear-gradient(180deg, #b10cfe, #2e0cfe);
-      }
-      .shaft-item {
-        width: 100%;
-        text-align: left;
-        font-size: 14px;
-        padding-bottom: 20px;
-        position: relative;
-      }
-      .shaft-item::before {
-        content: '';
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: #fff;
-        position: absolute;
-        left: -20px;
-        top: 6px;
-        z-index: 1;
-      }
-      .first::before {
-        background-color: #b117fc;
-      }
-      .second::before {
-        background-color: #a417fc;
-      }
-      .third::before {
-        background-color: #9717fc;
-      }
-      .forth::before {
-        background-color: #7b17fc;
-      }
-      .fifth::before {
-        background-color: #5717fc;
-      }
-      .sixth::before {
-        background-color: #3417fc;
-      }
-      .detail {
-        margin-top: 5px;
-        line-height: 22px;
-        opacity: 0.5;
       }
     }
     .process-row::after {
