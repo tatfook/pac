@@ -187,7 +187,7 @@ export default {
         let baseUrl = ''
         switch (process.env.NODE_ENV) {
           case 'production':
-            baseUrl = 'keepwork.com'
+            baseUrl = 'api-stage.keepwork.com'
             break
           default:
             baseUrl = 'fix.pac.stage.keepwork.com'
