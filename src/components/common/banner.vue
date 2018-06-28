@@ -143,6 +143,7 @@ export default {
   max-width: 90%;
 }
 .banner {
+  width: 100%;
   height: 625px;
   position: relative;
   overflow: hidden;

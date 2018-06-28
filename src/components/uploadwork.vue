@@ -3,6 +3,7 @@
     <main>
       <div class="intro-row-reg">
         <div class="container-reg">
+          <div class="uploadworkContent_wrap">
           <div class="top-square-uploadpage">
             <div class="white-bg"></div>
             <div class="transparent-bg"></div>
@@ -16,8 +17,8 @@
               <form @submit.prevent="uploadwork">
                 <table class="uploadwork_table">
                   <tr class="groups">
-                    <td width='94'>参赛组别</td>
-                    <td>
+                    <td class="firstRow">参赛组别</td>
+                    <td class="secondRow">
                       <input type="radio" id="radio_1" name="group_name" v-model="picked" value="3" />
                       <label for="radio_1"></label>
                       <span :class="picked == 3 ? 'group_name_sel' : 'group_name'">公开组</span>
@@ -28,19 +29,19 @@
                   </tr>
                   <tr>
                     <td>作品名称</td>
-                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称" /></td>
+                    <td><input type="text" v-model.trim="work_title" placeholder="请输入您的作品名称" @blur="isHaveSensitive"/></td>
                   </tr>
                   <tr class="select_items">
                     <td>作品简介</td>
                     <td>
                       <div class="brief_wrap">
-                        <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..."></textarea>
+                        <textarea v-model.trim="work_brief" class="work_brief" name="work_brief" id="" cols="60" rows="5" placeholder="请输入您的作品简介..." @blur="isHaveSensitive"></textarea>
                       </div>
                     </td>
                   </tr>
                   <tr v-if="picked == 4 ? true:false">
                     <td>学校名称</td>
-                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名" /></td>
+                    <td><input type="text" v-model.trim="school_name" placeholder="请输入您的学校全名" @blur="isHaveSensitive"/></td>
                   </tr>
                   <tr>
                     <td colspan="2">
@@ -54,7 +55,7 @@
                               </div>
                               点击上传
                             </div>
-                            <input type="file" :disabled="!!imgCover" class="input_file" @change="uploadLifePhoto('workCover',$event)">
+                            <input type="file" class="input_file" @change="uploadLifePhoto('workCover',$event)">
                           </div>
                           <div class="preview-location">
                             <div class="tip">(一张JPG格式,推荐比例16:9)</div>
@@ -124,9 +125,11 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
       <el-dialog title="提示" :visible.sync="dialogVisibleErr" width="30%">
-        <span>{{uploadworkMsg}}</span>
+        <span slot="title"><i class="el-icon-warning icon-red"></i> 提示</span>
+        <div style="margin:0 auto;width:60%;">{{uploadworkMsg}}</div>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="dialogVisibleErr = false">确 定</el-button>
         </span>
@@ -135,7 +138,7 @@
         <img width="100%" :src="enlargeImg" alt="">
       </el-dialog>
       <el-dialog :visible.sync="uploadworkSuccessVisible" width='500px' :show-close=false>
-        <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)'>
+        <registerok @close='setDialogVisible("uploadworkSuccessVisible", false)' :workUrl="value2">
           <span slot="uploadWorkSucceed">{{uploadworkMsg}}</span>
         </registerok>
       </el-dialog>
@@ -356,7 +359,10 @@ export default {
       } = this.userinfo.defaultSiteDataSource
       let filePath = `${dataSourceUsername}/${type}/pic${+new Date()}`
       let base64img
-      let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
+      let api = gitLabAPIGenerator({
+        url: 'https://api-stage.keepwork.com/git/api/v4',
+        token: dataSourceToken
+      })
       let imgURL
       let reader = new FileReader()
       reader.readAsDataURL(files[0])
@@ -395,7 +401,7 @@ export default {
         dataSourceToken,
         apiBaseUrl,
         dataSourceUsername
-      } = this.userinfo.dataSource[0]
+      } = this.userinfo.defaultSiteDataSource
       let api = gitLabAPIGenerator({ url: apiBaseUrl, token: dataSourceToken })
       api.projects.repository.files.remove(
         projectId,
@@ -420,13 +426,15 @@ export default {
           this.isSensitive = false
         })
     },
-    async uploadwork() {
+    async isHaveSensitive() {
       await this.checkSensitive()
       if (this.isSensitive) {
-        this.uploadworkMsg = '所填信息中包含敏感词！'
+        this.uploadworkMsg = '您输入的信息包含敏感词，请调整！'
         this.dialogVisibleErr = true
         return
       }
+    },
+    uploadwork() {
       keepwork.user
         .submitWorksApply({
           websiteId: iiccWebsiteId,
@@ -551,13 +559,14 @@ export default {
       }
     }
     .item_wrap {
-      display: flex;
+      // display: flex;
       .item-content {
         cursor: pointer;
       }
       div {
-        flex: 1;
-        padding-left: 6px;
+        // flex: 1;
+        float: left;
+        padding-left: 11px;
       }
     }
     div {
@@ -814,13 +823,13 @@ export default {
       position: absolute;
       top: 50px;
       left: 0;
-      width: 389px;
+      width: 60%;
       .tip {
         font-size: 12px;
-        padding: 8px 105px;
+        padding: 8px 0 8px 105px;
         color: #606266;
         line-height: 12px;
-        width: 385px;
+        width: 100%;
       }
       .preview {
         text-align: center;
@@ -879,6 +888,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.icon-red {
+  color: red;
+}
 .work-selector-popper {
   font-family: 'Microsoft Yahei', 'Avenir', Helvetica, Arial, sans-serif;
 }
@@ -907,6 +919,7 @@ export default {
       }
     }
     .img-wrap {
+      margin-left: 82px;
       cursor: pointer;
       width: 227px;
       height: 127px;
@@ -947,5 +960,202 @@ export default {
   }
 }
 </style>
-
+<style lang="scss">
+@media (max-width: 768px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      // border: 1px solid red;
+      .uploadworkContent_wrap {
+        // border:1px solid blue;
+        width: 96% !important;
+        margin: 0 auto;
+        .top-square-uploadpage{
+          display: none;
+        }
+        .content {
+          border:1px solid red;
+          .reg_info {
+            width: 100%;
+            table tr td {
+              &.firstRow{
+                width:90px;
+              }
+              &.secondRow{
+                width:300px !important;
+              }
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 22px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 100px;
+              }
+              .el-select{
+                width:92%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 415px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      // border: 1px solid red;
+      .uploadworkContent_wrap {
+        // border:1px solid blue;
+        width: 96% !important;
+        margin: 0 auto;
+        .content{
+          border:1px solid red;
+          padding:0 !important;
+          .reg_info {
+            width: 100%;
+            .btn{
+              width:40%;
+            }
+            table tr td {
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              .idcard-type{
+                width:30px;
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 4px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 100px;
+              }
+              .el-select{
+                width:92%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 321px) {
+  .intro-row-reg {
+    width:100%;
+    .container-reg {
+      margin: 0 auto;
+      .uploadworkContent_wrap {
+        width: 96% !important;
+        margin: 0 auto;
+        .content{
+          border:1px solid red;
+          padding:0 !important;
+          .reg_info {
+            width: 100%;
+            .btn{
+              width:40%;
+            }
+            table tr td {
+              &.firstRow{
+                width:90px !important;
+              }
+              &.secondRow{
+                width:300px !important;
+              }
+              .brief_wrap {
+                width: 87%;
+                .work_brief {
+                  width: 100%;
+                }
+              }
+              .idcard-type{
+                width:30px;
+              }
+              input {
+                width: 86%;
+              }
+              .clicktoup2 {
+                width: 72%;
+                margin-right: 4px;
+              }
+              .preview-location {
+              }
+              .img-wrap {
+                margin-left: 60px;
+              }
+              .el-select{
+                width:94%
+              }
+              .item_wrap{
+                div{
+                  padding:0;
+                  p{
+                    line-height:14px;
+                    label{
+                      margin:0 0 0 10px;
+                      font-size:12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
 

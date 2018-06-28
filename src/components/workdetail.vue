@@ -1,15 +1,11 @@
 <template>
   <div class="work-detail">
     <div class="main-container">
-      <div class="decoration hidden-xs-only">
-        <div class="white-bg"></div>
-        <div class="transparent-bg"></div>
-      </div>
       <div class="detail-header">
         <div class="top-square">
         </div>
-        <div style="padding:8px 30px 0;background:#fff;width:88%">
-            <h2 style="margin-bottom:0;height:30px">{{work.worksName}}
+        <div class="topTile">
+            <h2 style="margin-bottom:0;">{{work.worksName}}
             <span class="info">作品编号：{{work._id}}</span>
           </h2>
         </div>
@@ -20,7 +16,7 @@
       <div class="container row">
         
         <div class="content">
-          <img :src="work.worksLogo" class="work-cover" alt="">
+          <div><img :src="work.worksLogo" class="work-cover" alt=""></div>
           <div class="detail">
             <div class="upload-work-info">
               <p>作品作者：
@@ -67,7 +63,7 @@
           </div>
         </div>
       </div>
-      <div class="container row intro-row">
+      <div class="container intro-row">
         <!-- <h1 class="title">
           <img src="@/assets/pac/video_title.png" alt="">
         </h1>
@@ -94,7 +90,7 @@
           </transition>
         </div> -->
       </div>
-      <div class="container row comment-row">
+      <div class="container comment-row">
         <textarea v-model.trim="work_comments" placeholder="谈谈你的感受"></textarea>
         <div class="clearfix">
           <span class="comment-btn pull-right" @click="toComment">评论</span>
@@ -104,20 +100,21 @@
             <i class="iconfont icon-comment"></i>作品评论
             <span class="info">({{commentDataArr.length}}条评论)</span>
           </h3>
-          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount">
+          <div class="noCommentImg" v-if="commentDataArr.length <= 0"><img src="@/assets/pac/nocomment.png" alt="" class="nothing"></div>
+          <div v-for="(comment,index) in commentDataArr" :key="index" class="comments-box" v-show="index < showCommentCount" v-else>
             <div class="comment-item clearfix">
               <img :src='getUserPortrait(comment)' alt="" class="profile pull-left">
               <span v-if="(userinfo && userinfo.username) === (comment.userInfo && comment.userInfo.username) || workUrl.split('/')[0] == userinfo.username" class="deleteComment" @click="deleteComment(index,comment)">删除</span>
               <div class="comment-detail pull-left">
                 <h4>{{comment.userInfo && comment.userInfo.username}}</h4>
-                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}年{{comment.createTime.split(' ')[0].split('-')[1]}}月{{comment.createTime.split(' ')[0].split('-')[2]}}日 {{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
+                <p class="time">{{comment.createTime.split(' ')[0].split('-')[0]}}/{{comment.createTime.split(' ')[0].split('-')[1]}}/{{comment.createTime.split(' ')[0].split('-')[2]}}/{{comment.createTime.split(' ')[1].split('-')[0]}}:{{comment.createTime.split(' ')[1].split('-')[1]}}:{{comment.createTime.split(' ')[1].split('-')[2]}}</p>
                 <p class="comment-content">
                   {{comment.content}}
                 </p>
               </div>
             </div>
           </div>
-            <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore">{{commentBottom}}</div>
+            <div v-if="commentDataArr.length > 3" class="viewMore" @click="viewMore"><span>{{commentBottom}}</span></div>
         </div>
       </div>
     </div>
@@ -190,7 +187,7 @@ export default {
         let baseUrl = ''
         switch (process.env.NODE_ENV) {
           case 'production':
-            baseUrl = 'keepwork.com'
+            baseUrl = 'api-stage.keepwork.com'
             break
           default:
             baseUrl = 'fix.pac.stage.keepwork.com'
@@ -310,26 +307,26 @@ export default {
       this.work_comments = ''
     },
     deleteComment(index, comment) {
-        keepwork.websiteComment
-          .deleteById({ _id: comment._id })
-          .then(result => {
-            // console.log(result)
-            if (result.error.id == 0) {
-              keepwork.websiteComment
-                .getByPageUrl({
-                  url: this.workUrl,
-                  pageSize: 10000000
-                })
-                .then(result => {
-                  // console.log(result)
-                  this.commentDataArr = result.data.commentList
-                })
-                .catch(err => {})
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+      keepwork.websiteComment
+        .deleteById({ _id: comment._id })
+        .then(result => {
+          // console.log(result)
+          if (result.error.id == 0) {
+            keepwork.websiteComment
+              .getByPageUrl({
+                url: this.workUrl,
+                pageSize: 10000000
+              })
+              .then(result => {
+                // console.log(result)
+                this.commentDataArr = result.data.commentList
+              })
+              .catch(err => {})
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     viewMore() {
       if (this.commentDataArr.length <= this.showCommentCount) {
@@ -432,13 +429,15 @@ p {
   margin: 0 auto;
   max-width: 850px;
   font-size: 14px;
-  height: 84px;
   position: relative;
-  // background-color: #fff;
   box-sizing: border-box;
-  // border:1px solid red;
-  // padding: 8px 30px;
   border-bottom: 2px solid #f5f5f5;
+  .topTile {
+    padding: 8px 30px 0;
+    background: #fff;
+    width: 95%;
+    box-sizing: border-box;
+  }
   .top-square {
     width: 15%;
     height: 40px;
@@ -470,22 +469,25 @@ p {
   }
 }
 .time {
-  font-size: 14px;
-  color: #606266;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #909399;
 }
 .content {
   padding: 15px 30px;
-  display: flex;
+  overflow: auto;
   border-bottom: 2px solid #f5f5f5;
 }
+
 .work-cover {
+  float: left;
   width: 233px;
   height: 131px;
   object-fit: cover;
+  margin: 0 16px 16px 0;
 }
 .detail {
-  flex: 1;
-  padding: 0 30px;
+  float: left;
   font-size: 14px;
   p {
     margin-bottom: 5px;
@@ -525,6 +527,7 @@ p {
 .visit-btn {
   position: relative;
   .visit-inner-btn {
+    cursor: pointer;
     display: inline-block;
     width: 160px;
     font-size: 18px;
@@ -537,6 +540,7 @@ p {
   }
 }
 .share-btn {
+  cursor: pointer;
   width: 50px;
   background-color: #253994;
   box-shadow: 0 8px 0 0 #1a2b7c;
@@ -552,8 +556,6 @@ p {
 .intro-row {
   padding: 0 30px;
   text-align: center;
-  // padding-bottom: 200px;
-  // position: relative;
   .vote-area {
     position: relative;
     padding-bottom: 150px;
@@ -588,10 +590,11 @@ p {
   color: #606266;
   text-align: left;
   padding-bottom: 35px;
+  line-height: 24px;
+  border-bottom: 1px dashed #eee;
 }
 .work_video {
   height: 440px;
-  // border: 1px solid black;
 }
 .vote-info {
   position: relative;
@@ -660,21 +663,30 @@ textarea:focus {
     background: url('.././assets/pac/delete_gray.png') no-repeat;
     display: none;
   }
-  .deleteComment:hover{
+  .deleteComment:hover {
     color: red;
     cursor: pointer;
-    background: url('.././assets/pac/delete_red.png') no-repeat
+    background: url('.././assets/pac/delete_red.png') no-repeat;
   }
-  &:hover{
-    .deleteComment{
+  &:hover {
+    .deleteComment {
       display: block;
     }
+  }
+}
+.noCommentImg {
+  margin: 30px auto 15px;
+  text-align: center;
+  max-width: 462px;
+  .nothing {
+    width: 100%;
+    object-fit: cover;
   }
 }
 .comment-item::after {
   content: '';
   height: 1px;
-  width: 100px;
+  width: 76px;
   background-color: #ffffff;
   position: absolute;
   bottom: -1px;
@@ -683,23 +695,24 @@ textarea:focus {
   height: 100px;
   text-align: center;
   line-height: 120px;
-  text-decoration: underline;
   color: #303133;
   cursor: pointer;
+  span {
+    border-bottom: 1px solid black;
+  }
 }
 .profile {
-  width: 76px;
-  height: 76px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
-  margin-right: 20px;
   position: absolute;
   padding: 31px 0;
   left: 0;
   top: 0;
 }
 .comment-detail {
-  padding-left: 96px;
+  padding-left: 72px;
 }
 .comment-content {
   margin-top: 20px;
@@ -731,6 +744,22 @@ textarea:focus {
     }
     h4 {
       display: none;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@media (max-width: 769px) {
+  .work-detail {
+    .main-container {
+      .detail-header {
+        .topTile {
+          width: 100% !important;
+        }
+        .top-square{
+          display: none;
+        }
+      }
     }
   }
 }
