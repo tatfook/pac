@@ -15,7 +15,13 @@
       s.parentNode.insertBefore(hm, s)
     })()
   </script>
-
+  <script>
+      /* force https */
+      (location.protocol == 'http:'
+      && !/__http__for__debug__/.test(location.search))
+      && !/^(localhost|[0-9.]+)$/.test(location.hostname)
+      && document.write('<meta http-equiv="refresh" content="0; url=' + location.href.replace(/^http:/, 'https:') + '" />');
+  </script>
 </head>
 
 <body>
