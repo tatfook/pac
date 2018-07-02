@@ -45,7 +45,7 @@ import profileContent from '@/../static/profile_datas/profile.md'
 import siteContent from '@/../static/profile_datas/site.md'
 import sensitiveWord from '@/api/sensitiveWord'
 let axiosInstance = axios.create({
-  baseURL: 'http://keepwork.com/api/wiki/models'
+  baseURL: `${location.protocol}//keepwork.com/api/wiki/models`
 })
 export default {
   name: 'join',
