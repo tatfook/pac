@@ -269,7 +269,7 @@ export default {
         cellphone: this.phone,
         smsCode: this.code,
         smsId: this.smsId,
-        portrait: 'http://keepwork.com/wiki/assets/imgs/default_portrait.png'
+        portrait: `${location.protocol}//keepwork.com/wiki/assets/imgs/default_portrait.png`
       }
       let that = this
       axiosInstance
