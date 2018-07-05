@@ -17,29 +17,29 @@
           <div class="news-content">
             <ul class="first-col">
               <li title="中国动漫离“国际化”还有多远？">
-                <a href="https://keepwork.com/official/iicc2018/news/2" target="_blank">中国动漫离“国际化”还有多远？</a>
+                <a href="https://keepwork.com/official/iicc2018/news/中国动漫离“国际化”还有多远？" target="_blank">中国动漫离“国际化”还有多远？</a>
                 <span class="time">2018/05/12</span>
               </li>
               <li title="国际智能创意大奖赛”昨日正式启动">
-                <a href="https://keepwork.com/official/iicc2018/news/1" target="_blank">国际智能创意大奖赛”昨日正式启动</a>
+                <a href="https://keepwork.com/official/iicc2018/news/国际智能创意大奖赛”昨日正式启动" target="_blank">国际智能创意大奖赛”昨日正式启动</a>
                 <span class="time">2018/05/11</span>
               </li>
               <li title="深港啟動國際智能創意大獎賽">
-                <a href="https://keepwork.com/official/iicc2018/news/5" target="_blank">深港啟動國際智能創意大獎賽</a>
+                <a href="https://keepwork.com/official/iicc2018/news/深港啟動國際智能創意大獎賽" target="_blank">深港啟動國際智能創意大獎賽</a>
                 <span class="time">2018/05/11</span>
               </li>
             </ul>
             <ul class="second-col">
               <li title="为创意而战！2018年国际智能创意大奖赛等你来">
-                <a href="https://keepwork.com/official/iicc2018/news/4" target="_blank">为创意而战！2018年国际智能创意大奖赛等你来</a>
+                <a href="https://keepwork.com/official/iicc2018/news/为创意而战！2018年国际智能创意大奖赛等你来" target="_blank">为创意而战！2018年国际智能创意大奖赛等你来</a>
                 <span class="time">2018/05/10</span>
               </li>
               <li title="国际智能创意大奖赛落户深圳福田">
-                <a href="https://keepwork.com/official/iicc2018/news/3" target="_blank">国际智能创意大奖赛落户深圳福田</a>
+                <a href="https://keepwork.com/official/iicc2018/news/国际智能创意大奖赛落户深圳福田" target="_blank">国际智能创意大奖赛落户深圳福田</a>
                 <span class="time">2018/05/10</span>
               </li>
               <li title="国际智能创意大赛成功启动 大富科技创新助力“中国智造”">
-                <a href="https://keepwork.com/official/iicc2018/news/6" target="_blank">国际智能创意大赛成功启动 大富科技创新助力“中国智造”</a>
+                <a href="https://keepwork.com/official/iicc2018/news/国际智能创意大赛成功启动,大富科技创新助力“中国智造”" target="_blank">国际智能创意大赛成功启动 大富科技创新助力“中国智造”</a>
                 <span class="time">2018/05/10</span>
               </li>
             </ul>
