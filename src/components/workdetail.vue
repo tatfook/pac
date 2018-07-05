@@ -190,12 +190,12 @@ export default {
             baseUrl = 'api-stage.keepwork.com'
             break
           default:
-            baseUrl = 'stage.keepwork.com'
+            baseUrl = 'fix.pac.stage.keepwork.com'
             break
         }
         axios
           .create({
-            baseURL: 'https://' + baseUrl,
+            baseURL: 'http://' + baseUrl,
             headers: { Authorization: authorization }
           })
           .post('/api/mod/worldshare/models/worlds/getWorldByFilePath', {
