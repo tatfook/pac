@@ -73,10 +73,10 @@
                     <td><label for="location">所在地</label></td>
                     <td colspan="2"><input maxlength="24" type="text" id="location" class="inputsty" v-model.trim="location" placeholder="请精确到市级城市"/></td>
                   </tr>
-                  
-                  
-                  
-                  
+
+
+
+
                 </table>
                 </div>
                 <p class="hint">提示：信息一旦确认不得修改，如作品获得现金奖需提供与此身份证有关的银行卡方可领奖</p>
@@ -86,7 +86,7 @@
                 <div style="margin:8px auto;text-align:center;color:red" v-show="showerr">{{errmsg}}</div>
                 <input type="submit" value="提交信息" :disabled="!_pass" :class="_pass ? 'btnok' : 'btn'">
               </form>
-            </div> 
+            </div>
           </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
       <el-dialog :visible.sync='show_agreement' width='500px' class="agreement-sty">
         <div>
           <h1 style="text-align:center;">2018国际智能创意大奖赛赛事机制</h1>
-       
+
           <h2>一、大赛简介</h2>
           &nbsp;&nbsp;&nbsp;&nbsp;“国际智能创意大奖赛”（International Intellectual Creation Contest）,简称IICC，是中国首个以自主开发的计算机编程语言NPL为基础，以自主研发的创作软件Pracraft 为工具的科技与文化融合的创新性品牌；是一项由政府、业界、学界共同支持、倾力打造的人工智能产业领域的顶级赛事；是一个以评选原创优秀创意作品和优秀编程作品为载体，旨在激发全民的自主创新意识，培育青少年的基础计算机科学素养，提升青少年的基础计算机思维能力和创新创造能力的国际性权威赛事。IICC 以“创新·合作·开放·协同 ”为原则，倡导“高品质、高品格、高品位”的理念，鼓励自主开发和内容原创，打造精品；宏扬优秀文化，挖掘产业价值；培育人工智能领域顶级技术人才和创意人才，引导和推动人工智能产业的战略升级和科学发展。<br>
           &nbsp;&nbsp;&nbsp;&nbsp;IICC每年举办一次，2018国际智能产业大奖赛在深圳市福田区人民政府的大力支持下，由中国教育台和深圳市大富配天集团共同举办。IICC 面向全球的专业创作团队、技术型创业团队和在校学生征集作品，通过国际化、专业性评委团队评审，评选出百余个奖项，并对获奖者进行表彰，真正培养青少年的科学技术·人工智能的工业童子功，为未来产业升级提供人才储备。
@@ -161,7 +161,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;3) 各项注册信息填完后，点击进入官网“2018国际智能创意大奖赛”栏目，阅读赛事相关信息，按照赛程指导进行报名，须填写上传完整真实的报名信息及个人/团队身份资料（公开组含：姓名、出生年月日、性别、QQ号码、邮箱、位置、电话、身份证号码/  学生组含：姓名、出生年月日、性别、QQ号码、邮箱、位置、电话、身份证号码、身份证复印件大小100K以内、学校）。<br>
           &nbsp;&nbsp;&nbsp;&nbsp;4) 完成报名后，点击下载指定制作软件《Paracraft创意空间》。<br>
           &nbsp;&nbsp;&nbsp;&nbsp;5) 软件下载完毕后，已注册的keepwork账号密码（可勾选记住密码和自动登陆），随后可进行自由创作。<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;6) 根据自身经验和基础，选择线上课程，完成课程学习。  <br>  
+          &nbsp;&nbsp;&nbsp;&nbsp;6) 根据自身经验和基础，选择线上课程，完成课程学习。  <br>
           &nbsp;&nbsp;&nbsp;&nbsp;■ 作品提交：<br>
           &nbsp;&nbsp;&nbsp;&nbsp;1) 提交身份证明材料。个人参赛提交身份证扫描件（JPG格式，大小不超过100K），团队参赛需提交队长身份扫描件1份（JPG格式，大小不超过100K）及团队人员合照1份（JPG格式1024*768以上）。<br>
           &nbsp;&nbsp;&nbsp;&nbsp;2) 提交作品和插件，以工作文档/脚本/视频形式提交，其中，编程类以https://github.com/源代码链接 + MOD安装包+视频的形式提交。<br>
@@ -197,7 +197,7 @@
           </div>
         </div>
       </el-dialog>
-    </main> 
+    </main>
   </div>
 </template>
 <script>
@@ -311,9 +311,6 @@ export default {
         return false
       } else if (this.value2 != '+86' && !/\d{4,}$/.test(this.tel)) {
         this.showErr('手机号码错误')
-        return false
-      } else if (!/\d{5,}$/g.test(this.idcard_no)) {
-        this.showErr('证件号码不正确')
         return false
       } else if (!localStorage.getItem('userinfo')) {
         this.loginDialogVisible = true
