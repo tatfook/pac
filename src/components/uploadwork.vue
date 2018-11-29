@@ -72,12 +72,13 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>选择作品</td>
+                    <td>作品地址</td>
                     <td class="compete_works">
-                      <el-select id="my-compete-works" v-model="value2" @visible-change='getWorkUrlDatas' popper-class="work-selector-popper">
+                      <el-input type="text" v-model="value2" placeholder="输入您要比赛的项目地址"></el-input>
+                      <!-- <el-select id="my-compete-works" v-model="value2" @visible-change='getWorkUrlDatas' popper-class="work-selector-popper">
                         <el-option v-for="item in myworks" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled">
                         </el-option>
-                      </el-select>
+                      </el-select> -->
                     </td>
                   </tr>
                   <tr class="select_items">
@@ -193,7 +194,7 @@ export default {
       work_title: '',
       work_brief: '',
       school_name: '',
-      value2: '选择您要比赛的作品',
+      value2: '',
       uploadworkVisible: false,
       dialogVisibleErr: false,
       dialogImageUrl: '',

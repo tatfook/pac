@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Icon, Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading, Select, Option, DatePicker, Button, Message } from 'element-ui'
+import { Icon, Dropdown, DropdownMenu, DropdownItem, Collapse, CollapseItem, Tooltip, Popover, Dialog, Loading, Select, Input, Option, DatePicker, Button, Message } from 'element-ui'
 
 Vue.config.productionTip = false
 Vue.use(Icon)
@@ -17,6 +17,7 @@ Vue.use(Popover)
 Vue.use(Dialog)
 Vue.use(Loading)
 Vue.use(Select)
+Vue.use(Input)
 Vue.use(Option)
 Vue.use(DatePicker)
 Vue.use(Button)
