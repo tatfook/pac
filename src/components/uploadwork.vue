@@ -321,17 +321,17 @@ export default {
           for (let i = 0; i < result.data.length; i++) {
             let path = result.data[i].path
             let obj = {}
-            if (
-              path.indexOf(this.userinfo.username + '/paracraft/world_') == 0
-            ) {
+            // if (
+            //   path.indexOf(this.userinfo.username + '/paracraft/world_') == 0
+            // ) {
               obj.value = path.split('.')[0]
               obj.label = path.split('.')[0]
               this.myworks.push(obj)
-            }
+            // }
           }
         })
         .catch(error => {
-          // console.log(error)
+          console.log(error)
         })
     },
     reGetUserinfo() {
